@@ -1,0 +1,20 @@
+{
+    "name": "devdk/economics",
+    "description": "A PHP wrapper to interact with the e-conomics API",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "t_kjaergaard",
+            "email": "tkj@tkjaergaard.dk"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+
+    },
+    "autoload": {
+        "psr-0": {
+            "devdk": "src/"
+        }
+    }
+}
