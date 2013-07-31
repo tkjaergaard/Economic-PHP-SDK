@@ -40,6 +40,10 @@ class Contact {
             ->DebtorContactData;
     }
 
+    /**
+     * Get all Contacts
+     * @return array
+     */
     public function all()
     {
         $handles = $this->client
@@ -50,6 +54,26 @@ class Contact {
         return $this->getArrayFromHandles($handles);
     }
 
+    /**
+     * Get Contact data by ID
+     * @param  integer $id
+     * @return object
+     */
+    public function findById($id)
+    {
+        $data = $this->client
+            ->DebtorContact_GetData(array(
+                'entityHandle' => array('Id' => $id)
+            ))->DebtorContact_GetDataResult;
+
+        return $data;
+    }
+
+    /**
+     * Search contact by full name
+     * @param  string $name
+     * @return array
+     */
     public function search($name)
     {
         $handles = $this->client
@@ -149,6 +173,23 @@ class Contact {
             ))->DebtorContact_CreateResult;
 
         return $this->update($data, $id->Id);
+    }
+
+    /**
+     * Delete a Contact by ID
+     * @param  integer $id
+     * @return boolean
+     */
+    public function delete($id)
+    {
+        $data = $this->findById($id);
+
+        $this->client
+            ->DebtorContact_Delete(array(
+                "debtorContactHandle" => $data->Handle
+            ));
+
+        return true;
     }
 
 }
