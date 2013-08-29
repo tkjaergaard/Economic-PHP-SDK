@@ -36,7 +36,7 @@ class Invoice {
      */
     public function getHandle($no)
     {
-        if( is_object($no) AND isset($no->Number) ) return $no;
+        if( is_object($no) AND isset($no->Id) ) return $no;
 
         if( @$result = $this->client
                 ->Invoice_FindByNumber(array('number'=>$no))
@@ -200,6 +200,22 @@ class Invoice {
         return $this->client->CurrentInvoice_GetDataArray(
             array('entityHandles' => array('CurrentInvoiceHandle' => $invoiceHandle))
         )->CurrentInvoice_GetDataArrayResult;
+    }
+
+    /**
+     * Book a current Invoice
+     * @param  mixed $invoiceNumber
+     * @return object
+     */
+    public function book($invoiceNumber)
+    {
+        $handle = $this->getHandle($invoiceNumber);
+
+        $number = $this->client
+            ->CurrentInvoice_Book(array('currentInvoiceHandle'=>$handle))
+            ->CurrentInvoice_BookResult;
+
+        return $number;
     }
 
 }

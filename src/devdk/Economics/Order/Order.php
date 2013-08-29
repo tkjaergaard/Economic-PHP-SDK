@@ -272,4 +272,20 @@ class Order {
             array('entityHandles' => array('OrderHandle' => $orderHandle))
         )->Order_GetDataArrayResult;
     }
+
+    /**
+     * Upgrade a Order to a Invoice
+     * @param  integer $orderNumber
+     * @return object
+     */
+    public function upgrade($orderNumber)
+    {
+        $handle = $this->getHandle($no);
+
+        $id = $this->client
+            ->Order_UpgradeToInvoice(array('orderHandle'=>$handle))
+            ->Order_UpgradeToInvoiceResult;
+
+        return $id;
+    }
 }
