@@ -249,7 +249,7 @@ class Order {
      * @param  Closure  $callback
      * @return object
      */
-    public function create($debtorNumber, Closure $callback)
+    public function create($debtorNumber, Closure $callback, array $options=NULL)
     {
         $debtor = new Debtor($this->client_raw);
         $debtorHandle = $debtor->getHandle($debtorNumber);
@@ -264,6 +264,9 @@ class Order {
             throw new Exception("Error: creating Invoice.");
         }
 
+        if( $options )
+            $this->setOptions($orderhandle, $options);
+
         $this->lines = new Line($this->client_raw, $orderHandle);
 
         call_user_func($callback, $this->lines);
@@ -271,6 +274,27 @@ class Order {
         return $this->client->Order_GetDataArray(
             array('entityHandles' => array('OrderHandle' => $orderHandle))
         )->Order_GetDataArrayResult;
+    }
+
+    /**
+     * Set Order Option
+     * @param mixed $handle
+     * @param array $options
+     */
+    public function setOptions($handle, array $options)
+    {
+        foreach( $options as $option => $value )
+        {
+            switch( strtolower($options) )
+            {
+                case 'vat':
+                    $this->client
+                        ->Order_SetIsVatIncluded(array(
+                                'orderHandle' => $handle,
+                                'value'       => $value
+                        ));
+            }
+        }
     }
 
     /**
