@@ -312,4 +312,25 @@ class Order {
 
         return $id;
     }
+
+    /**
+     * Delete order
+     * @param  mixed $no
+     * @return boolean
+     */
+    public function delete($no)
+    {
+        $handle = $this->getHandle($no);
+
+        try {
+            $this->client
+                ->Order_Delete(array(
+                    'OrderHandle' => $handle
+                ));
+        } catch( Exception $e ) {
+            return false;
+        }
+
+        return true;
+    }
 }
