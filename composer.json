@@ -1,6 +1,7 @@
 {
     "name": "devdk/economics",
     "description": "A PHP wrapper to interact with the e-conomics API",
+    "tags": ["economic", "ERP"],
     "license": "MIT",
     "authors": [
         {
@@ -9,12 +10,9 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {
-
-    },
     "autoload": {
-        "psr-0": {
-            "devdk": "src/"
+        "psr-4": {
+            "devdk\\Economics\\": "src/devdk/Economics"
         }
     }
 }
