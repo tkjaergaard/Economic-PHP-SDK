@@ -12,7 +12,7 @@
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
-            "devdk\\Economics\\": "src/devdk/Economics"
+            "tkj\\Economics\\": "src/tkj/Economics"
         }
     }
 }

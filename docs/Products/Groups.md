@@ -2,8 +2,8 @@
 The **Product Group Class** depends on getting a instance of the *Client Class* injected in order to function.
 
     <?php
-    use devdk\Economics\Client;
-    use devdk\Economics\Product\Group;
+    use tkj\Economics\Client;
+    use tkj\Economics\Product\Group;
 
     $client = new Client($agreementNumber, $userID, $password);
     $group  = new Group($client);
@@ -12,8 +12,8 @@ The **Product Group Class** depends on getting a instance of the *Client Class* 
 This method returns all Product Groups.
 
     <?php
-    use devdk\Economics\Client;
-    use devdk\Economics\Product\Group;
+    use tkj\Economics\Client;
+    use tkj\Economics\Product\Group;
 
     $client = new Client($agreementNumber, $userID, $password);
     $group  = new Group($client);
@@ -24,8 +24,8 @@ This method returns all Product Groups.
 This method lets you grap a specific Product Group by the group number.
 
     <?php
-    use devdk\Economics\Client;
-    use devdk\Economics\Product\Group;
+    use tkj\Economics\Client;
+    use tkj\Economics\Product\Group;
 
     $client = new Client($agreementNumber, $userID, $password);
     $group  = new Group($client);
@@ -36,8 +36,8 @@ This method lets you grap a specific Product Group by the group number.
 This method lets you grap all Products within a specific group.
 
     <?php
-    use devdk\Economics\Client;
-    use devdk\Economics\Product\Group;
+    use tkj\Economics\Client;
+    use tkj\Economics\Product\Group;
 
     $client = new Client($agreementNumber, $userID, $password);
     $group  = new Group($client);

@@ -1,6 +1,6 @@
-<?php namespace devdk\Economics\Account;
+<?php namespace tkj\Economics\Account;
 
-use devdk\Economics\Client;
+use tkj\Economics\Client;
 
 class Account {
 

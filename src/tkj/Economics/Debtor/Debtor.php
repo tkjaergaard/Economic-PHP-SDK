@@ -1,9 +1,9 @@
-<?php namespace devdk\Economics\Debtor;
+<?php namespace tkj\Economics\Debtor;
 
-use devdk\Economics\Client;
-use devdk\Economics\Invoice\Invoice;
-use devdk\Economics\Order\Order;
-use devdk\Economics\Quotation\Quotation;
+use tkj\Economics\Client;
+use tkj\Economics\Invoice\Invoice;
+use tkj\Economics\Order\Order;
+use tkj\Economics\Quotation\Quotation;
 
 class Debtor {
 

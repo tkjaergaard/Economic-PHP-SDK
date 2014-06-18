@@ -1,8 +1,8 @@
-<?php namespace devdk\Economics\Quotation;
+<?php namespace tkj\Economics\Quotation;
 
-use devdk\Economics\Client;
-use devdk\Economics\Debtor\Debtor;
-use devdk\Economics\Quotation\QuotationLines;
+use tkj\Economics\Client;
+use tkj\Economics\Debtor\Debtor;
+use tkj\Economics\Quotation\QuotationLines;
 use Exception;
 use Closure;
 

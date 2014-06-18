@@ -1,7 +1,7 @@
-<?php namespace devdk\Economics\Debtor;
+<?php namespace tkj\Economics\Debtor;
 
-use devdk\Economics\Client;
-use devdk\Economics\Account\Account;
+use tkj\Economics\Client;
+use tkj\Economics\Account\Account;
 
 class Group {
 

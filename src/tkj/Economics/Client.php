@@ -1,4 +1,4 @@
-<?php namespace devdk\Economics;
+<?php namespace tkj\Economics;
 
 use SoapClient;
 

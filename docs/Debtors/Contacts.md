@@ -2,8 +2,8 @@
 The **Debtor Contact Class** depends on getting a instance of the *Client Class* injected in order to function.
 
     <?php
-    use devdk\Economics\Client;
-    use devdk\Economics\Debtor\Contact;
+    use tkj\Economics\Client;
+    use tkj\Economics\Debtor\Contact;
 
     $client = new Client($agreementNumber, $userID, $password);
     $contact = new Contact($client);
@@ -13,8 +13,8 @@ The **Debtor Contact Class** depends on getting a instance of the *Client Class*
 This method returns all contacts as an array.
 
     <?php
-    use devdk\Economics\Client;
-    use devdk\Economics\Debtor\Contact;
+    use tkj\Economics\Client;
+    use tkj\Economics\Debtor\Contact;
 
     $client = new Client($agreementNumber, $userID, $password);
     $contact = new Contact($client);
@@ -25,8 +25,8 @@ This method returns all contacts as an array.
 This method lets you grap the data of a Contact by the ID.
 
     <?php
-    use devdk\Economics\Client;
-    use devdk\Economics\Debtor\Contact;
+    use tkj\Economics\Client;
+    use tkj\Economics\Debtor\Contact;
 
     $client = new Client($agreementNumber, $userID, $password);
     $contact = new Contact($client);
@@ -37,8 +37,8 @@ This method lets you grap the data of a Contact by the ID.
 This method lets you serach a contact by their name.
 
     <?php
-    use devdk\Economics\Client;
-    use devdk\Economics\Debtor\Contact;
+    use tkj\Economics\Client;
+    use tkj\Economics\Debtor\Contact;
 
     $client = new Client($agreementNumber, $userID, $password);
     $contact = new Contact($client);
@@ -54,8 +54,8 @@ The method returns an array with the details of the new contact.
 * $debtor `integer` `The debtor number to assign the contact to`
 
     <?php
-    use devdk\Economics\Client;
-    use devdk\Economics\Debtor\Contact;
+    use tkj\Economics\Client;
+    use tkj\Economics\Debtor\Contact;
 
     $client = new Client($agreementNumber, $userID, $password);
     $contact = new Contact($client);
@@ -89,8 +89,8 @@ This method lets you update an existing Contact.
 ** All of the above elements are optional. **
 
     <?php
-    use devdk\Economics\Client;
-    use devdk\Economics\Debtor\Contact;
+    use tkj\Economics\Client;
+    use tkj\Economics\Debtor\Contact;
 
     $client = new Client($agreementNumber, $userID, $password);
     $contact = new Contact($client);
@@ -110,8 +110,8 @@ This method lets you update an existing Contact.
 This method lets you delete a Contact by ID.
 
     <?php
-    use devdk\Economics\Client;
-    use devdk\Economics\Debtor\Contact;
+    use tkj\Economics\Client;
+    use tkj\Economics\Debtor\Contact;
 
     $client = new Client($agreementNumber, $userID, $password);
     $contact = new Contact($client);
