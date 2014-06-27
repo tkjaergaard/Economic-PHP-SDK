@@ -36,7 +36,7 @@ class Debtor {
      */
     public function getHandle($no)
     {
-        if( is_object($no) AND isset($no->Id) ) return $no;
+        if( is_object($no) AND isset($no->Number) ) return $no;
 
         return $this->client
                     ->Debtor_FindByNumber(array('number'=>$no))
