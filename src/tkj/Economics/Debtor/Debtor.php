@@ -258,7 +258,7 @@ class Debtor {
         $handles = $this->client
             ->Debtor_FindByEmail(array('email'=>$value))
             ->Debtor_FindByEmailResult
-            ->debtorHandle;
+            ->DebtorHandle;
 
         return $this->getArrayFromHandles($handles);
     }
