@@ -210,7 +210,7 @@ class Debtor {
             case 'EAN':
                 return $this->findByEan($value);
             case 'EMAIL':
-                return $this->findByEmail($vaule);
+                return $this->findByEmail($value);
             case 'NAME':
                 return $this->findByName($value);
             case 'NUMBER':
