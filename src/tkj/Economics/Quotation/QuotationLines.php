@@ -1,8 +1,8 @@
-<?php namespace devdk\Economics\Quotation;
+<?php namespace tkj\Economics\Quotation;
 
-use devdk\Economics\Client;
-use devdk\Economics\Unit\Unit;
-use devdk\Economics\Product\Product;
+use tkj\Economics\Client;
+use tkj\Economics\Unit\Unit;
+use tkj\Economics\Product\Product;
 
 class QuotationLines {
 

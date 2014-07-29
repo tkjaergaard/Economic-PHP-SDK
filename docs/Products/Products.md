@@ -2,8 +2,8 @@
 The **Product Class** depends on getting a instance of the *Client Class* injected in order to function.
 
     <?php
-    use devdk\Economics\Client;
-    use devdk\Economics\Product\Product;
+    use tkj\Economics\Client;
+    use tkj\Economics\Product\Product;
 
     $client = new Client($agreementNumber, $userID, $password);
     $product = new Product($client);
@@ -12,8 +12,8 @@ The **Product Class** depends on getting a instance of the *Client Class* inject
 This method returns all products.
 
     <?php
-    use devdk\Economics\Client;
-    use devdk\Economics\Product\Product;
+    use tkj\Economics\Client;
+    use tkj\Economics\Product\Product;
 
     $client = new Client($agreementNumber, $userID, $password);
     $product = new Product($client);
@@ -24,8 +24,8 @@ This method returns all products.
 This method returns a specific Product by the product number.
 
     <?php
-    use devdk\Economics\Client;
-    use devdk\Economics\Product\Product;
+    use tkj\Economics\Client;
+    use tkj\Economics\Product\Product;
 
     $client = new Client($agreementNumber, $userID, $password);
     $product = new Product($client);
@@ -36,8 +36,8 @@ This method returns a specific Product by the product number.
 This method returns all accessible Products.
 
     <?php
-    use devdk\Economics\Client;
-    use devdk\Economics\Product\Product;
+    use tkj\Economics\Client;
+    use tkj\Economics\Product\Product;
 
     $client = new Client($agreementNumber, $userID, $password);
     $product = new Product($client);
@@ -48,8 +48,8 @@ This method returns all accessible Products.
 This method returns the current stock of a specific Product by product number.
 
     <?php
-    use devdk\Economics\Client;
-    use devdk\Economics\Product\Product;
+    use tkj\Economics\Client;
+    use tkj\Economics\Product\Product;
 
     $client = new Client($agreementNumber, $userID, $password);
     $product = new Product($client);
@@ -70,8 +70,8 @@ The `$data` array accepts the following elements:
 
 ```
 <?php
-use devdk\Economics\Client;
-use devdk\Economics\Product\Product;
+use tkj\Economics\Client;
+use tkj\Economics\Product\Product;
 
 $client = new Client($agreementNumber, $userID, $password);
 $product = new Product($client);

@@ -1,6 +1,6 @@
-<?php namespace devdk\Economics\Debtor;
+<?php namespace tkj\Economics\Debtor;
 
-use devdk\Economics\Client;
+use tkj\Economics\Client;
 use Exception;
 
 class Contact {

@@ -1,7 +1,7 @@
-<?php namespace devdk\Economics\Invoice;
+<?php namespace tkj\Economics\Invoice;
 
-use devdk\Economics\Client;
-use devdk\Economics\Debtor\Debtor;
+use tkj\Economics\Client;
+use tkj\Economics\Debtor\Debtor;
 use Exception;
 use Closure;
 

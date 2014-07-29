@@ -1,6 +1,6 @@
-<?php namespace devdk\Economics\Unit;
+<?php namespace tkj\Economics\Unit;
 
-use devdk\Economics\Client;
+use tkj\Economics\Client;
 
 class Unit {
 

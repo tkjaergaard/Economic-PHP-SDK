@@ -1,7 +1,7 @@
-<?php namespace devdk\Economics\Product;
+<?php namespace tkj\Economics\Product;
 
-use devdk\Economics\Client;
-use devdk\Economics\Unit\Unit;
+use tkj\Economics\Client;
+use tkj\Economics\Unit\Unit;
 
 class Product {
 

@@ -1,6 +1,6 @@
-<?php namespace devdk\Economics\Product;
+<?php namespace tkj\Economics\Product;
 
-use devdk\Economics\Client;
+use tkj\Economics\Client;
 
 class Group {
 
