@@ -190,7 +190,7 @@ use tkj\Economics\Order\Order;
 $client = new Client($agreementNumber, $userID, $password);
 $order = new Order($client);
 
-$debtorNumber = 101;
+$orderNumber = 101;
 
-$invoiceID = $order->upgrade($debtorNumber);
+$invoiceID = $order->upgrade($orderNumber);
 ```
