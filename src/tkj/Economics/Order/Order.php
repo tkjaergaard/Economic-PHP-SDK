@@ -304,7 +304,7 @@ class Order {
      */
     public function upgrade($orderNumber)
     {
-        $handle = $this->getHandle($no);
+        $handle = $this->getHandle($orderNumber);
 
         $id = $this->client
             ->Order_UpgradeToInvoice(array('orderHandle'=>$handle))
