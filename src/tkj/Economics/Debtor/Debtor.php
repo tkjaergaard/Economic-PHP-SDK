@@ -371,9 +371,13 @@ class Debtor {
      */
     public function create(array $data)
     {
-        $number = $this->client
-            ->Debtor_GetNextAvailableNumber()
-            ->Debtor_GetNextAvailableNumberResult;
+        if(isset($data["number"])) {
+    		$number = $data["number"];
+    	}else{
+    		$number = $this->client
+	    		->Debtor_GetNextAvailableNumber()
+	    		->Debtor_GetNextAvailableNumberResult;
+    	}
 
         $groupHandle = array('Number' => 1);
 
