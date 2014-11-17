@@ -102,9 +102,13 @@ class Product {
      */
     public function create(array $data)
     {
-        $all    = $this->all();
-        $number = end($all)->Number + 1;
-
+        if(isset($data["number"])) {
+            $number = $data["number"];
+        }else{
+            $all    = $this->all();
+            $number = end($all)->Number + 1;
+        }
+        
         $group       = new Group($this->client_raw);
         $groupHandle = $group->getHandle($data['group']);
 
