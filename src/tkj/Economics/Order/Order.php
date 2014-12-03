@@ -265,7 +265,7 @@ class Order {
         }
 
         if( $options )
-            $this->setOptions($orderhandle, $options);
+            $this->setOptions($orderHandle, $options);
 
         $this->lines = new Line($this->client_raw, $orderHandle);
 
@@ -285,7 +285,7 @@ class Order {
     {
         foreach( $options as $option => $value )
         {
-            switch( strtolower($options) )
+            switch( strtolower($option) )
             {
                 case 'vat':
                     $this->client
@@ -293,6 +293,14 @@ class Order {
                                 'orderHandle' => $handle,
                                 'value'       => $value
                         ));
+                    break;
+                case 'text1':
+                    $this->client
+                        ->Order_SetTextLine1(array(
+                            'orderHandle' => $handle,
+                            'value'       => $value
+                        ));
+                    break;
             }
         }
     }
