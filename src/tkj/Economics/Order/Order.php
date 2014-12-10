@@ -301,6 +301,41 @@ class Order {
                             'value'       => $value
                         ));
                     break;
+                case 'termsofdelivery':
+                    $this->client
+                        ->Order_SetTermsOfDelivery(array(
+                            'orderHandle' => $handle,
+                            'value'       => $value
+                        ));
+                    break;
+                case 'deliveryaddress':
+                    $this->client
+                        ->Order_SetDeliveryAddress(array(
+                            'orderHandle' => $handle,
+                            'value'       => $value
+                        ));
+                    break;
+                case 'deliverycity':
+                    $this->client
+                        ->Order_SetDeliveryCity(array(
+                            'orderHandle' => $handle,
+                            'value'       => $value
+                        ));
+                    break;
+                case 'deliverycountry':
+                    $this->client
+                        ->Order_SetDeliveryCountry(array(
+                            'orderHandle' => $handle,
+                            'value'       => $value
+                        ));
+                    break;
+                case 'deliverypostalcode':
+                    $this->client
+                        ->Order_SetDeliveryPostalCode(array(
+                            'orderHandle' => $handle,
+                            'value'       => $value
+                        ));
+                    break;
             }
         }
     }
