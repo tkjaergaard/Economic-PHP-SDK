@@ -58,7 +58,7 @@ class Invoice {
     }
 
     /**
-     * Get all Invoices
+     * Get all Invoices that are booked
      * @return array
      */
     public function all()
@@ -70,6 +70,27 @@ class Invoice {
 
         return $this->getArrayFromHandles($handles);
     }
+
+    /**
+     * Get all invoices
+     * @return array
+     */
+    public function get_all()
+    {
+
+        $handles = $this->client
+            ->Invoice_GetAll()
+            ->Invoice_GetAllResult
+            ->InvoiceHandle;
+
+         return $this->client
+            ->Invoice_GetDataArray(array('entityHandles'=>array('InvoiceHandle'=>$handles)))
+            ->Invoice_GetDataArrayResult
+            ->InvoiceData;
+
+
+    }
+
 
     /**
      * Get specific Invoice by number
