@@ -108,7 +108,7 @@ class Product {
             $all    = $this->all();
             $number = end($all)->Number + 1;
         }
-        
+
         $group       = new Group($this->client_raw);
         $groupHandle = $group->getHandle($data['group']);
 
@@ -189,6 +189,28 @@ class Product {
         }
 
         return $this->getArrayFromHandles( $handle );
+    }
+
+    /**
+     * Find a product by it's name.
+     * The name has to be an exact match in
+     * order to get any returns. Unfortunately
+     * this method can't be used very well as a
+     * search function.
+     *
+     * @param  string $query
+     * @return null|stdClass
+     */
+    public function find($query)
+    {
+        $handles = $this->client
+            ->Product_FindByName(array('name'=>$query))
+            ->Product_FindByNameResult;
+
+        if( ! isset($handles->ProductHandle) )
+            return null;
+
+        return $this->getArrayFromHandles($handles->ProductHandle);
     }
 
 }
