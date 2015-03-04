@@ -32,6 +32,18 @@ This method returns a specific Product by the product number.
 
     $get = $this->get(301);
 
+#### Find a product by it's name
+This method lets you retrive a product by it's excact name.
+
+    <?php
+    use tkj\Economics\Client;
+    use tkj\Economics\Product\Product;
+
+    $client = new Client($agreementNumber, $userID, $password);
+    $product = new Product($client);
+
+    $get = $this->find("my product");
+
 #### Get all accessible Products
 This method returns all accessible Products.
 
