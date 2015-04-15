@@ -30,7 +30,7 @@ This method returns a specific Product by the product number.
     $client = new Client($agreementNumber, $userID, $password);
     $product = new Product($client);
 
-    $get = $this->get(301);
+    $get = $product->get(301);
 
 #### Find a product by it's name
 This method lets you retrive a product by it's excact name.
@@ -42,7 +42,7 @@ This method lets you retrive a product by it's excact name.
     $client = new Client($agreementNumber, $userID, $password);
     $product = new Product($client);
 
-    $get = $this->find("my product");
+    $get = $product->find("my product");
 
 #### Get all accessible Products
 This method returns all accessible Products.
