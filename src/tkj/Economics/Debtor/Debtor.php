@@ -242,7 +242,11 @@ class Debtor {
 
         if ( count($handles) > 1 )
             return $this->getArrayFromHandles($handles);
-        return array($this->getDataFromHandle($handles));
+
+	$result = $this->getDataFromHandle($handles);
+	if ( empty($result) )
+		return array();
+	return array($result);
     }
 
     /**
@@ -259,7 +263,11 @@ class Debtor {
 
         if ( count($handles) > 1 )
             return $this->getArrayFromHandles($handles);
-        return array($this->getDataFromHandle($handles));
+
+	$result = $this->getDataFromHandle($handles);
+	if ( empty($result) )
+		return array();
+	return array($result);
     }
 
     /**
@@ -276,7 +284,11 @@ class Debtor {
 
         if ( count($handles) > 1 )
             return $this->getArrayFromHandles($handles);
-        return array($this->getDataFromHandle($handles));
+
+	$result = $this->getDataFromHandle($handles);
+	if ( empty($result) )
+		return array();
+	return array($result);
     }
 
     /**
@@ -293,7 +305,11 @@ class Debtor {
 
         if ( count($handles) > 1 )
             return $this->getArrayFromHandles($handles);
-        return array($this->getDataFromHandle($handles));
+
+	$result = $this->getDataFromHandle($handles);
+	if ( empty($result) )
+		return array();
+	return array($result);
     }
 
     /**
