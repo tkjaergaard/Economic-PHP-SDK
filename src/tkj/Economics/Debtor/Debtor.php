@@ -44,8 +44,20 @@ class Debtor {
     }
 
     /**
+     * Get Debtor from handle
+     * @param  object $handle
+     * @return object
+     */
+    public function getDataFromHandle($handle)
+    {
+        return $this->client
+            ->Debtor_GetData(array('entityHandle'=> $handle))
+            ->Debtor_GetDataResult;
+    }
+
+    /**
      * Get Debtors from handles
-     * @param  object $handels
+     * @param  object $handles
      * @return object
      */
     public function getArrayFromHandles($handles)
@@ -78,9 +90,7 @@ class Debtor {
     public function get($no)
     {
         $handle = $this->getHandle($no);
-        return $this->client
-            ->Debtor_GetData(array('entityHandle'=> $handle))
-            ->Debtor_GetDataResult;
+        return $this->getDataFromHandle($handle);
     }
 
     /**
@@ -228,9 +238,11 @@ class Debtor {
         $handles = $this->client
             ->Debtor_FindByCINumber(array('ciNumber'=>$value))
             ->Debtor_FindByCINumberResult
-            ->debtorHandle;
+            ->DebtorHandle;
 
-        return $this->getArrayFromHandles($handles);
+        if ( count($handles) > 1 )
+            return $this->getArrayFromHandles($handles);
+        return array($this->getDataFromHandle($handles));
     }
 
     /**
@@ -243,9 +255,11 @@ class Debtor {
         $handles = $this->client
             ->Debtor_FindByEan(array('ean'=>$value))
             ->Debtor_FindByEanResult
-            ->debtorHandle;
+            ->DebtorHandle;
 
-        return $this->getArrayFromHandles($handles);
+        if ( count($handles) > 1 )
+            return $this->getArrayFromHandles($handles);
+        return array($this->getDataFromHandle($handles));
     }
 
     /**
@@ -260,7 +274,9 @@ class Debtor {
             ->Debtor_FindByEmailResult
             ->DebtorHandle;
 
-        return $this->getArrayFromHandles($handles);
+        if ( count($handles) > 1 )
+            return $this->getArrayFromHandles($handles);
+        return array($this->getDataFromHandle($handles));
     }
 
     /**
@@ -271,11 +287,13 @@ class Debtor {
     protected function findByName($value)
     {
         $handles = $this->client
-            ->Debtor_FindByEmail(array('name'=>$value))
+            ->Debtor_FindByName(array('name'=>$value))
             ->Debtor_FindByNameResult
-            ->debtorHandle;
+            ->DebtorHandle;
 
-        return $this->getArrayFromHandles($handles);
+        if ( count($handles) > 1 )
+            return $this->getArrayFromHandles($handles);
+        return array($this->getDataFromHandle($handles));
     }
 
     /**
