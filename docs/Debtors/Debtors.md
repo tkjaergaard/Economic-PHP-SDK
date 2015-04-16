@@ -37,11 +37,12 @@ Returns a object for a specific Debtor.
 This method Lets you search Debtors by a specific field.
 
 Available fields to search:
-* CI Number
-* EAN Number
-* Email
-* Name
-* Number
+* CI (CI Number)
+* EAN (EAN Number)
+* EMAIL
+* NAME
+* PARTIALNAME (Partial Name)
+* NUMBER
 
     <?php
     use tkj\Economics\Client;
