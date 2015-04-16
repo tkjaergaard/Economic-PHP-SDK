@@ -223,6 +223,8 @@ class Debtor {
                 return $this->findByEmail($value);
             case 'NAME':
                 return $this->findByName($value);
+            case 'PARTIALNAME':
+                return $this->findByPartialName($value);
             case 'NUMBER':
                 return $this->get($value);
         }
@@ -310,6 +312,27 @@ class Debtor {
 	if ( empty($result) )
 		return array();
 	return array($result);
+    }
+
+    /**
+     * Returns handles for debtors with a given partial name
+     * @param  string $value
+     * @return object
+     */
+    public function findByPartialName($value)
+    {
+        $handles = $this->client
+            ->Debtor_FindByPartialName(array('partialName'=>$value))
+            ->Debtor_FindByPartialNameResult
+            ->DebtorHandle;
+
+        if ( count($handles) > 1 )
+            return $this->getArrayFromHandles($handles);
+
+		$result = $this->getDataFromHandle($handles);
+		if ( empty($result) )
+			return array();
+		return array($result);
     }
 
     /**
