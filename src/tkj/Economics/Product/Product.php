@@ -214,7 +214,7 @@ class Product {
     }
 
     /**
-     * Gets the currency price of a product
+     * Get the price of a product by currency code
      * @param  string $number
      * @param  string $code
      * @return string
