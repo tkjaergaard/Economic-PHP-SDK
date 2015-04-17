@@ -1,4 +1,4 @@
-<?php namespace custom\Economics;
+<?php namespace tkj\Economics\PriceGroup;
 
 use tkj\Economics\Client;
 

@@ -1,4 +1,4 @@
-<?php namespace Tkj\Economics\Subscriptions;
+<?php namespace tkj\Economics\Subscriptions;
 
 use tkj\Economics\Client;
 use tkj\Economics\Subscriptions\Subscriber;
