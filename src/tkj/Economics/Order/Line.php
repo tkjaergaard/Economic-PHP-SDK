@@ -135,7 +135,7 @@ class Line {
      * Set Order Line product
      * by product number
      * @param  mixed $orderLineHandle
-     * @param  integer $product
+     * @param  string $product
      * @return boolean
      */
     public function product($orderLineHandle, $product)
@@ -169,7 +169,7 @@ class Line {
 
     /**
      * Set Quotation Line discount
-     * @param  mixed $QuotationLineHandle
+     * @param  mixed $orderLineHandle
      * @param  float $discount
      * @return boolean
      */
@@ -188,7 +188,7 @@ class Line {
 
     /**
      * Set Quotation Line description
-     * @param  mixed $QuotationLineHandle
+     * @param  mixed $orderLineHandle
      * @param  string $description
      * @return boolean
      */
@@ -207,7 +207,7 @@ class Line {
 
     /**
      * Set Quotation Line price without VAT
-     * @param  mixed $QuotationLineHandle
+     * @param  mixed $orderLineHandle
      * @param  float $price
      * @return boolean
      */
@@ -226,8 +226,8 @@ class Line {
 
     /**
      * Set Quotation Line quantity
-     * @param  mixed $QuotationLineHandle
-     * @param  integer $qty
+     * @param  mixed $orderLineHandle
+     * @param  float $qty
      * @return boolean
      */
     public function qty($orderLineHandle, $qty)
@@ -246,7 +246,7 @@ class Line {
     /**
      * Set Quotation Line unit
      * by unit number
-     * @param  mixed $QuotationLineHandle [description]
+     * @param  mixed $orderLineHandle [description]
      * @param  integer $unit
      * @return boolean
      */
