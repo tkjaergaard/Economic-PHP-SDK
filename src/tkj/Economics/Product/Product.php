@@ -213,4 +213,16 @@ class Product {
         return $this->getArrayFromHandles($handles->ProductHandle);
     }
 
+    /**
+     * Get the price of a product by currency code
+     * @param  string $number
+     * @param  string $code
+     * @return string
+     */
+    public function getPriceByCurrency($number, $code)
+    {
+		return $this->client->ProductPrice_GetPrice(array('productPriceHandle' => array('Id1' => $number, 'Id2' => $code)))->ProductPrice_GetPriceResult;
+    }
+
+    
 }
