@@ -23,7 +23,7 @@ You can also install it manually by downloading this repository and manually inc
 
 ## Contributing
 
-All PR's are welcome, just throw on at me, and i take a look at it :)
+All PR's are welcome, just throw me one, and i take a look at it :)
 
 ## License
 
