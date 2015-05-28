@@ -46,7 +46,7 @@ class Invoice {
 
     /**
      * Get Invoices from handles
-     * @param  object $handels
+     * @param  object $handles
      * @return object
      */
     public function getArrayFromHandles($handles)
@@ -106,7 +106,7 @@ class Invoice {
     public function total($no, $vat=false)
     {
         $handle  = $this->getHandle($no);
-        $request = array('invoiceHandle'=>$handel);
+        $request = array('invoiceHandle'=>$handle);
 
         if( $vat )
         {
