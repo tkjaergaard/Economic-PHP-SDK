@@ -20,6 +20,7 @@ You can also install it manually by downloading this repository and manually inc
 
 [Diblo](https://github.com/Diblo)   
 [zookz](https://github.com/zookz)
+[Oliwicked](https://github.com/Oliwicked)
 
 ## Contributing
 
