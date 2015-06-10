@@ -19,7 +19,7 @@ You can also install it manually by downloading this repository and manually inc
 ## Contributors
 
 [Diblo](https://github.com/Diblo)   
-[zookz](https://github.com/zookz)
+[zookz](https://github.com/zookz)   
 [Oliwicked](https://github.com/Oliwicked)
 
 ## Contributing
