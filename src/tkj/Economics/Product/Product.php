@@ -103,7 +103,7 @@ class Product {
     public function create(array $data)
     {
         $all    = $this->all();
-        $number = end($all)->Number + 1;
+        $data['number'] ? $number = $data['number'] :  $number = end($all)->Number + 1;
 
         $group       = new Group($this->client_raw);
         $groupHandle = $group->getHandle($data['group']);
@@ -112,6 +112,7 @@ class Product {
             ->Product_Create(array(
                 "number"             => $number,
                 "productGroupHandle" => $groupHandle,
+                "description" => $data['description'] ? $data['description'] : "",
                 "name"               => $data["name"]
             ))
             ->Product_CreateResult;
