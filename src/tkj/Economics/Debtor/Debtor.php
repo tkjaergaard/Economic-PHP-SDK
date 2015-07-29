@@ -341,7 +341,7 @@ class Debtor {
      * @param  array   $data
      * @return object
      */
-    public function update($no, $data)
+    public function updateField($no, $data)
     {
         $handle = $this->getHandle($no);
 
@@ -463,6 +463,94 @@ class Debtor {
             );
 
         return $this->update($number, $data);
+    }
+
+
+    /**
+     * Update debtor
+     * @param  array  $data
+     * @return boolean
+     */
+    public function update($data)
+    {
+        $debitorHandle = [ 'Number' => $data['number'] ];
+        $groupHandle = [ 'Number' => $data['group_number'] ];
+        $currencyHandle = [ 'Code' => $data['currency_code'] ];
+        $termHandle = [ 'Name' => $data['payment_term_name'] ];
+        $templateHandle = [ 'Name' => $data['template_name'] ];
+        $contactHandle = [ 'externalId' => $data['externalId'] ];
+
+        $data = [
+          'data' => (object) [
+                'Handle' => $debitorHandle,
+                'Number' => $data['number'],
+                'VatZone' => $vat_zone,
+                'IsAccessible' => true,
+                'Name' => $params['company'],
+                'Email' => $params['email'],
+                'Address' => $params['address'],
+                'PostalCode' => $params['postalcode'],
+                'City' => $params['city'],
+                'VatNumber' => $params['vat'],
+                'Country' => $params['country'],
+                'DebtorGroupHandle' => $groupHandle,
+                'CurrencyHandle' =>  $currencyHandle,
+                'TermOfPaymentHandle' => $termHandle,
+                'LayoutHandle' => $templatecollectionHandle,
+                'AttentionHandle' => $contact_handle
+            ]
+        ];
+
+        try 
+        {
+
+            $updatedDebitorHandle = $this->client->Debtor_UpdateFromData($data)->Debtor_UpdateFromDataResult; 
+
+        }catch(\Exception $e)
+        {
+            throw new Exception('Could not update Debitor');
+        };
+
+        if(isset($contact_handle->Id)) 
+        {
+          
+            $contactData = [
+                'data' => [
+                    'Handle' => $contact_handle,
+                    'Id' => $contact_handle->Id,
+                    'ExternalId' => $params['external'],
+                    'DebtorHandle' => $updatedDebitorHandle,
+                    'Name' => $params['name'],
+                    'Number' => $params['external'],
+                    'Email' => $params['email'],
+                    'IsToReceiveEmailCopyOfOrder' => false,
+                    'IsToReceiveEmailCopyOfInvoice' => false
+                ]
+            ];
+
+            try 
+            {
+
+            $contact = $this->client->DebtorContact_UpdateFromData($contactData)->DebtorContact_UpdateFromDataResult;
+            
+            }catch(\Exception $e)
+            {
+                throw new Exception('Could not update Debitor Contact information');
+            };
+        }
+
+        if ( ! empty($params['debitor_ean']))
+        {
+            $debtorEan = [
+                'debtorHandle' => $debitor,
+                'valueHandle' => $params['debitor_ean']
+            ];
+
+            $this->client->Debtor_SetEan($debtorEan);
+        }
+
+        return true;
+       
     }
 
 }
