@@ -44,6 +44,12 @@ class Client {
         $this->token    = $token;
         $this->appToken = $appToken;
 
+        // Add X-EconomicAppIdentifier to all SOAP calls
+        $debug['stream_context'] = stream_context_create(array(
+           'http' => array(
+               'header' => 'X-EconomicAppIdentifier: ' . $appToken
+           )
+        ));
         $this->client = new SoapClient($this->apiUrl, $this->debug);
 
         $this->client->ConnectWithToken(
