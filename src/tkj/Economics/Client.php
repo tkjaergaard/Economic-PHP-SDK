@@ -38,8 +38,9 @@ class Client {
      * Client constructor
      * @param string $token
      * @param string $appToken
+     * @param $appIdentifier (example: MyCoolIntegration/1.1 (http://example.com/MyCoolIntegration/; MyCoolIntegration@example.com) BasedOnSuperLib/1.4)
      */
-    public function __construct($token, $appToken)
+    public function __construct($token, $appToken, $appIdentifier)
     {
         $this->token    = $token;
         $this->appToken = $appToken;
@@ -47,7 +48,7 @@ class Client {
         // Add X-EconomicAppIdentifier to all SOAP calls
         $debug['stream_context'] = stream_context_create(array(
            'http' => array(
-               'header' => 'X-EconomicAppIdentifier: ' . $appToken
+               'header' => 'X-EconomicAppIdentifier: ' . $appIdentifier
            )
         ));
         $this->client = new SoapClient($this->apiUrl, $this->debug);
