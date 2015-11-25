@@ -476,8 +476,8 @@ class Debtor {
     {
         $debitorHandle = [ 'Number' => $number ];
         $groupHandle = [ 'Number' => $params['group'] ];
-        $currencyHandle = [ 'Code' => $params['currencyCode'] ];
-        $termHandle = [ 'Name' => $params['payment_term_name'], 'Id' => $params['termId'] ];
+        $currencyHandle = [ 'Code' => $params['CurrencyCode'] ];
+        $termHandle = [ 'Name' => $params['payment_term_name'], 'Id' => $params['TermId'] ];
         $templateHandle = [ 'Name' => $params['template_name'] ];
         $contactHandle = [ 'externalId' => $params['externalId'] ];
 
