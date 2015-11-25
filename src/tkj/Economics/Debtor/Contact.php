@@ -172,7 +172,7 @@ class Contact {
                 'name'         => $data['name']
             ))->DebtorContact_CreateResult;
 
-        return $this->update($data, $id->Id);
+        return $this->update($id->Id, $data);
     }
 
     /**
