@@ -245,10 +245,10 @@ class Debtor {
         if ( count($handles) > 1 )
             return $this->getArrayFromHandles($handles);
 
-	$result = $this->getDataFromHandle($handles);
-	if ( empty($result) )
-		return array();
-	return array($result);
+    $result = $this->getDataFromHandle($handles);
+    if ( empty($result) )
+        return array();
+    return array($result);
     }
 
     /**
@@ -266,10 +266,10 @@ class Debtor {
         if ( count($handles) > 1 )
             return $this->getArrayFromHandles($handles);
 
-	$result = $this->getDataFromHandle($handles);
-	if ( empty($result) )
-		return array();
-	return array($result);
+    $result = $this->getDataFromHandle($handles);
+    if ( empty($result) )
+        return array();
+    return array($result);
     }
 
     /**
@@ -287,10 +287,10 @@ class Debtor {
         if ( count($handles) > 1 )
             return $this->getArrayFromHandles($handles);
 
-	$result = $this->getDataFromHandle($handles);
-	if ( empty($result) )
-		return array();
-	return array($result);
+    $result = $this->getDataFromHandle($handles);
+    if ( empty($result) )
+        return array();
+    return array($result);
     }
 
     /**
@@ -308,10 +308,10 @@ class Debtor {
         if ( count($handles) > 1 )
             return $this->getArrayFromHandles($handles);
 
-	$result = $this->getDataFromHandle($handles);
-	if ( empty($result) )
-		return array();
-	return array($result);
+    $result = $this->getDataFromHandle($handles);
+    if ( empty($result) )
+        return array();
+    return array($result);
     }
 
     /**
@@ -329,10 +329,10 @@ class Debtor {
         if ( count($handles) > 1 )
             return $this->getArrayFromHandles($handles);
 
-		$result = $this->getDataFromHandle($handles);
-		if ( empty($result) )
-			return array();
-		return array($result);
+        $result = $this->getDataFromHandle($handles);
+        if ( empty($result) )
+            return array();
+        return array($result);
     }
 
     /**
@@ -429,12 +429,12 @@ class Debtor {
     public function create(array $data)
     {
         if(isset($data["number"])) {
-    		$number = $data["number"];
-    	}else{
-    		$number = $this->client
-	    		->Debtor_GetNextAvailableNumber()
-	    		->Debtor_GetNextAvailableNumberResult;
-    	}
+            $number = $data["number"];
+        }else{
+            $number = $this->client
+                ->Debtor_GetNextAvailableNumber()
+                ->Debtor_GetNextAvailableNumberResult;
+        }
 
         $groupHandle = array('Number' => 1);
 
@@ -468,31 +468,32 @@ class Debtor {
 
     /**
      * Update debtor
-     * @param  array  $data
+     * @param integer $number
+     * @param  array  $params
      * @return boolean
      */
-    public function update($data)
+    public function update($number, $params)
     {
-        $debitorHandle = [ 'Number' => $data['number'] ];
-        $groupHandle = [ 'Number' => $data['group_number'] ];
-        $currencyHandle = [ 'Code' => $data['currency_code'] ];
-        $termHandle = [ 'Name' => $data['payment_term_name'] ];
-        $templateHandle = [ 'Name' => $data['template_name'] ];
-        $contactHandle = [ 'externalId' => $data['externalId'] ];
+        $debitorHandle = [ 'Number' => $number ];
+        $groupHandle = [ 'Number' => $params['group'] ];
+        $currencyHandle = [ 'Code' => $params['currencyCode'] ];
+        $termHandle = [ 'Name' => $params['payment_term_name'], 'Id' => $params['termId'] ];
+        $templateHandle = [ 'Name' => $params['template_name'] ];
+        $contactHandle = [ 'externalId' => $params['externalId'] ];
 
         $data = [
           'data' => (object) [
                 'Handle' => $debitorHandle,
-                'Number' => $data['number'],
-                'VatZone' => $vat_zone,
+                'Number' => $number,
+                'VatZone' => $params['vatZone'],
                 'IsAccessible' => true,
-                'Name' => $params['company'],
-                'Email' => $params['email'],
-                'Address' => $params['address'],
-                'PostalCode' => $params['postalcode'],
-                'City' => $params['city'],
-                'VatNumber' => $params['vat'],
-                'Country' => $params['country'],
+                'Name' => $params['Name'],
+                'Email' => $params['Email'],
+                'Address' => $params['Address'],
+                'PostalCode' => $params['PostalCode'],
+                'City' => $params['City'],
+                'VatNumber' => $params['VatNumber'],
+                'Country' => $params['Country'],
                 'DebtorGroupHandle' => $groupHandle,
                 'CurrencyHandle' =>  $currencyHandle,
                 'TermOfPaymentHandle' => $termHandle,
@@ -501,19 +502,19 @@ class Debtor {
             ]
         ];
 
-        try 
+        try
         {
 
-            $updatedDebitorHandle = $this->client->Debtor_UpdateFromData($data)->Debtor_UpdateFromDataResult; 
+            $updatedDebitorHandle = $this->client->Debtor_UpdateFromData($data)->Debtor_UpdateFromDataResult;
 
         }catch(\Exception $e)
         {
             throw new Exception('Could not update Debitor');
         };
 
-        if(isset($contact_handle->Id)) 
+        if(isset($contact_handle->Id))
         {
-          
+
             $contactData = [
                 'data' => [
                     'Handle' => $contact_handle,
@@ -528,11 +529,11 @@ class Debtor {
                 ]
             ];
 
-            try 
+            try
             {
 
             $contact = $this->client->DebtorContact_UpdateFromData($contactData)->DebtorContact_UpdateFromDataResult;
-            
+
             }catch(\Exception $e)
             {
                 throw new Exception('Could not update Debitor Contact information');
@@ -550,7 +551,7 @@ class Debtor {
         }
 
         return true;
-       
+
     }
 
 }
