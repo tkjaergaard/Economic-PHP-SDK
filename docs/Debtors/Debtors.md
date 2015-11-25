@@ -219,18 +219,20 @@ Optional `data array` elements:
 
     $data = array(
         "group"         => 1,
-        "name"          => "Company ltd.",
         "vatZone"       => "HomeCountry",
-
         "Ean"           => 0000123456789,
         "Email"         => "info@company.com",
         "Website"       => "http://company.com",
         "Address"       => "Some Alley 123",
         "PostalCode"    => 2000,
-        "Country"       => "Copenhagen",
+        "City"          => "Copenhagen",
+        "Country"       => "Denmark",
         "CreditMaximum" => 30000.00,
         "VatNumber"     => 12345678,
-        "CINumber"      => 12345678
+        "CINumber"      => 12345678,
+        "termId"        => 4,
+        "Name"          => "Lorem Ipsum Inc.",
+        "currencyCode"  => "DKK"
     );
 
     $debtorNumber = $debtor->create($data);
