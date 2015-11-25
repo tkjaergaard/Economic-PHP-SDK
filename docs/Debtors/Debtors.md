@@ -1,16 +1,19 @@
 #### Getting started
 The **Debtor Class** depends on getting a instance of the *Client Class* injected in order to function.
 
+```
     <?php
     use tkj\Economics\Client;
     use tkj\Economics\Debtor\Debtor;
 
     $client = new Client($agreementNumber, $userID, $password);
     $debtor = new Debtor($client);
+```
 
 #### Get all Debtors
 This method returns all Debtors.
 
+```
     <?php
     use tkj\Economics\Client;
     use tkj\Economics\Debtor\Debtor;
@@ -19,10 +22,12 @@ This method returns all Debtors.
     $debtor = new Debtor($client);
 
     $all = $debtor->all();
+```
 
 #### Get a specific Debtor
 Returns a object for a specific Debtor.
 
+```
     <?php
     use tkj\Economics\Client;
     use tkj\Economics\Debtor\Debtor;
@@ -32,6 +37,7 @@ Returns a object for a specific Debtor.
 
     $debtorNumber = 1001;
     $get = $debtor->get($debtorNumber);
+```
 
 #### Search Debtor by field
 This method Lets you search Debtors by a specific field.
@@ -44,6 +50,7 @@ Available fields to search:
 * PARTIALNAME (Partial Name)
 * NUMBER
 
+```
     <?php
     use tkj\Economics\Client;
     use tkj\Economics\Debtor\Debtor;
@@ -52,6 +59,7 @@ Available fields to search:
     $debtor = new Debtor($client);
 
     $restult = $debtor->search('foo@example.com', 'email');
+```
 
 #### Update existing Debtor
 This method lets you update a existing Debtors data.
@@ -75,6 +83,7 @@ Required `data array` elements:
 * **County** - The Debtor county ( UK )
 * **CINumber** - The Debtor CI number
 
+```
     <?php
     use tkj\Economics\Client;
     use tkj\Economics\Debtor\Debtor;
@@ -95,10 +104,12 @@ Required `data array` elements:
     );
 
     $debtor->update($debtorNumber, $data);
+```
 
 #### Get all Debtor Quotations
 This method lets you retrive a object containing all Quotaions for a specific Debtor.
 
+```
     <?php
     use tkj\Economics\Client;
     use tkj\Economics\Debtor\Debtor;
@@ -107,10 +118,12 @@ This method lets you retrive a object containing all Quotaions for a specific De
     $debtor = new Debtor($client);
 
     $quotations = $debtor->quotations($debtorNumber);
+```
 
-#### Get alle Debtor Orders
+#### Get all Debtor Orders
 This method lets you retrive all Orders for a specific Debor.
 
+```
     <?php
     use tkj\Economics\Client;
     use tkj\Economics\Debtor\Debtor;
@@ -119,10 +132,12 @@ This method lets you retrive all Orders for a specific Debor.
     $debtor = new Debtor($client);
 
     $orders = $debtor->orders($debtorNumber);
+```
 
 #### Get all Debtor Invoices
 This method lets you retrive all Invoices for a specific Debtor.
 
+```
     <?php
     use tkj\Economics\Client;
     use tkj\Economics\Debtor\Debtor;
@@ -131,10 +146,12 @@ This method lets you retrive all Invoices for a specific Debtor.
     $debtor = new Debtor($client);
 
     $invoies = $debtor->invoices($debtorNumber);
+```
 
 #### Get all Debtor Contacts
 This method lets you retrive all Contacts for a specific Debtor.
 
+```
     <?php
     use tkj\Economics\Client;
     use tkj\Economics\Debtor\Debtor;
@@ -143,7 +160,7 @@ This method lets you retrive all Contacts for a specific Debtor.
     $debtor = new Debtor($client);
 
     $contacts = $debtor->contacts($debtorNumber);
-
+```
 
 #### Get the Balance for Debtor
 This method lets you retrive the Balance for a specific Debtor.
@@ -160,6 +177,7 @@ This method lets you retrive the Balance for a specific Debtor.
 #### Get the Address for Debtor
 This method lets you retrive the Address for a specific Debtor
 
+```
     <?php
     use tkj\Economics\Client;
     use tkj\Economics\Debtor\Debtor;
@@ -168,6 +186,7 @@ This method lets you retrive the Address for a specific Debtor
     $debtor = new Debtor($client);
 
     $address = $debtor->address($debtorNumber);
+```
 
 #### Create new Debtor
 This method lets you create a new Debtor.
@@ -190,6 +209,7 @@ Optional `data array` elements:
 * **County** - The Debtor county ( UK )
 * **CINumber** - The Debtor CI number
 
+```
     <?php
     use tkj\Economics\Client;
     use tkj\Economics\Debtor\Debtor;
@@ -214,3 +234,4 @@ Optional `data array` elements:
     );
 
     $debtorNumber = $debtor->create($data);
+```
