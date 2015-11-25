@@ -491,6 +491,7 @@ class Debtor {
                 'Email' => $params['Email'],
                 'Address' => $params['Address'],
                 'PostalCode' => $params['PostalCode'],
+                'County' => $params['County'],
                 'City' => $params['City'],
                 'VatNumber' => $params['VatNumber'],
                 'Country' => $params['Country'],
