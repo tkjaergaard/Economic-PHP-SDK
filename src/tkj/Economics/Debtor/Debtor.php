@@ -449,7 +449,7 @@ class Debtor {
                 array(
                     'number'            => $number,
                     'debtorGroupHandle' => $groupHandle,
-                    'name'              => $data['name'],
+                    'name'              => $data['Name'],
                     'vatZone'           => $data['vatZone']
                 )
             )
@@ -470,7 +470,7 @@ class Debtor {
      * Update debtor
      * @param integer $number
      * @param  array  $params
-     * @return boolean
+     * @return integer the id of the Debtor
      */
     public function update($number, $params)
     {
@@ -551,7 +551,7 @@ class Debtor {
             $this->client->Debtor_SetEan($debtorEan);
         }
 
-        return true;
+        return $number;
 
     }
 
