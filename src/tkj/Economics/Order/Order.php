@@ -335,6 +335,27 @@ class Order {
                             'orderHandle' => $handle,
                             'value'       => $value
                         ));
+                     break;
+                case 'otherreference':
+                    $this->client
+                        ->Order_SetOtherReference(array(
+                            'orderHandle' => $handle,
+                            'value'       => $value
+                        ));
+                    break;
+                case 'date':
+                    $this->client
+                        ->Order_SetDate(array(
+                            'orderHandle' => $handle,
+                            'value'       => $value
+                        ));
+                    break;
+                case 'layout':
+                    $this->client
+                        ->Order_SetLayout(array(
+                            'orderHandle' => $handle,
+                            'value'       => $value
+                        ));
                     break;
             }
         }
