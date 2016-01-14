@@ -8,8 +8,8 @@ use tkj\Economics\Invoice\Invoice;
 use tkj\Economics\Order\Order;
 use tkj\Economics\Quotation\Quotation;
 
-class Debtor {
-
+class Debtor
+{
     /**
      * Client Connection
      *
@@ -521,7 +521,7 @@ class Debtor {
 
     /**
      * Create a new debtor
-     * 
+     *
      * @param  array  $data
      * @return object
      */

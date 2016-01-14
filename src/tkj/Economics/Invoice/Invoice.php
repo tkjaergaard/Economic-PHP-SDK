@@ -1,27 +1,32 @@
-<?php namespace tkj\Economics\Invoice;
+<?php
 
+namespace tkj\Economics\Invoice;
+
+use stdClass;
 use tkj\Economics\Client;
 use tkj\Economics\Debtor\Debtor;
 use Exception;
 use Closure;
 
-class Invoice {
-
+class Invoice
+{
     /**
      * Client Connection
-     * @var devdk\Economics\Client
+     *
+     * @var Client
      */
     protected $client;
 
     /**
      * Instance of Client
-     * @var devdk\Economics\Client
+     *
+     * @var Client
      */
     protected $client_raw;
 
     /**
      * Construct class and set dependencies
-     * @param devdk\Economics\Client $client
+     * @param Client $client
      */
     public function __construct(Client $client)
     {
@@ -31,21 +36,28 @@ class Invoice {
 
     /**
      * Get Invoice handle by number
-     * @param  integer $no
-     * @return object
+     *
+     * @param integer $no
+     * @return null|object
      */
     public function getHandle($no)
     {
         if( is_object($no) AND isset($no->Id) ) return $no;
 
-        if( @$result = $this->client
-                ->Invoice_FindByNumber(array('number'=>$no))
-                ->Invoice_FindByNumberResult
-        ) return $result;
+        @$result = $this->client
+            ->Invoice_FindByNumber(array('number'=>$no))
+            ->Invoice_FindByNumberResult;
+
+        if ($result) {
+            return $result;
+        }
+
+        return null;
     }
 
     /**
      * Get Invoices from handles
+     *
      * @param  object $handles
      * @return object
      */
@@ -59,7 +71,8 @@ class Invoice {
 
     /**
      * Get all Invoices
-     * @return array
+     *
+     * @return array|stdClass[]
      */
     public function all()
     {
@@ -73,6 +86,7 @@ class Invoice {
 
     /**
      * Get specific Invoice by number
+     *
      * @param  integer $no
      * @return object
      */
@@ -85,6 +99,7 @@ class Invoice {
 
     /**
      * Get Invoice due date by number
+     *
      * @param  integer $no
      * @return string
      */
@@ -99,6 +114,7 @@ class Invoice {
 
     /**
      * Get Invoice total ny number
+     *
      * @param  integer  $no
      * @param  boolean  $vat
      * @return float
@@ -106,10 +122,11 @@ class Invoice {
     public function total($no, $vat=false)
     {
         $handle  = $this->getHandle($no);
-        $request = array('invoiceHandle'=>$handle);
+        $request = [
+            'invoiceHandle'=>$handle,
+        ];
 
-        if( $vat )
-        {
+        if ($vat) {
             return $this->client
                 ->Invoice_GetGrossAmount($request)
                 ->Invoice_GetGrossAmountResult;
@@ -122,6 +139,7 @@ class Invoice {
 
     /**
      * Return the Invoice VAT amount
+     *
      * @param  integer $no
      * @return float
      */
@@ -134,26 +152,36 @@ class Invoice {
             ->Invoice_GetVatAmountResult;
     }
 
+    /**
+     * Lines
+     *
+     * @param integer $no
+     * @return object
+     */
     public function lines($no)
     {
         $handle = $this->getHandle($no);
 
         $lineHandles = $this->client
-            ->Invoice_GetLines(array('invoiceHandle'=>$handle))
+            ->Invoice_GetLines([
+                'invoiceHandle'=>$handle
+            ])
             ->Invoice_GetLinesResult
             ->InvoiceLineHandle;
 
         $line = new Line($this->client_raw);
+
         return $line->getArrayFromHandles($lineHandles);
     }
 
     /**
-     * Get Invoice pdf
-     * by Invoice number
-     * @param  integer $no
-     * @return mixed
+     * Get Invoice pdf by Invoice number
+     *
+     * @param integer $no
+     * @param bool|false $download
+     * @return bool
      */
-    public function pdf($no, $download=false)
+    public function pdf($no, $download = false)
     {
         $handle = $this->getHandle($no);
 
@@ -161,11 +189,11 @@ class Invoice {
             ->Invoice_GetPdf(array('invoiceHandle'=>$handle))
             ->Invoice_GetPdfResult;
 
-        if( $download )
-        {
+        if ($download) {
             header('Content-type: application/pdf');
-            header('Content-Disposition: attachment; filename="'.$no.'.pdf"');
-            echo $pdf;
+            header('Content-Disposition: attachment; filename="' . $no . '.pdf"');
+
+            echo($pdf);
             return true;
         }
 
@@ -174,9 +202,11 @@ class Invoice {
 
     /**
      * Create a new Quotaion to a specific Debtor
-     * @param  integer  $debtorNumber
-     * @param  Closure $callback
+     *
+     * @param integer $debtorNumber
+     * @param Closure $callback
      * @return object
+     * @throws Exception
      */
     public function create($debtorNumber, Closure $callback)
     {
@@ -184,12 +214,13 @@ class Invoice {
         $debtorHandle = $debtor->getHandle($debtorNumber);
 
         $invoiceHandle = $this->client
-            ->CurrentInvoice_Create(array('debtorHandle'=>$debtorHandle))
+            ->CurrentInvoice_Create([
+                'debtorHandle'=>$debtorHandle,
+            ])
             ->CurrentInvoice_CreateResult;
 
 
-        if( !$invoiceHandle->Id )
-        {
+        if( !$invoiceHandle->Id ) {
             throw new Exception("Error: creating Invoice.");
         }
 
@@ -197,14 +228,17 @@ class Invoice {
 
         call_user_func($callback, $this->lines);
 
-        return $this->client->CurrentInvoice_GetDataArray(
-            array('entityHandles' => array('CurrentInvoiceHandle' => $invoiceHandle))
-        )->CurrentInvoice_GetDataArrayResult;
+        return $this->client->CurrentInvoice_GetDataArray([
+            'entityHandles' => [
+                'CurrentInvoiceHandle' => $invoiceHandle],
+            ])
+            ->CurrentInvoice_GetDataArrayResult;
     }
 
     /**
      * Book a current Invoice
-     * @param  mixed $invoiceNumber
+     *
+     * @param  integer $invoiceNumber
      * @return object
      */
     public function book($invoiceNumber)
@@ -212,7 +246,9 @@ class Invoice {
         $handle = $this->getHandle($invoiceNumber);
 
         $number = $this->client
-            ->CurrentInvoice_Book(array('currentInvoiceHandle'=>$handle))
+            ->CurrentInvoice_Book([
+                'currentInvoiceHandle' => $handle,
+            ])
             ->CurrentInvoice_BookResult;
 
         return $number;
