@@ -31,9 +31,9 @@ class PriceGroup
     public function all()
     {
         return $this->client
-                    ->PriceGroup_GetAll()
-					->PriceGroup_GetAllResult
-					->PriceGroupHandle;
+            ->PriceGroup_GetAll()
+            ->PriceGroup_GetAllResult
+            ->PriceGroupHandle;
     }
 
     /**
@@ -47,14 +47,14 @@ class PriceGroup
     public function getPrice($groupNo, $productNo)
     {
         return $this->client
-                    ->PriceGroup_GetPrice([
-                        'priceGroupHandle'=> [
-                            'Number' => $groupNo,
-                        ],
-                        'productHandle'=> [
-                            'Number' => $productNo,
-                        ],
-                    ])
-					->PriceGroup_GetPriceResult;
+            ->PriceGroup_GetPrice([
+                'priceGroupHandle'=> [
+                    'Number' => $groupNo,
+                ],
+                'productHandle'=> [
+                    'Number' => $productNo,
+                ],
+            ])
+            ->PriceGroup_GetPriceResult;
     }
 }

@@ -1,11 +1,13 @@
-<?php namespace tkj\Economics\Order;
+<?php
+
+namespace tkj\Economics\Order;
 
 use tkj\Economics\Client;
 use tkj\Economics\Unit\Unit;
 use tkj\Economics\Product\Product;
 
-class Line {
-
+class Line
+{
     /**
      * Client Connection
      * @var Client
@@ -36,8 +38,7 @@ class Line {
         $this->client     = $client->getClient();
         $this->client_raw = $client;
 
-        if( $orderHandle )
-        {
+        if ($orderHandle) {
             $this->orderHandle = $orderHandle;
         }
     }
@@ -113,7 +114,7 @@ class Line {
             ];
         }
 
-        foreach($data as $name => $value) {
+        foreach ($data as $name => $value) {
             if (is_null($value)) {
                 continue;
             }
@@ -273,5 +274,4 @@ class Line {
 
         return true;
     }
-
 }

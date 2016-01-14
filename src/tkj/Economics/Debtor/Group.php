@@ -1,10 +1,12 @@
-<?php namespace tkj\Economics\Debtor;
+<?php
+
+namespace tkj\Economics\Debtor;
 
 use tkj\Economics\Client;
 use tkj\Economics\Account\Account;
 
-class Group {
-
+class Group
+{
     /**
      * Client Connection
      * @var Client
@@ -34,7 +36,7 @@ class Group {
      */
     public function getHandle($no)
     {
-        if (is_object($no) AND isset($no->Number)) {
+        if (is_object($no) and isset($no->Number)) {
             return $no;
         }
 
@@ -139,5 +141,4 @@ class Group {
 
         return $this->get($number);
     }
-
 }

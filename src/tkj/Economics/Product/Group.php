@@ -34,12 +34,12 @@ class Group
     /**
      * Get Product Group handle by group number
      *
-     * @param  integer $no
+     * @param integer $no
      * @return object
      */
     public function getHandle($no)
     {
-        if (is_object($no) AND isset($no->Number)) {
+        if (is_object($no) and isset($no->Number)) {
             return $no;
         }
 
@@ -136,5 +136,4 @@ class Group
     {
 
     }
-
 }

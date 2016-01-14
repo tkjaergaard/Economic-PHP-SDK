@@ -37,7 +37,7 @@ class Product
      */
     public function getHandle($no)
     {
-        if (is_object($no) AND isset($no->Number)) {
+        if (is_object($no) and isset($no->Number)) {
             return $no;
         }
 
@@ -152,8 +152,8 @@ class Product
             ])
             ->Product_CreateResult;
 
-        unset( $data['name'] );
-        unset( $data['group'] );
+        unset($data['name']);
+        unset($data['group']);
 
         $this->client
             ->Product_SetIsAccessible([
@@ -174,15 +174,14 @@ class Product
     {
         $handle  = $this->getHandle($no);
 
-        foreach( $data as $field => $value )
-        {
+        foreach ($data as $field => $value) {
             $request = [
                 'productHandle' => $handle,
                 'value' => $value,
             ];
 
             switch (strtolower($field)) {
-                case 'cost';
+                case 'cost':
                     $this->client
                         ->Product_SetCostPrice($request);
                     break;
@@ -264,7 +263,7 @@ class Product
      */
     public function getPriceByCurrency($number, $code)
     {
-		return $this->client->ProductPrice_GetPrice([
+        return $this->client->ProductPrice_GetPrice([
                 'productPriceHandle' => [
                     'Id1' => $number,
                     'Id2' => $code,
@@ -272,6 +271,4 @@ class Product
             ])
             ->ProductPrice_GetPriceResult;
     }
-
-    
 }

@@ -32,7 +32,7 @@ class Unit
      */
     public function getHandle($no)
     {
-        if (is_object($no) AND isset($no->Id)) {
+        if (is_object($no) and isset($no->Id)) {
             return $no;
         }
 
@@ -42,5 +42,4 @@ class Unit
                     ])
                     ->Unit_FindByNumberResult;
     }
-
 }

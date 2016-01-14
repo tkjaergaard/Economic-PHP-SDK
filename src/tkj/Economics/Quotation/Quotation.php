@@ -1,4 +1,6 @@
-<?php namespace tkj\Economics\Quotation;
+<?php
+
+namespace tkj\Economics\Quotation;
 
 use tkj\Economics\Client;
 use tkj\Economics\Debtor\Debtor;
@@ -6,16 +8,18 @@ use tkj\Economics\Quotation\QuotationLines;
 use Exception;
 use Closure;
 
-class Quotation {
-
+class Quotation
+{
     /**
      * Client Connection
+     *
      * @var Client
      */
     protected $client;
 
     /**
      * Instance of Client
+     *
      * @var Client
      */
     protected $client_raw;
@@ -31,8 +35,28 @@ class Quotation {
     }
 
     /**
+     * Get Quotation handle by number
+     *
+     * @param  integer $no
+     * @return object
+     */
+    public function getHandle($no)
+    {
+        if (is_object($no) and isset($no->Id)) {
+            return $no;
+        }
+
+        return $this->client
+            ->Quotation_FindByNumber([
+                'number'=>$no,
+            ])
+            ->Quotation_FindByNumberResult;
+    }
+
+    /**
      * Get all Quotations
-     * @return arrat
+     *
+     * @return array
      */
     public function all()
     {
@@ -46,13 +70,16 @@ class Quotation {
 
     /**
      * Get Quotations from handles
-     * @param  object $handels
-     * @return object
+     *
+     * @param array $handles
+     * @return mixed
      */
     public function getArrayFromHandles($handles)
     {
         $quotations = $this->client
-            ->Quotation_GetDataArray(array('entityHandles'=> $handles))
+            ->Quotation_GetDataArray([
+                'entityHandles' => $handles,
+            ])
             ->Quotation_GetDataArrayResult
             ->QuotationData;
 
@@ -60,8 +87,8 @@ class Quotation {
     }
 
     /**
-     * Delete Quotation by
-     * Quotation number
+     * Delete Quotation by Quotation number
+     *
      * @param  integer $no
      * @return boolean
      */
@@ -69,14 +96,16 @@ class Quotation {
     {
         $handle = $this->getHandle($no);
 
-        $this->client->Quotation_Delete(array('quotationHandle'=>$handle));
+        $this->client->Quotation_Delete([
+            'quotationHandle' => $handle
+        ]);
 
         return true;
     }
 
     /**
-     * Get Quotation due date
-     * by Quotation number
+     * Get Quotation due date by Quotation number
+     *
      * @param  integer $no
      * @return mixed
      */
@@ -85,26 +114,32 @@ class Quotation {
         $handle = $this->getHandle($no);
 
         return $this->client
-            ->Quotation_GetDueDate(array('quotationHandle'=>$handle))
+            ->Quotation_GetDueDate([
+                'quotationHandle' => $handle
+            ])
             ->Quotation_GetDueDateResult;
     }
 
     /**
      * Get specific Quotation by number
+     *
      * @param  integer $no
      * @return mixed
      */
     public function get($no)
     {
         $handle = $this->getHandle($no);
+
         return $this->client
-            ->Quotation_GetData(array('entityHandle'=> $handle))
+            ->Quotation_GetData([
+                'entityHandle' => $handle,
+            ])
             ->Quotation_GetDataResult;
     }
 
     /**
-     * Get all Quotation lines
-     * by Quotations number
+     * Get all Quotation lines by Quotations number
+     *
      * @param  integer $no
      * @return mixed
      */
@@ -113,87 +148,98 @@ class Quotation {
         $handle  = $this->getHandle($no);
 
         $handles = $this->client
-            ->Quotation_GetLines(array('quotationHandle'=>$handle))
+            ->Quotation_GetLines([
+                'quotationHandle' => $handle
+            ])
             ->Quotation_GetLinesResult;
 
         return $this->client
-            ->QuotationLine_GetDataArray(array('entityHandles'=>$handles))
+            ->QuotationLine_GetDataArray([
+                'entityHandles' => $handles
+            ])
             ->QuotationLine_GetDataArrayResult
             ->QuotationLineData;
     }
 
     /**
-     * Get Quotation pdf
-     * by Quotation number
-     * @param  integer $no
-     * @return mixed
+     * Get Quotation pdf by Quotation number
+     *
+     * @param integer $no
+     * @param bool|false $download
+     * @return bool
      */
-    public function pdf($no, $download=false)
+    public function pdf($no, $download = false)
     {
         $handle = $this->getHandle($no);
         $pdf = $this->client
-            ->Quotation_GetPdf(array('quotationHandle'=>$handle))
+            ->Quotation_GetPdf([
+                'quotationHandle' => $handle,
+            ])
             ->Quotation_GetPdfResult;
 
-        if( $download )
-        {
-            header('Content-type: application/pdf');
-            header('Content-Disposition: attachment; filename="'.$no.'.pdf"');
-            echo $pdf;
-            return true;
+        if (!$download) {
+            return $pdf;
         }
 
-        return $pdf;
-    }
-
-    /**
-     * Get or set sent status for a
-     * Quotation by Quotation number
-     * @param  integer $no
-     * @param  boolean $set
-     * @return boolean
-     */
-    public function sent($no, $set=NULL)
-    {
-        $handle = $this->getHandle($no);
-
-        if( !is_bool($set) )
-        {
-            return $this->client
-                ->Quotation_GetIsSent(array('quotationHandle'=>$handle))
-                ->Quotation_GetIsSentResult;
-
-        }
-        else if( !$set )
-        {
-            $this->client->Quotation_CancelSentStatus(array('quotationHandle'=>$handle));
-        }
-        else
-        {
-            $this->client->Quotation_RegisterAsSent(array('quotationHandle'=>$handle));
-        }
+        header('Content-type: application/pdf');
+        header('Content-Disposition: attachment; filename="' . $no . '.pdf"');
+        echo $pdf;
 
         return true;
     }
 
     /**
-     * Get Quotation total
-     * by Quotation number
+     * Get or set sent status for a Quotation by Quotation number
+     *
+     * @param  integer $no
+     * @param  boolean $set
+     * @return boolean
+     */
+    public function sent($no, $set = null)
+    {
+        $handle = $this->getHandle($no);
+
+        if (!is_bool($set)) {
+            return $this->client
+                ->Quotation_GetIsSent([
+                    'quotationHandle' => $handle,
+                ])
+                ->Quotation_GetIsSentResult;
+
+        } elseif (!$set) {
+            $this->client->Quotation_CancelSentStatus([
+                'quotationHandle' => $handle,
+            ]);
+            return true;
+        }
+
+        $this->client->Quotation_RegisterAsSent([
+            'quotationHandle' => $handle,
+        ]);
+
+        return true;
+    }
+
+    /**
+     * Get Quotation total by Quotation number
+     *
      * @param  integer $no
      * @return mixed
      */
     public function total($no)
     {
         $handle = $this->getHandle($no);
+
         return $this->client
-            ->Quotation_GetNetAmount(array('quotationHandle'=>$handle))
+            ->Quotation_GetNetAmount([
+                'quotationHandle' => $handle,
+            ])
             ->Quotation_GetNetAmountResult;
     }
 
     /**
-     * Upgrade a Quotation to an order
-     * by Quotation number and returns the
-     * ID of the order
+     * Upgrade a Quotation to an order by Quotation number and returns the ID of the order
+     *
      * @param  integer $no
      * @return integer      return the ID of the Order
      */
@@ -202,15 +248,19 @@ class Quotation {
         $handle = $this->getHandle($no);
 
         return $this->client
-            ->Quotation_UpgradeToOrder(array('quotationHandle'=>$handle))
+            ->Quotation_UpgradeToOrder([
+                'quotationHandle' => $handle,
+            ])
             ->Quotation_UpgradeToOrderResult;
     }
 
     /**
-     * Create a new Quotaion to a specific Debtor
-     * @param  integer  $debtorNumber
-     * @param  Closure $callback
-     * @return object
+     * Create a new Quotation to a specific Debtor
+     *
+     * @param integer $debtorNumber
+     * @param Closure $callback
+     * @return mixed
+     * @throws Exception
      */
     public function create($debtorNumber, Closure $callback)
     {
@@ -218,12 +268,13 @@ class Quotation {
         $debtorHandle = $debtor->getHandle($debtorNumber);
 
         $quotationHandle = $this->client
-            ->Quotation_Create(array('debtorHandle'=>$debtorHandle))
+            ->Quotation_Create([
+                'debtorHandle'=>$debtorHandle,
+            ])
             ->Quotation_CreateResult;
 
 
-        if( !$quotationHandle->Id )
-        {
+        if (!$quotationHandle->Id) {
             throw new Exception("Error: creating Quotation.");
         }
 
@@ -233,19 +284,4 @@ class Quotation {
 
         return $this->get($quotationHandle);
     }
-
-    /**
-     * Get Quotation handle by number
-     * @param  integer $no
-     * @return object
-     */
-    public function getHandle($no)
-    {
-        if( is_object($no) AND isset($no->Id) ) return $no;
-
-        return $this->client
-                    ->Quotation_FindByNumber(array('number'=>$no))
-                    ->Quotation_FindByNumberResult;
-    }
-
 }

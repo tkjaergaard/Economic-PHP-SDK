@@ -9,6 +9,9 @@
             "email": "tkj@tkjaergaard.dk"
         }
     ],
+    "require-dev": {
+        "squizlabs/php_codesniffer" : "~2.5.0"
+    },
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": {

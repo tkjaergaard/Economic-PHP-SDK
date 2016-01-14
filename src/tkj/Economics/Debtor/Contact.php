@@ -115,7 +115,7 @@ class Contact
             'Id' => $id
         ];
 
-        foreach($data as $field => $value) {
+        foreach ($data as $field => $value) {
             switch (strtolower($field)) {
                 case 'name':
                     $this->client
@@ -209,5 +209,4 @@ class Contact
 
         return true;
     }
-
 }

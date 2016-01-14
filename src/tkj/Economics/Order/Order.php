@@ -43,7 +43,7 @@ class Order
      */
     public function getHandle($no)
     {
-        if (is_object($no) AND isset($no->Number)) {
+        if (is_object($no) and isset($no->Number)) {
             return $no;
         }
 
@@ -53,7 +53,7 @@ class Order
             ])
             ->Order_FindByNumberResult;
 
-        if($result) {
+        if ($result) {
             return $result;
         }
 
@@ -195,11 +195,11 @@ class Order
     /**
      * Get a Order total with or without VAT
      *
-     * @param $no
+     * @param integer $no
      * @param bool|false $vat
      * @return mixed
      */
-    public function total($no, $vat=false)
+    public function total($no, $vat = false)
     {
         $handle = $this->getHandle($no);
 
@@ -306,7 +306,7 @@ class Order
             ->Order_CreateResult;
 
 
-        if(!$orderHandle->Id) {
+        if (!$orderHandle->Id) {
             throw new Exception("Error: creating Invoice");
         }
 
@@ -333,8 +333,8 @@ class Order
      */
     public function setOptions($handle, array $options)
     {
-        foreach($options as $option => $value) {
-            switch(strtolower($option)) {
+        foreach ($options as $option => $value) {
+            switch (strtolower($option)) {
                 case 'vat':
                     $this->client
                         ->Order_SetIsVatIncluded([
@@ -384,7 +384,8 @@ class Order
                             'orderHandle' => $handle,
                             'value'       => $value
                         ]);
-                     break;
+                    break;
+
                 case 'otherreference':
                     $this->client
                         ->Order_SetOtherReference([
@@ -444,7 +445,7 @@ class Order
                 ->Order_Delete([
                     'OrderHandle' => $handle,
                 ]);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return false;
         }
 

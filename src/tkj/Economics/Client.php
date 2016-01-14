@@ -88,5 +88,4 @@ class Client
     {
         return $this->client;
     }
-
 }

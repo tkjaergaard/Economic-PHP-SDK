@@ -40,8 +40,7 @@ class Line
         $this->client     = $client->getClient();
         $this->client_raw = $client;
 
-        if( $invoiceHandle )
-        {
+        if ($invoiceHandle) {
             $this->invoiceHandle = $invoiceHandle;
         }
     }
@@ -116,12 +115,12 @@ class Line
             ];
         }
 
-        foreach($data as $name => $value) {
-            if( is_null($value) ) {
+        foreach ($data as $name => $value) {
+            if (is_null($value)) {
                 continue;
             }
 
-            switch (strtolower($name))  {
+            switch (strtolower($name)) {
                 case 'description':
                     $this->description($line, $value);
                     break;
@@ -277,5 +276,4 @@ class Line
 
         return true;
     }
-
 }

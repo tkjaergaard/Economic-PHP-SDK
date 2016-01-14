@@ -43,7 +43,7 @@ class Debtor
      */
     public function getHandle($no)
     {
-        if (is_object($no) AND isset($no->Number)) {
+        if (is_object($no) and isset($no->Number)) {
             return $no;
         }
 
@@ -228,8 +228,9 @@ class Debtor
             ])
             ->Debtor_GetQuotationsResult;
 
-        if( count($quotationHandles) <= 0 )
+        if (count($quotationHandles) <= 0) {
             return [];
+        }
 
         $quotationHandles = $quotationHandles->QuotationHandle;
 
@@ -286,7 +287,7 @@ class Debtor
 
         $result = $this->getDataFromHandle($handles);
 
-        if ( count($handles) > 1 ) {
+        if (count($handles) > 1) {
             return $result;
         }
 
@@ -294,7 +295,9 @@ class Debtor
             return [];
         }
 
-	    return array($result);
+        return [
+            $result
+        ];
     }
 
     /**
@@ -314,7 +317,7 @@ class Debtor
 
         $result = $this->getDataFromHandle($handles);
 
-        if ( count($handles) > 1 ) {
+        if (count($handles) > 1) {
             return $result;
         }
 
@@ -322,7 +325,9 @@ class Debtor
             return [];
         }
 
-        return array($result);
+        return [
+            $result
+        ];
     }
 
     /**
@@ -351,7 +356,9 @@ class Debtor
             return [];
         }
 
-        return array($result);
+        return [
+            $result,
+        ];
     }
 
     /**
@@ -376,15 +383,13 @@ class Debtor
             return $result;
         }
 
-        if (count($handles) > 1) {
-            return $result;
-        }
-
         if (empty($result)) {
             return [];
         }
 
-        return array($result);
+        return [
+            $result,
+        ];
     }
 
     /**
@@ -405,11 +410,7 @@ class Debtor
 
         $result = $this->getDataFromHandle($handles);
 
-        if ( count($handles) > 1 ) {
-            return $result;
-        }
-
-        if ( count($handles) > 1 ) {
+        if (count($handles) > 1) {
             return $result;
         }
 
@@ -417,7 +418,9 @@ class Debtor
             return [];
         }
 
-        return array($result);
+        return [
+            $result,
+        ];
     }
 
     /**
@@ -527,9 +530,9 @@ class Debtor
      */
     public function create(array $data)
     {
-        if(isset($data["number"])) {
-    		$number = $data["number"];
-    	}
+        if (isset($data["number"])) {
+            $number = $data["number"];
+        }
 
         if (!isset($number)) {
             $number = $this->client
@@ -541,7 +544,7 @@ class Debtor
             'Number' => 1
         ];
 
-        if( isset($data['group']) ) {
+        if (isset($data['group'])) {
             $group = new Group($this->client_raw);
             $groupHandle = $group->getHandle($data['group']);
         }
@@ -608,7 +611,7 @@ class Debtor
             $updatedDebitorHandle = $this->client
                 ->Debtor_UpdateFromData($data)
                 ->Debtor_UpdateFromDataResult;
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             throw new Exception('Could not update Debitor');
         }
 
@@ -629,7 +632,7 @@ class Debtor
 
             try {
                 $contact = $this->client->DebtorContact_UpdateFromData($contactData)->DebtorContact_UpdateFromDataResult;
-            } catch(Exception $e) {
+            } catch (Exception $e) {
                 throw new Exception('Could not update Debitor Contact information');
             };
         }

@@ -42,10 +42,14 @@ class Invoice
      */
     public function getHandle($no)
     {
-        if( is_object($no) AND isset($no->Id) ) return $no;
+        if (is_object($no) and isset($no->Id)) {
+            return $no;
+        }
 
         @$result = $this->client
-            ->Invoice_FindByNumber(array('number'=>$no))
+            ->Invoice_FindByNumber([
+                'number' => $no,
+            ])
             ->Invoice_FindByNumberResult;
 
         if ($result) {
@@ -119,7 +123,7 @@ class Invoice
      * @param  boolean  $vat
      * @return float
      */
-    public function total($no, $vat=false)
+    public function total($no, $vat = false)
     {
         $handle  = $this->getHandle($no);
         $request = [
@@ -220,7 +224,7 @@ class Invoice
             ->CurrentInvoice_CreateResult;
 
 
-        if( !$invoiceHandle->Id ) {
+        if (!$invoiceHandle->Id) {
             throw new Exception("Error: creating Invoice.");
         }
 
@@ -253,5 +257,4 @@ class Invoice
 
         return $number;
     }
-
 }

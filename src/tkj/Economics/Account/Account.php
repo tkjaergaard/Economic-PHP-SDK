@@ -4,8 +4,8 @@ namespace tkj\Economics\Account;
 
 use tkj\Economics\Client;
 
-class Account {
-
+class Account
+{
     /**
      * Client Connection
      *
@@ -39,7 +39,7 @@ class Account {
      */
     public function getHandle($no)
     {
-        if (is_object($no) AND isset($no->Number)) {
+        if (is_object($no) and isset($no->Number)) {
             return $no;
         }
 
