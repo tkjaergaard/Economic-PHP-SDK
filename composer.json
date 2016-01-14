@@ -1,6 +1,6 @@
 {
     "name": "tkj/economics",
-    "description": "A PHP wrapper to interact with the e-conomics API",
+    "description": "A PHP wrapper to interact with the e-conomic API",
     "tags": ["economic", "ERP"],
     "license": "MIT",
     "authors": [
