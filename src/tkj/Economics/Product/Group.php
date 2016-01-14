@@ -1,23 +1,28 @@
-<?php namespace tkj\Economics\Product;
+<?php
+
+namespace tkj\Economics\Product;
 
 use tkj\Economics\Client;
 
-class Group {
-
+class Group
+{
     /**
      * Client Connection
+     *
      * @var Client
      */
     protected $client;
 
     /**
      * Instance of Client
+     *
      * @var Client
      */
     protected $client_raw;
 
     /**
      * Construct class and set dependencies
+     *
      * @param Client $client
      */
     public function __construct(Client $client)
@@ -27,35 +32,46 @@ class Group {
     }
 
     /**
-     * Get Product Group handle
-     * by group number
+     * Get Product Group handle by group number
+     *
      * @param  integer $no
      * @return object
      */
     public function getHandle($no)
     {
-        if( is_object($no) AND isset($no->Number) ) return $no;
+        if (is_object($no) AND isset($no->Number)) {
+            return $no;
+        }
 
         return $this->client
-                    ->ProductGroup_FindByNumber(array('number'=>$no))
+                    ->ProductGroup_FindByNumber([
+                        'number' => $no,
+                    ])
                     ->ProductGroup_FindByNumberResult;
     }
+
     /**
      * Get Products Groups from handles
-     * @param  object $handels
-     * @return object
+     *
+     * @param object[]|array|object $handles
+     * @return mixed
      */
     public function getArrayFromHandles($handles)
     {
         return $this->client
-            ->Product_GetDataArray(array('entityHandles'=>array('ProductGroupHandle'=>$handles)))
+            ->Product_GetDataArray([
+                'entityHandles' => [
+                    'ProductGroupHandle' => $handles,
+                ],
+            ])
             ->Product_GetDataArrayResult
             ->ProductData;
     }
 
     /**
      * Get all Product Groups
-     * @return array
+     *
+     * @return array|object[]
      */
     public function all()
     {
@@ -69,6 +85,7 @@ class Group {
 
     /**
      * Get specific Product Group
+     *
      * @param  integer $no
      * @return array
      */
@@ -80,17 +97,19 @@ class Group {
     }
 
     /**
-     * Get all Products of a
-     * specific Product Group
-     * @param  integer $no
-     * @return array
+     * Get all Products of a specific Product Group
+     *
+     * @param integer $no
+     * @return object
      */
     public function products($no)
     {
         $handle = $this->getHandle($no);
 
         $productHandles = $this->client
-            ->ProductGroup_GetProducts(array('productGroupHandle'=>$handle))
+            ->ProductGroup_GetProducts([
+                'productGroupHandle' => $handle,
+            ])
             ->ProductGroup_GetProductsResult
             ->ProductHandle;
 
@@ -99,11 +118,20 @@ class Group {
         return $product->getArrayFromHandles($productHandles);
     }
 
+    /**
+     * Unfinished
+     */
     public function create()
     {
 
     }
 
+    /**
+     * Unfinished
+     *
+     * @param $no
+     * @param array $data
+     */
     public function update($no, array $data)
     {
 

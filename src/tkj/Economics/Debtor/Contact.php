@@ -1,10 +1,12 @@
-<?php namespace tkj\Economics\Debtor;
+<?php
+
+namespace tkj\Economics\Debtor;
 
 use tkj\Economics\Client;
 use Exception;
 
-class Contact {
-
+class Contact
+{
     /**
      * Client Connection
      * @var Client
@@ -29,20 +31,26 @@ class Contact {
 
     /**
      * Get Contacts from handles
-     * @param  object $handels
+     *
+     * @param object[] $handles
      * @return object
      */
     public function getArrayFromHandles($handles)
     {
         return $this->client
-            ->DebtorContact_GetDataArray(array('entityHandles'=>array('DebtorContactHandle'=>$handles)))
+            ->DebtorContact_GetDataArray([
+                'entityHandles' => [
+                    'DebtorContactHandle' => $handles,
+                ],
+            ])
             ->DebtorContact_GetDataArrayResult
             ->DebtorContactData;
     }
 
     /**
      * Get all Contacts
-     * @return array
+     *
+     * @return array|object[]
      */
     public function all()
     {
@@ -62,22 +70,27 @@ class Contact {
     public function findById($id)
     {
         $data = $this->client
-            ->DebtorContact_GetData(array(
-                'entityHandle' => array('Id' => $id)
-            ))->DebtorContact_GetDataResult;
+            ->DebtorContact_GetData([
+                'entityHandle' => [
+                    'Id' => $id
+                ],
+            ])->DebtorContact_GetDataResult;
 
         return $data;
     }
 
     /**
      * Search contact by full name
+     *
      * @param  string $name
      * @return array
      */
     public function search($name)
     {
         $handles = $this->client
-            ->DebtorContact_FindByName(array('name'=>$name))
+            ->DebtorContact_FindByName([
+                'name' => $name,
+            ])
             ->DebtorContact_FindByNameResult
             ->DebtorContactHandle;
 
@@ -86,69 +99,71 @@ class Contact {
 
     /**
      * Update an existion Contact by Contact ID
-     * @param  array   $data
-     * @param  integer $id
-     * @return array
+     *
+     * @param array $data
+     * @param integer $id
+     * @return object
+     * @throws Exception
      */
     public function update(array $data, $id)
     {
-        if( !is_integer($id) )
+        if (!is_integer($id)) {
             throw new Exception("ID must be a integer");
+        }
 
-        $handle = array('Id'=>$id);
+        $handle = [
+            'Id' => $id
+        ];
 
-        foreach( $data as $field => $value )
-        {
-            switch( strtolower($field) )
-            {
+        foreach($data as $field => $value) {
+            switch (strtolower($field)) {
                 case 'name':
                     $this->client
-                        ->debtorContact_SetName(array(
+                        ->debtorContact_SetName([
                             'debtorContactHandle' => $handle,
                             'value'               => $value
-                        ));
+                        ]);
                     break;
 
                 case 'email':
                     $this->client
-                        ->debtorContact_SetEmail(array(
+                        ->debtorContact_SetEmail([
                             'debtorContactHandle' => $handle,
                             'value'               => $value
-                        ));
+                        ]);
                     break;
 
                 case 'phone':
                     $this->client
-                        ->DebtorContact_SetTelephoneNumber(array(
+                        ->DebtorContact_SetTelephoneNumber([
                             'debtorContactHandle' => $handle,
                             'value'               => $value
-                        ));
+                        ]);
                     break;
 
                 case 'invoice':
                     $this->client
-                        ->debtorContact_SetIsToReceiveEmailCopyOfInvoice(array(
+                        ->debtorContact_SetIsToReceiveEmailCopyOfInvoice([
                             'debtorContactHandle' => $handle,
                             'value'               => !!$value
-                        ));
+                        ]);
                     break;
 
                 case 'order':
                     $this->client
-                        ->debtorContact_SetIsToReceiveEmailCopyOfOrder(array(
+                        ->debtorContact_SetIsToReceiveEmailCopyOfOrder([
                             'debtorContactHandle' => $handle,
                             'value'               => !!$value
-                        ));
+                        ]);
                     break;
 
                 case 'comment':
                     $this->client
-                        ->debtorContact_SetComments(array(
+                        ->debtorContact_SetComments([
                             'debtorContactHandle' => $handle,
                             'value'               => $value
-                        ));
+                        ]);
                     break;
-
             }
         }
 
@@ -157,6 +172,7 @@ class Contact {
 
     /**
      * Create a new Contact from data array
+     *
      * @param  array   $data
      * @param  integer $debtor
      * @return array
@@ -167,16 +183,18 @@ class Contact {
         $debtorHandle = $debtors->getHandle($debtor);
 
         $id = $this->client
-            ->DebtorContact_Create(array(
+            ->DebtorContact_Create([
                 'debtorHandle' => $debtorHandle,
                 'name'         => $data['name']
-            ))->DebtorContact_CreateResult;
+            ])
+            ->DebtorContact_CreateResult;
 
         return $this->update($data, $id->Id);
     }
 
     /**
      * Delete a Contact by ID
+     *
      * @param  integer $id
      * @return boolean
      */
@@ -185,9 +203,9 @@ class Contact {
         $data = $this->findById($id);
 
         $this->client
-            ->DebtorContact_Delete(array(
-                "debtorContactHandle" => $data->Handle
-            ));
+            ->DebtorContact_Delete([
+                'debtorContactHandle' => $data->Handle,
+            ]);
 
         return true;
     }
