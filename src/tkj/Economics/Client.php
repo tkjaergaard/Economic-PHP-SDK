@@ -1,50 +1,68 @@
-<?php namespace tkj\Economics;
+<?php
+
+namespace tkj\Economics;
 
 use SoapClient;
 
-class Client {
-
+class Client
+{
     /**
-     * E-conomics agreement number
+     * E-conomic agreement number
+     *
      * @var integer
      */
     protected $agreement;
 
     /**
-     * E-conomics user id
+     * E-conomic user id
+     *
      * @var integer
      */
     protected $userId;
 
     /**
-     * E-conomics password
+     * E-conomic password
+     *
      * @var string
      */
     protected $password;
 
     /**
      * SOAP Connection
-     * @var \SoapClient
+     *
+     * @var SoapClient
      */
     protected $client;
 
     /**
-     * E-conomics API url
+     * E-conomic API url
+     *
      * @var string
      */
     protected $apiUrl = 'https://www.e-conomic.com/secure/api1/EconomicWebservice.asmx?WSDL';
 
     /**
      * Array with debug options
+     *
      * @var array
      */
-    protected $debug = array("trace"=>1, "exceptions"=>1);
+    protected $debug = [
+        "trace" => 1,
+        "exceptions" => 1
+    ];
 
     /**
      * Client constructor
      * @param integer   $agreement
      * @param integer   $userId
      * @param string    $password
+     */
+    /**
+     * Client structor
+     *
+     * @param integer $agreement
+     * @param integer $userId
+     * @param string $password
      */
     public function __construct($agreement, $userId, $password)
     {
@@ -54,18 +72,17 @@ class Client {
 
         $this->client = new SoapClient($this->apiUrl, $this->debug);
 
-        $this->client->Connect(
-            array(
-                'agreementNumber' => $this->agreement,
-                'userName'        => $this->userId,
-                'password'        => $this->password
-            )
-        );
+        $this->client->Connect([
+            'agreementNumber' => $this->agreement,
+            'userName'        => $this->userId,
+            'password'        => $this->password
+        ]);
     }
 
     /**
      * Return client
-     * @return \SoapClient
+     *
+     * @return SoapClient
      */
     public function getClient()
     {

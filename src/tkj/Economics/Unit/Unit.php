@@ -1,18 +1,20 @@
-<?php namespace tkj\Economics\Unit;
+<?php
+
+namespace tkj\Economics\Unit;
 
 use tkj\Economics\Client;
 
-class Unit {
-
+class Unit
+{
     /**
      * Client Connection
-     * @var devdk\Economics\Client
+     * @var Client
      */
     protected $client;
 
     /**
      * Instance of Client
-     * @var devdk\Economics\Client
+     * @var Client
      */
     protected $client_raw;
 
@@ -22,12 +24,22 @@ class Unit {
         $this->client_raw = $client;
     }
 
+    /**
+     * Get handle from number
+     *
+     * @param integer $no
+     * @return object|integer
+     */
     public function getHandle($no)
     {
-        if( is_object($no) AND isset($no->Id) ) return $no;
+        if (is_object($no) AND isset($no->Id)) {
+            return $no;
+        }
 
         return $this->client
-                    ->Unit_FindByNumber(array('number'=>$no))
+                    ->Unit_FindByNumber([
+                        'number' => $no,
+                    ])
                     ->Unit_FindByNumberResult;
     }
 

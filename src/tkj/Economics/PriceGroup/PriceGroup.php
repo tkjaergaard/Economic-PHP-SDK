@@ -6,13 +6,13 @@ class PriceGroup {
 
     /**
      * Client Connection
-     * @var devdk\Economics\Client
+     * @var Client
      */
     protected $client;
 
     /**
      * Construct class and set dependencies
-     * @param devdk\Economics\Client $client
+     * @param Client $client
      */
     public function __construct(Client $client)
     {

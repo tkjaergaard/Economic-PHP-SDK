@@ -4,10 +4,18 @@ use tkj\Economics\Client;
 use tkj\Economics\Debtor\Debtor;
 use InvalidArgumentException;
 
-class Subscriber {
-
+class Subscriber
+{
+    /**
+     * Client Connection
+     * @var Client
+     */
     protected $client;
 
+    /**
+     * Instance of Client
+     * @var Client
+     */
     protected $client_raw;
 
     protected $subscriptionHandle;

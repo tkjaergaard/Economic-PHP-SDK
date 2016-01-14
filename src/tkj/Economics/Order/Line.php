@@ -8,13 +8,13 @@ class Line {
 
     /**
      * Client Connection
-     * @var devdk\Economics\Client
+     * @var Client
      */
     protected $client;
 
     /**
      * Instance of Client
-     * @var devdk\Economics\Client
+     * @var Client
      */
     protected $client_raw;
 
@@ -27,7 +27,7 @@ class Line {
 
     /**
      * Construct class and set dependencies
-     * @param devdk\Economics\Client $client
+     * @param Client $client
      */
     public function __construct(Client $client, $orderHandle=NULL)
     {

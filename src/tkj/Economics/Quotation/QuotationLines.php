@@ -8,13 +8,13 @@ class QuotationLines {
 
     /**
      * Client Connection
-     * @var devdk\Economics\Client
+     * @var Client
      */
     protected $client;
 
     /**
      * Instance of Client
-     * @var devdk\Economics\Client
+     * @var Client
      */
     protected $client_raw;
 

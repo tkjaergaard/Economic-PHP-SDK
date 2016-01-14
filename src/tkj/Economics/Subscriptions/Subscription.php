@@ -4,10 +4,18 @@ use tkj\Economics\Client;
 use tkj\Economics\Subscriptions\Subscriber;
 use Exception;
 
-class Subscription {
-
+class Subscription
+{
+    /**
+     * Client Connection
+     * @var Client
+     */
     protected $client;
 
+    /**
+     * Instance of Client
+     * @var Client
+     */
     protected $client_raw;
 
     public function __construct(Client $client)
