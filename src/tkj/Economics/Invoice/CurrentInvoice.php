@@ -8,7 +8,7 @@ use tkj\Economics\Debtor\Debtor;
 use Exception;
 use Closure;
 
-class Invoice
+class CurrentInvoice
 {
     /**
      * Client Connection
@@ -68,9 +68,9 @@ class Invoice
     public function getArrayFromHandles($handles)
     {
         return $this->client
-            ->Invoice_GetDataArray(array('entityHandles'=>array('InvoiceHandle'=>$handles)))
-            ->Invoice_GetDataArrayResult
-            ->InvoiceData;
+            ->CurrentInvoice_GetDataArray(array('entityHandles'=>array('CurrentInvoiceHandle'=>$handles)))
+            ->CurrentInvoice_GetDataArrayResult
+            ->CurrentInvoiceData;
     }
 
     /**
@@ -81,9 +81,9 @@ class Invoice
     public function all()
     {
         $handles = $this->client
-            ->Invoice_GetAll()
-            ->Invoice_GetAllResult
-            ->InvoiceHandle;
+            ->CurrentInvoice_GetAll()
+            ->CurrentInvoice_GetAllResult
+            ->CurrentInvoiceHandle;
 
         return $this->getArrayFromHandles($handles);
     }
@@ -218,10 +218,10 @@ class Invoice
         $debtorHandle = $debtor->getHandle($debtorNumber);
 
         $invoiceHandle = $this->client
-            ->Invoice_Create([
+            ->CurrentInvoice_Create([
                 'debtorHandle'=>$debtorHandle,
             ])
-            ->Invoice_CreateResult;
+            ->CurrentInvoice_CreateResult;
 
 
         if (!$invoiceHandle->Id) {
@@ -232,11 +232,11 @@ class Invoice
 
         call_user_func($callback, $this->lines);
 
-        return $this->client->Invoice_GetDataArray([
+        return $this->client->CurrentInvoice_GetDataArray([
             'entityHandles' => [
-                'InvoiceHandle' => $invoiceHandle],
+                'CurrentInvoiceHandle' => $invoiceHandle],
             ])
-            ->Invoice_GetDataArrayResult;
+            ->CurrentInvoice_GetDataArrayResult;
     }
 
     /**
@@ -250,10 +250,10 @@ class Invoice
         $handle = $this->getHandle($invoiceNumber);
 
         $number = $this->client
-            ->Invoice_Book([
-                'invoiceHandle' => $handle,
+            ->CurrentInvoice_Book([
+                'currentInvoiceHandle' => $handle,
             ])
-            ->Invoice_BookResult;
+            ->CurrentInvoice_BookResult;
 
         return $number;
     }
