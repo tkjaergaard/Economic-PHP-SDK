@@ -68,7 +68,11 @@ class CurrentInvoice
     public function getArrayFromHandles($handles)
     {
         return $this->client
-            ->CurrentInvoice_GetDataArray(array('entityHandles'=>array('CurrentInvoiceHandle'=>$handles)))
+            ->CurrentInvoice_GetDataArray([
+                'entityHandles' => [
+                    'CurrentInvoiceHandle' => $handles,
+                ],
+            ])
             ->CurrentInvoice_GetDataArrayResult
             ->CurrentInvoiceData;
     }
@@ -112,7 +116,9 @@ class CurrentInvoice
         $handle = $this->getHandle($no);
 
         return $this->client
-            ->Invoice_GetDueDate(array('invoiceHandle'=>$handle))
+            ->Invoice_GetDueDate([
+                'invoiceHandle' => $handle,
+            ])
             ->Invoice_GetDueDateResult;
     }
 
@@ -152,7 +158,9 @@ class CurrentInvoice
         $handle = $this->getHandle($no);
 
         return $this->client
-            ->Invoice_GetVatAmount(array('invoiceHandle'=>$handle))
+            ->Invoice_GetVatAmount([
+                'invoiceHandle' => $handle,
+            ])
             ->Invoice_GetVatAmountResult;
     }
 
@@ -190,7 +198,9 @@ class CurrentInvoice
         $handle = $this->getHandle($no);
 
         $pdf = $this->client
-            ->Invoice_GetPdf(array('invoiceHandle'=>$handle))
+            ->Invoice_GetPdf([
+                'invoiceHandle' => $handle,
+            ])
             ->Invoice_GetPdfResult;
 
         if ($download) {

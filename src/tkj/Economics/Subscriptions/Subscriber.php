@@ -55,11 +55,11 @@ class Subscriber
 
         unset($data['debtor']);
 
-        $data = array_merge(array(
+        $data = array_merge([
             'startDate'          => date('Y-m-d H:i:s'),
             'registeredDate'     => date('Y-m-d H:i:s'),
-            'endDate'            => date('Y-m-d H:i:s', strtotime('+99 YEAR'))
-        ), $data);
+            'endDate'            => date('Y-m-d H:i:s', strtotime('+99 YEAR')),
+        ], $data);
 
         return $this->client
             ->Subscriber_Create($data)
