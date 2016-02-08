@@ -1,6 +1,6 @@
 <?php namespace tkj\Economics\Unit;
 
-use tkj\Economics\Client;
+use tkj\Economics\ClientInterface as Client;
 
 class Unit {
 

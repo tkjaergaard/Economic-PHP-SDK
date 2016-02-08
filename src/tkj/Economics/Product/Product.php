@@ -1,6 +1,6 @@
 <?php namespace tkj\Economics\Product;
 
-use tkj\Economics\Client;
+use tkj\Economics\ClientInterface as Client;
 use tkj\Economics\Unit\Unit;
 
 class Product {
@@ -224,5 +224,5 @@ class Product {
 		return $this->client->ProductPrice_GetPrice(array('productPriceHandle' => array('Id1' => $number, 'Id2' => $code)))->ProductPrice_GetPriceResult;
     }
 
-    
+
 }

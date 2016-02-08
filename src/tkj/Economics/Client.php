@@ -2,8 +2,8 @@
 
 use SoapClient;
 
-class Client {
-
+class Client
+{
     /**
      * E-conomics agreement number
      * @var integer
@@ -21,24 +21,6 @@ class Client {
      * @var string
      */
     protected $password;
-
-    /**
-     * SOAP Connection
-     * @var \SoapClient
-     */
-    protected $client;
-
-    /**
-     * E-conomics API url
-     * @var string
-     */
-    protected $apiUrl = 'https://www.e-conomic.com/secure/api1/EconomicWebservice.asmx?WSDL';
-
-    /**
-     * Array with debug options
-     * @var array
-     */
-    protected $debug = array("trace"=>1, "exceptions"=>1);
 
     /**
      * Client constructor
@@ -62,14 +44,4 @@ class Client {
             )
         );
     }
-
-    /**
-     * Return client
-     * @return \SoapClient
-     */
-    public function getClient()
-    {
-        return $this->client;
-    }
-
 }

@@ -1,6 +1,6 @@
 <?php namespace tkj\Economics\Debtor;
 
-use tkj\Economics\Client;
+use tkj\Economics\ClientInterface as Client;
 use tkj\Economics\Invoice\Invoice;
 use tkj\Economics\Order\Order;
 use tkj\Economics\Quotation\Quotation;
@@ -501,19 +501,19 @@ class Debtor {
             ]
         ];
 
-        try 
+        try
         {
 
-            $updatedDebitorHandle = $this->client->Debtor_UpdateFromData($data)->Debtor_UpdateFromDataResult; 
+            $updatedDebitorHandle = $this->client->Debtor_UpdateFromData($data)->Debtor_UpdateFromDataResult;
 
         }catch(\Exception $e)
         {
             throw new Exception('Could not update Debitor');
         };
 
-        if(isset($contact_handle->Id)) 
+        if(isset($contact_handle->Id))
         {
-          
+
             $contactData = [
                 'data' => [
                     'Handle' => $contact_handle,
@@ -528,11 +528,11 @@ class Debtor {
                 ]
             ];
 
-            try 
+            try
             {
 
             $contact = $this->client->DebtorContact_UpdateFromData($contactData)->DebtorContact_UpdateFromDataResult;
-            
+
             }catch(\Exception $e)
             {
                 throw new Exception('Could not update Debitor Contact information');
@@ -550,7 +550,7 @@ class Debtor {
         }
 
         return true;
-       
+
     }
 
 }
