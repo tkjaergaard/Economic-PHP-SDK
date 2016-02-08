@@ -1,8 +1,12 @@
 # E-conomic PHP API Wrapper
 This is a PHP wrapper for the E-conomic SOAP API.
 
+## New February 8th 2016
+Token authentication is now possible. Please refer to the docs to see how to get started:
+[Getting Started](https://github.com/tkjaergaard/Economic-PHP-SDK/blob/master/docs/GettingStarted.md)
+
 ## Documentation
-See the [docs folder](docs) for full documentation documentation.
+See the [docs folder](docs) for full documentation.
 
 ## Installation
 
@@ -18,8 +22,8 @@ You can also install it manually by downloading this repository and manually inc
 
 ## Contributors
 
-[Diblo](https://github.com/Diblo)   
-[zookz](https://github.com/zookz)   
+[Diblo](https://github.com/Diblo)
+[zookz](https://github.com/zookz)
 [Oliwicked](https://github.com/Oliwicked)
 
 ## Contributing
@@ -28,7 +32,7 @@ All PR's are welcome, just throw me one, and i take a look at it :)
 
 ## License
 
-This code is release under the MIT License, which means you can do pretty much whatever you wanna do with it.   
+This code is release under the MIT License, which means you can do pretty much whatever you wanna do with it.
 Take a look at the [LICENSE file](LICENSE) for more information.
 
 ## Author
