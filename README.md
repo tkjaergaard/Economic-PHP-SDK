@@ -22,9 +22,12 @@ You can also install it manually by downloading this repository and manually inc
 
 ## Contributors
 
-[Diblo](https://github.com/Diblo)
-[zookz](https://github.com/zookz)
-[Oliwicked](https://github.com/Oliwicked)
+[Diblo](https://github.com/Diblo)   
+[zookz](https://github.com/zookz)   
+[Oliwicked](https://github.com/Oliwicked)   
+[Sve1nn](https://github.com/Sve1nn)   
+[lizard2010](https://github.com/lizard2010)   
+[danielboendergaard](https://github.com/danielboendergaard)   
 
 ## Contributing
 
