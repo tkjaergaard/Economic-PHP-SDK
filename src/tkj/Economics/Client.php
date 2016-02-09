@@ -2,8 +2,10 @@
 
 use SoapClient;
 
-class Client
+class Client implements ClientInterface
 {
+    use ClientableTrait;
+
     /**
      * E-conomics agreement number
      * @var integer

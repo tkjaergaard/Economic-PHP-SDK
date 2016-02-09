@@ -1,12 +1,10 @@
-<?php
-
-namespace Tkj\Economics
+<?php namespace tkj\Economics;
 
 use SoapClient;
 
 class TokenClient implements ClientInterface {
 
-    use ClientTrait;
+    use ClientableTrait;
 
     protected $token;
 

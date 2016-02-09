@@ -1,6 +1,4 @@
-<?php
-
-namespace Tkj\Economics;
+<?php namespace tkj\Economics;
 
 trait ClientableTrait
 {
