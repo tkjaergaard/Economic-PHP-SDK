@@ -1,8 +1,7 @@
 <?php
 
 namespace tkj\Economics\PriceGroup;
-
-use tkj\Economics\Client;
+use tkj\Economics\ClientInterface as Client;
 
 class PriceGroup
 {

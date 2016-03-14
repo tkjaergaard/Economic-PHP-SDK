@@ -2,7 +2,7 @@
 
 namespace tkj\Economics\Debtor;
 
-use tkj\Economics\Client;
+use tkj\Economics\ClientInterface as Client;
 use Exception;
 
 class Contact

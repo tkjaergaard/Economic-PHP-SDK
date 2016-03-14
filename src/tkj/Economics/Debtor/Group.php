@@ -2,7 +2,7 @@
 
 namespace tkj\Economics\Debtor;
 
-use tkj\Economics\Client;
+use tkj\Economics\ClientInterface as Client;
 use tkj\Economics\Account\Account;
 
 class Group

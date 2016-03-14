@@ -2,7 +2,7 @@
 
 namespace tkj\Economics\Product;
 
-use tkj\Economics\Client;
+use tkj\Economics\ClientInterface as Client;
 
 class Group
 {

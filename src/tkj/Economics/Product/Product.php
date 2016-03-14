@@ -3,8 +3,8 @@
 namespace tkj\Economics\Product;
 
 use stdClass;
-use tkj\Economics\Client;
 use tkj\Economics\Unit\Unit;
+use tkj\Economics\ClientInterface as Client;
 
 class Product
 {

@@ -2,7 +2,7 @@
 
 namespace tkj\Economics\Invoice;
 
-use tkj\Economics\Client;
+use tkj\Economics\ClientInterface as Client;
 use tkj\Economics\Unit\Unit;
 use tkj\Economics\Product\Product;
 

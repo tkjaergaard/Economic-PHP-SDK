@@ -3,7 +3,7 @@
 namespace tkj\Economics\Invoice;
 
 use stdClass;
-use tkj\Economics\Client;
+use tkj\Economics\ClientInterface as Client;
 use tkj\Economics\Debtor\Debtor;
 use Exception;
 use Closure;

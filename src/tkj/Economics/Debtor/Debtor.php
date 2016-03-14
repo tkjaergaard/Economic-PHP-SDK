@@ -3,10 +3,10 @@
 namespace tkj\Economics\Debtor;
 
 use Exception;
-use tkj\Economics\Client;
-use tkj\Economics\Invoice\Invoice;
 use tkj\Economics\Order\Order;
+use tkj\Economics\Invoice\Invoice;
 use tkj\Economics\Quotation\Quotation;
+use tkj\Economics\ClientInterface as Client;
 
 class Debtor
 {

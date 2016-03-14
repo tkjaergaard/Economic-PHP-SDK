@@ -4,8 +4,9 @@ namespace tkj\Economics;
 
 use SoapClient;
 
-class Client
+class Client implements ClientInterface
 {
+    use ClientableTrait;
     /**
      * E-conomic agreement number
      *

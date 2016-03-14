@@ -1,6 +1,8 @@
-<?php namespace tkj\Economics\Subscriptions;
+<?php
 
-use tkj\Economics\Client;
+namespace tkj\Economics\Subscriptions;
+
+use tkj\Economics\ClientInterface as Client;
 use tkj\Economics\Subscriptions\Subscriber;
 use Exception;
 
