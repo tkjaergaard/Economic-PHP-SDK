@@ -1,25 +1,27 @@
-<?php namespace tkj\Economics\Debtor;
+<?php
+
+namespace tkj\Economics\Debtor;
 
 use tkj\Economics\ClientInterface as Client;
 use tkj\Economics\Account\Account;
 
-class Group {
-
+class Group
+{
     /**
      * Client Connection
-     * @var devdk\Economics\Client
+     * @var Client
      */
     protected $client;
 
     /**
      * Instance of Client
-     * @var devdk\Economics\Client
+     * @var Client
      */
     protected $client_raw;
 
     /**
      * Construct class and set dependencies
-     * @param devdk\Economics\Client $client
+     * @param Client $client
      */
     public function __construct(Client $client)
     {
@@ -34,37 +36,53 @@ class Group {
      */
     public function getHandle($no)
     {
-        if( is_object($no) AND isset($no->Number) ) return $no;
+        if (is_object($no) and isset($no->Number)) {
+            return $no;
+        }
 
         return $this->client
-            ->DebtorGroup_FindByNumber(array('number'=>$no))
+            ->DebtorGroup_FindByNumber([
+                'number' => $no,
+            ])
             ->DebtorGroup_FindByNumberResult;
     }
 
     /**
      * Get Debtor Groups from handles
-     * @param  object $handels
+     *
+     * @param  object $handles
      * @return object
      */
     public function getArrayFromHandles($handles)
     {
         return $this->client
-            ->DebtorGroup_GetDataArray(array('entityHandles'=>$handles))
+            ->DebtorGroup_GetDataArray([
+                'entityHandles' => $handles,
+            ])
             ->DebtorGroup_GetDataArrayResult
             ->DebtorGroupData;
     }
 
+    /**
+     * Get debitor group from number
+     *
+     * @param integer $no
+     * @return object
+     */
     public function get($no)
     {
         $handle = $this->getHandle($no);
 
         return $this->client
-            ->DebtorGroup_GetData(array('entityHandle'=> $handle))
+            ->DebtorGroup_GetData([
+                'entityHandle'=> $handle,
+            ])
             ->DebtorGroup_GetDataResult;
     }
 
     /**
      * Get all Debtor Groups
+     *
      * @return object
      */
     public function all()
@@ -79,16 +97,18 @@ class Group {
 
     /**
      * Get all Debtors of a debtor group
-     * by group number
-     * @param  [type] $no [description]
-     * @return [type]     [description]
+     *
+     * @param integer $no
+     * @return object
      */
     public function debtors($no)
     {
         $handle = $this->getHandle($no);
 
         $debtorHandles = $this->client
-            ->DebtorGroup_GetDebtors(array('debtorGroupHandle'=>$handle))
+            ->DebtorGroup_GetDebtors([
+                'debtorGroupHandle'=>$handle,
+            ])
             ->DebtorGroup_GetDebtorsResult
             ->DebtorHandle;
 
@@ -98,6 +118,7 @@ class Group {
 
     /**
      * Create a new Debtor Group
+     *
      * @param  string  $name
      * @param  integer $account
      * @return object
@@ -111,13 +132,13 @@ class Group {
         $accountHandle = $accounts->getHandle($account);
 
         $groupHandle = $this->client
-            ->DebtorGroup_Create(array(
+            ->DebtorGroup_Create([
                 "number"        => $number,
                 "name"          => $name,
                 "accountHandle" => $accountHandle
-            ))->DebtorGroup_CreateResult;
+            ])
+            ->DebtorGroup_CreateResult;
 
         return $this->get($number);
     }
-
 }

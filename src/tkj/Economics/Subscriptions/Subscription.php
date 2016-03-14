@@ -1,13 +1,23 @@
-<?php namespace tkj\Economics\Subscriptions;
+<?php
+
+namespace tkj\Economics\Subscriptions;
 
 use tkj\Economics\ClientInterface as Client;
 use tkj\Economics\Subscriptions\Subscriber;
 use Exception;
 
-class Subscription {
-
+class Subscription
+{
+    /**
+     * Client Connection
+     * @var Client
+     */
     protected $client;
 
+    /**
+     * Instance of Client
+     * @var Client
+     */
     protected $client_raw;
 
     public function __construct(Client $client)
@@ -16,30 +26,51 @@ class Subscription {
         $this->client_raw = $client;
     }
 
+    /**
+     * Get handle
+     *
+     * @param integer $no
+     * @return object|null
+     */
     public function getHandle($no)
     {
-        if( is_object($no) AND isset($no->Id) ) return $no;
+        if (is_object($no) and isset($no->Id)) {
+            return $no;
+        }
 
-        if( @$result = $this->client
-                ->Subscription_FindByNumber(array('number'=>$no))
-                ->Subscription_FindByNumberResult
-        ) return $result;
+        @$result = $this->client
+            ->Subscription_FindByNumber([
+                'number'=>$no,
+            ])
+            ->Subscription_FindByNumberResult;
+
+        if ($result) {
+            return $result;
+        }
+
+        return null;
     }
 
+    /**
+     * Create
+     *
+     *     https://api.e-conomic.com/secure/api1/EconomicWebService.asmx?op=Subscription_Create
+     *
+     *     subscriptionNumber               Subscription number for the subscription
+     *     subscriptionName                 Subscription name for the subscription
+     *     description                      Description for the subscription
+     *     includeName                      Enables include name for the subscription (boolean)
+     *     subscriptionInterval             Subscription interval for the subscription
+     *     calendarYearBasis                Enables calendar year for the subscription (boolean)
+     *     collection                       Collection for the subscription
+     *     addPeriod                        Enables add period for the subscription (boolean)
+     *     allowMoreThanOneForEachDebtor    Enables to allow more than one for each debitor for the subscription
+     *
+     * @param array $data
+     * @return mixed
+     */
     public function create(array $data)
     {
-        //     https://api.e-conomic.com/secure/api1/EconomicWebService.asmx?op=Subscription_Create
-        //
-        //     subscriptionNumber               Subscription number for the subscription
-        //     subscriptionName                 Subscription name for the subscription
-        //     description                      Description for the subscription
-        //     includeName                      Enables include name for the subscription (boolean)
-        //     subscriptionInterval             Subscription interval for the subscription
-        //     calendarYearBasis                Enables calendar year for the subscription (boolean)
-        //     collection                       Collection for the subscription
-        //     addPeriod                        Enables add period for the subscription (boolean)
-        //     allowMoreThanOneForEachDebtor    Enables to allow more than one for each debitor for the subscription
-
         $subscriptionHandle = $this->client
             ->Subscription_Create($data)
             ->Subscription_CreateResult;
@@ -47,21 +78,31 @@ class Subscription {
         return $subscriptionHandle;
     }
 
+    /**
+     * Delete
+     *
+     * @param integer $no
+     * @return bool
+     */
     public function delete($no)
     {
         $handle = $this->getHandle($no);
 
         try {
             $this->client
-                ->Subscription_Delete(array('subscriptionHandle' => $handle));
-        }
-        catch (Exception $e) {
+                ->Subscription_Delete([
+                    'subscriptionHandle' => $handle,
+                ]);
+        } catch (Exception $e) {
             return false;
         }
 
         return true;
     }
 
+    /**
+     * @return mixed
+     */
     public function all()
     {
         $handles = $this->client
@@ -71,14 +112,23 @@ class Subscription {
         return $this->getArrayFromHandles($handles);
     }
 
+    /**
+     * @param $handles
+     * @return mixed
+     */
     public function getArrayFromHandles($handles)
     {
         return $this->client
-            ->Subscription_GetDataArray(array('entityHandles'=>$handles))
+            ->Subscription_GetDataArray([
+                'entityHandles' => $handles,
+            ])
             ->Subscription_GetDataArrayResult
             ->SubscriptionData;
     }
 
+    /**
+     * @return mixed
+     */
     public function nextAvailableNumber()
     {
         return $this->client
@@ -86,12 +136,18 @@ class Subscription {
             ->Subscription_GetNextAvailableNumberResult;
     }
 
+    /**
+     * @param integer $no
+     * @return mixed
+     */
     public function subscribers($no)
     {
         $handle = $this->getHandle($no);
 
         $subscriberHandles = $this->client
-            ->Subscription_GetSubscribers(array('subscriptionHandle' => $handle))
+            ->Subscription_GetSubscribers([
+                'subscriptionHandle' => $handle,
+            ])
             ->Subscription_GetSubscribersResult;
 
         $subscriber = new Subscriber($this->client_raw, $handle);
@@ -99,6 +155,11 @@ class Subscription {
         return $subscriber->subscribers($subscriberHandles);
     }
 
+    /**
+     * @param integer $no
+     * @param array $data
+     * @return mixed
+     */
     public function addSubscriber($no, array $data)
     {
         $handle = $this->getHandle($no);
@@ -108,17 +169,30 @@ class Subscription {
         return $subscriber->create($data);
     }
 
+    /**
+     * (Unfinished)
+     * TODO: New subscription line instance
+     *
+     * @param $no
+     */
     public function lines($no)
     {
         $handle = $this->getHandle($no);
 
         $lineHandles = $this->client
-            ->Subscription_GetSubscriptionLines(array('subscriptionHandle' => $handle))
+            ->Subscription_GetSubscriptionLines([
+                'subscriptionHandle' => $handle,
+            ])
             ->Subscription_GetSubscriptionLinesResult;
-
-        // @TODO: New subsciprtion line instance
     }
 
+    /**
+     * Update
+     *
+     * @param integer $no
+     * @param array $data
+     * @return mixed
+     */
     public function update($no, array $data)
     {
         $handle = $this->getHandle($no);
@@ -131,12 +205,20 @@ class Subscription {
             ->Subscription_UpdateFromDataResult;
     }
 
+    /**
+     * Get from number
+     *
+     * @param integer $no
+     * @return mixed
+     */
     public function get($no)
     {
         $handle = $this->getHandle($no);
 
         return $this->client
-            ->Subscription_GetData(array('entityHandle' => $handle))
+            ->Subscription_GetData([
+                'entityHandle' => $handle,
+            ])
             ->Subscription_GetDataResult;
     }
 }

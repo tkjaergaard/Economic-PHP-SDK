@@ -1,20 +1,22 @@
-<?php namespace tkj\Economics\Order;
+<?php
+
+namespace tkj\Economics\Order;
 
 use tkj\Economics\ClientInterface as Client;
 use tkj\Economics\Unit\Unit;
 use tkj\Economics\Product\Product;
 
-class Line {
-
+class Line
+{
     /**
      * Client Connection
-     * @var devdk\Economics\Client
+     * @var Client
      */
     protected $client;
 
     /**
      * Instance of Client
-     * @var devdk\Economics\Client
+     * @var Client
      */
     protected $client_raw;
 
@@ -27,23 +29,25 @@ class Line {
 
     /**
      * Construct class and set dependencies
-     * @param devdk\Economics\Client $client
+     *
+     * @param Client $client
+     * @param null $orderHandle
      */
-    public function __construct(Client $client, $orderHandle=NULL)
+    public function __construct(Client $client, $orderHandle = null)
     {
         $this->client     = $client->getClient();
         $this->client_raw = $client;
 
-        if( $orderHandle )
-        {
+        if ($orderHandle) {
             $this->orderHandle = $orderHandle;
         }
     }
 
     /**
-     * Set Order handle for editing or
-     * creating lines
-     * @param object $handle
+     * Set Order handle for editing or creating lines
+     *
+     * @param $handle
+     * @return $this
      */
     public function setHandle($handle)
     {
@@ -53,38 +57,43 @@ class Line {
 
     /**
      * Get Order Lines from handles
-     * @param  object $handels
+     *
+     * @param object[] $handles
      * @return object
      */
     public function getArrayFromHandles($handles)
     {
          return $this->client
-            ->OrderLine_GetDataArray(array('entityHandles'=>$handles))
+            ->OrderLine_GetDataArray([
+                'entityHandles' => $handles
+            ])
             ->OrderLine_GetDataArrayResult->OrderLineData;
     }
 
     /**
      * Add Order Line
+     *
      * @param array $data
+     * @return object
      */
     public function add(array $data)
     {
-        $defaults = array(
+        $defaults = [
             "description" => null,
             "price"       => null,
             "discount"    => null,
             "qty"         => 1,
             "unit"        => null
-        );
+        ];
 
         $merged = array_merge($defaults, $data);
 
         $line = $this->create($this->orderHandle);
 
-        if( isset($merged['product']) )
-        {
+        if (isset($merged['product'])) {
             $this->product($line, $merged['product']);
-            unset( $merged['product'] );
+
+            unset($merged['product']);
         }
 
         return $this->update($data, $line);
@@ -92,51 +101,57 @@ class Line {
 
     /**
      * Update Order Line by data
-     * @param  array  $data
-     * @param  object $line
+     *
+     * @param array $data
+     * @param object $line
      * @return object
      */
     public function update(array $data, $line)
     {
-        if( is_integer($line) )
-        {
-            $line = array('Id' => $line);
+        if (is_integer($line)) {
+            $line = [
+                'Id' => $line
+            ];
         }
 
-        foreach( $data as $name => $value )
-        {
-            if( is_null($value) )
+        foreach ($data as $name => $value) {
+            if (is_null($value)) {
                 continue;
+            }
 
-            switch( strtolower($name) )
-            {
+            switch (strtolower($name)) {
                 case 'description':
                     $this->description($line, $value);
                     break;
+
                 case 'price':
                     $this->price($line, $value);
                     break;
                 case 'discount':
                     $this->discount($line, $value);
                     break;
+
                 case 'qty':
                     $this->qty($line, $value);
                     break;
+
                 case 'unit':
                     $this->unit($line, $value);
                     break;
             }
         }
 
-        return $this->getArrayFromHandles( array('OrderLineHandle'=>$line) );
+        return $this->getArrayFromHandles([
+            'OrderLineHandle' => $line,
+        ]);
     }
 
     /**
-     * Set Order Line product
-     * by product number
-     * @param  mixed $orderLineHandle
-     * @param  string $product
-     * @return boolean
+     * Set Order Line product by product number
+     *
+     * @param object $orderLineHandle
+     * @param $product
+     * @return bool
      */
     public function product($orderLineHandle, $product)
     {
@@ -144,111 +159,107 @@ class Line {
         $productHandle = $products->getHandle($product);
 
         $this->client
-            ->OrderLine_SetProduct(
-                array(
-                    'orderLineHandle' => $orderLineHandle,
-                    'valueHandle' => $productHandle
-                )
-            );
+            ->OrderLine_SetProduct([
+                'orderLineHandle' => $orderLineHandle,
+                'valueHandle' => $productHandle
+            ]);
 
         return true;
     }
 
     /**
-     * Create Invoice line
-     * and return handle
-     * @param  mixed $orderHandle
+     * Create Invoice line and return handle
+     *
+     * @param object $orderHandle
      * @return object
      */
     public function create($orderHandle)
     {
         return $this->client
-            ->OrderLine_Create(array('orderHandle' => $orderHandle))
+            ->OrderLine_Create([
+                'orderHandle' => $orderHandle,
+            ])
             ->OrderLine_CreateResult;
     }
 
     /**
      * Set Quotation Line discount
-     * @param  mixed $orderLineHandle
-     * @param  float $discount
-     * @return boolean
+     *
+     * @param $orderLineHandle
+     * @param $discount
+     * @return bool
      */
     public function discount($orderLineHandle, $discount)
     {
         $this->client
-            ->OrderLine_SetDiscountAsPercent(
-                array(
-                    'orderLineHandle' => $orderLineHandle,
-                    'value'           => $discount
-                )
-            );
+            ->OrderLine_SetDiscountAsPercent([
+                'orderLineHandle' => $orderLineHandle,
+                'value'           => $discount
+            ]);
 
         return true;
     }
 
     /**
      * Set Quotation Line description
-     * @param  mixed $orderLineHandle
-     * @param  string $description
-     * @return boolean
+     *
+     * @param $orderLineHandle
+     * @param $description
+     * @return bool
      */
     public function description($orderLineHandle, $description)
     {
         $this->client
-            ->OrderLine_SetDescription(
-                array(
-                    'orderLineHandle' => $orderLineHandle,
-                    'value'           => $description
-                )
-            );
+            ->OrderLine_SetDescription([
+                'orderLineHandle' => $orderLineHandle,
+                'value'           => $description
+            ]);
 
         return true;
     }
 
     /**
      * Set Quotation Line price without VAT
-     * @param  mixed $orderLineHandle
-     * @param  float $price
-     * @return boolean
+     *
+     * @param $orderLineHandle
+     * @param $price
+     * @return bool
      */
     public function price($orderLineHandle, $price)
     {
         $this->client
-            ->OrderLine_SetUnitNetPrice(
-                array(
-                    'orderLineHandle' => $orderLineHandle,
-                    'value'           => $price
-                )
-            );
+            ->OrderLine_SetUnitNetPrice([
+                'orderLineHandle' => $orderLineHandle,
+                'value'           => $price
+            ]);
 
         return true;
     }
 
     /**
      * Set Quotation Line quantity
-     * @param  mixed $orderLineHandle
-     * @param  float $qty
-     * @return boolean
+     *
+     * @param $orderLineHandle
+     * @param $qty
+     * @return bool
      */
     public function qty($orderLineHandle, $qty)
     {
         $this->client
-            ->OrderLine_SetQuantity(
-                array(
-                    'orderLineHandle' => $orderLineHandle,
-                    'value'           => $qty
-                )
-            );
+            ->OrderLine_SetQuantity([
+                'orderLineHandle' => $orderLineHandle,
+                'value'           => $qty
+            ]);
 
         return true;
     }
 
     /**
-     * Set Quotation Line unit
-     * by unit number
-     * @param  mixed $orderLineHandle [description]
-     * @param  integer $unit
-     * @return boolean
+     * Set Quotation Line unit by unit number
+     *
+     * @param object $orderLineHandle
+     * @param $unit
+     * @return bool
      */
     public function unit($orderLineHandle, $unit)
     {
@@ -256,14 +267,11 @@ class Line {
         $unitHandle = $units->getHandle($unit);
 
         $this->client
-            ->OrderLine_SetUnit(
-                array(
-                    'orderLineHandle' => $orderLineHandle,
-                    'valueHandle'     => $unitHandle
-                )
-            );
+            ->OrderLine_SetUnit([
+                'orderLineHandle' => $orderLineHandle,
+                'valueHandle'     => $unitHandle
+            ]);
 
         return true;
     }
-
 }

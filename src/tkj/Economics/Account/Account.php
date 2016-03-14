@@ -1,24 +1,29 @@
-<?php namespace tkj\Economics\Account;
+<?php
+
+namespace tkj\Economics\Account;
 
 use tkj\Economics\ClientInterface as Client;
 
-class Account {
-
+class Account
+{
     /**
      * Client Connection
-     * @var devdk\Economics\Client
+     *
+     * @var Client
      */
     protected $client;
 
     /**
      * Instance of Client
-     * @var devdk\Economics\Client
+     *
+     * @var Client
      */
     protected $client_raw;
 
     /**
      * Construct class and set dependencies
-     * @param devdk\Economics\Client $client
+     *
+     * @param Client $client
      */
     public function __construct(Client $client)
     {
@@ -28,27 +33,35 @@ class Account {
 
     /**
      * Get Debtor Group handle by number
+     *
      * @param  integer $no
      * @return object
      */
     public function getHandle($no)
     {
-        if( is_object($no) AND isset($no->Number) ) return $no;
+        if (is_object($no) and isset($no->Number)) {
+            return $no;
+        }
 
         return $this->client
-            ->Account_FindByNumber(array('number'=>$no))
+            ->Account_FindByNumber([
+                'number'=>$no,
+            ])
             ->Account_FindByNumberResult;
     }
 
     /**
      * Get Debtor Groups from handles
-     * @param  object $handels
+     *
+     * @param array $handles
      * @return object
      */
     public function getArrayFromHandles($handles)
     {
         return $this->client
-            ->Account_GetDataArray(array('entityHandles'=>$handles))
+            ->Account_GetDataArray([
+                'entityHandles' => $handles,
+            ])
             ->Account_GetDataArrayResult
             ->AccountData;
     }

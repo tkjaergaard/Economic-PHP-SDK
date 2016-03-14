@@ -1,25 +1,28 @@
-<?php namespace tkj\Economics\Product;
+<?php
 
-use tkj\Economics\ClientInterface as Client;
+namespace tkj\Economics\Product;
+
+use stdClass;
 use tkj\Economics\Unit\Unit;
+use tkj\Economics\ClientInterface as Client;
 
-class Product {
-
+class Product
+{
     /**
      * Client Connection
-     * @var devdk\Economics\Client
+     * @var Client
      */
     protected $client;
 
     /**
      * Instance of Client
-     * @var devdk\Economics\Client
+     * @var Client
      */
     protected $client_raw;
 
     /**
      * Construct class and set dependencies
-     * @param devdk\Economics\Client $client
+     * @param Client $client
      */
     public function __construct(Client $client)
     {
@@ -34,26 +37,41 @@ class Product {
      */
     public function getHandle($no)
     {
-        if( is_object($no) AND isset($no->Number) ) return $no;
+        if (is_object($no) and isset($no->Number)) {
+            return $no;
+        }
 
         return $this->client
-                    ->Product_FindByNumber(array('number'=>$no))
+                    ->Product_FindByNumber([
+                        'number'=>$no,
+                    ])
                     ->Product_FindByNumberResult;
     }
 
     /**
      * Get Products from handles
-     * @param  object $handels
-     * @return object
+     *
+     * @param object[]|array|object $handles
+     * @return mixed
      */
     public function getArrayFromHandles($handles)
     {
         return $this->client
-            ->Product_GetDataArray(array('entityHandles'=>array('ProductHandle'=>$handles)))
+            ->Product_GetDataArray([
+                'entityHandles' => [
+                    'ProductHandle' => $handles,
+                ],
+            ])
             ->Product_GetDataArrayResult
             ->ProductData;
     }
 
+    /**
+     * Get handle
+     *
+     * @param $no
+     * @return object
+     */
     public function get($no)
     {
         $handle = $this->getHandle($no);
@@ -61,6 +79,11 @@ class Product {
         return $this->getArrayFromHandles($handle);
     }
 
+    /**
+     * All products
+     *
+     * @return mixed
+     */
     public function all()
     {
         $handles = $this->client
@@ -71,6 +94,11 @@ class Product {
         return $this->getArrayFromHandles($handles);
     }
 
+    /**
+     * Is accesiable
+     *
+     * @return boolean
+     */
     public function accessible()
     {
         $handles = $this->client
@@ -83,15 +111,18 @@ class Product {
 
     /**
      * Get product Stock
-     * @param  [type] $no [description]
-     * @return [type]     [description]
+     *
+     * @param integer $no
+     * @return mixed
      */
     public function stock($no)
     {
         $handle = $this->getHandle($no);
 
         return $this->client
-            ->Product_GetAvailable(array('productHandle'=>$handle))
+            ->Product_GetAvailable([
+                'productHandle' => $handle,
+            ])
             ->Product_GetAvailableResult;
     }
 
@@ -102,29 +133,33 @@ class Product {
      */
     public function create(array $data)
     {
-        if(isset($data["number"])) {
+        if (isset($data["number"])) {
             $number = $data["number"];
-        }else{
-            $all    = $this->all();
-            $number = end($all)->Number + 1;
+        }
+
+        if (!isset($number)) {
+            $number = end($this->all())->Number + 1;
         }
 
         $group       = new Group($this->client_raw);
         $groupHandle = $group->getHandle($data['group']);
 
         $productHandle = $this->client
-            ->Product_Create(array(
+            ->Product_Create([
                 "number"             => $number,
                 "productGroupHandle" => $groupHandle,
                 "name"               => $data["name"]
-            ))
+            ])
             ->Product_CreateResult;
 
-        unset( $data['name'] );
-        unset( $data['group'] );
+        unset($data['name']);
+        unset($data['group']);
 
         $this->client
-            ->Product_SetIsAccessible(array('productHandle' => $productHandle, "value" => true));
+            ->Product_SetIsAccessible([
+                'productHandle' => $productHandle,
+                'value' => true,
+            ]);
 
         return $this->update($productHandle, $data);
     }
@@ -139,24 +174,28 @@ class Product {
     {
         $handle  = $this->getHandle($no);
 
-        foreach( $data as $field => $value )
-        {
-            $request = array('productHandle' => $handle, "value" => $value);
+        foreach ($data as $field => $value) {
+            $request = [
+                'productHandle' => $handle,
+                'value' => $value,
+            ];
 
-            switch( strtolower($field) )
-            {
-                case 'cost';
+            switch (strtolower($field)) {
+                case 'cost':
                     $this->client
                         ->Product_SetCostPrice($request);
                     break;
+
                 case 'description':
                     $this->client
                         ->Product_SetDescription($request);
                     break;
+
                 case 'name':
                     $this->client
                         ->Product_SetName($request);
                     break;
+
                 case 'group':
                     unset($request["value"]);
 
@@ -164,17 +203,17 @@ class Product {
                     $groupHandle            = $group->getHandle($value);
                     $request["valueHandle"] = $groupHandle;
 
-                    $this->client
-                        ->Product_SetProductGroup($request);
+                    $this->client->Product_SetProductGroup($request);
                     break;
+
                 case 'price':
-                    $this->client
-                        ->Product_SetSalesPrice($request);
+                    $this->client->Product_SetSalesPrice($request);
                     break;
+
                 case 'rrp':
-                    $this->client
-                        ->Product_SetRecommendedPrice($request);
+                    $this->client->Product_SetRecommendedPrice($request);
                     break;
+
                 case 'unit':
                     unset($request["value"]);
 
@@ -182,13 +221,12 @@ class Product {
                     $unitHandle             = $unit->getHandle($value);
                     $request["valueHandle"] = $unitHandle;
 
-                    $this->client
-                        ->Product_SetUnit($request);
+                    $this->client->Product_SetUnit($request);
                     break;
             }
         }
 
-        return $this->getArrayFromHandles( $handle );
+        return $this->getArrayFromHandles($handle);
     }
 
     /**
@@ -204,25 +242,33 @@ class Product {
     public function find($query)
     {
         $handles = $this->client
-            ->Product_FindByName(array('name'=>$query))
+            ->Product_FindByName([
+                'name' => $query,
+            ])
             ->Product_FindByNameResult;
 
-        if( ! isset($handles->ProductHandle) )
+        if (!isset($handles->ProductHandle)) {
             return null;
+        }
 
         return $this->getArrayFromHandles($handles->ProductHandle);
     }
 
     /**
      * Get the price of a product by currency code
-     * @param  string $number
-     * @param  string $code
+     *
+     * @param string $number
+     * @param string $code
      * @return string
      */
     public function getPriceByCurrency($number, $code)
     {
-		return $this->client->ProductPrice_GetPrice(array('productPriceHandle' => array('Id1' => $number, 'Id2' => $code)))->ProductPrice_GetPriceResult;
+        return $this->client->ProductPrice_GetPrice([
+                'productPriceHandle' => [
+                    'Id1' => $number,
+                    'Id2' => $code,
+                ],
+            ])
+            ->ProductPrice_GetPriceResult;
     }
-
-
 }
