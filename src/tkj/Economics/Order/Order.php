@@ -170,7 +170,7 @@ class Order {
     {
         $handle = $this->getHandle($no);
 
-        $request = array('orderHandle'=>$handel);
+        $request = array('orderHandle'=>$handle);
 
         if( $vat )
         {
