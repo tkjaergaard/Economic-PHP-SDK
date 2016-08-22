@@ -1,6 +1,6 @@
 #### Getting started
 
-This document berifly goes through the process of installing and setting up this package.
+This document briefly goes through the process of installing and setting up this package.
 
 ##### Installation
 
@@ -18,7 +18,9 @@ Clone this repository and load the files manually or setup a `spl_autoload`.
 
 All classes requires a instance of the `ClientInterface` which either can be a the "regular" client which accepts the agreement number, user id and password **(This authentication method will be deprecated by March 15th 2016)**.
 
-###### Agreenment number authentication (deprecated by March 15th 2016).
+###### Agreement number authentication (deprecated by March 15th 2016).
+
+Get your access/tokens from here: https://www.e-conomic.com/developer
 
 ```php
 
@@ -28,7 +30,7 @@ use Tkj\Economics\Client;
 $client = new Client($agreementNo, $userId, $password);
 ```
 
-###### Token authentication (Recommend).
+###### Token authentication (Recommended).
 
 ```php
 use Tkj\Economics\TokenClient;
