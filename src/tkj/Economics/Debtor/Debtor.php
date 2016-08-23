@@ -503,15 +503,7 @@ class Debtor {
             ]
         ];
 
-        try
-        {
-
-            $updatedDebitorHandle = $this->client->Debtor_UpdateFromData($data)->Debtor_UpdateFromDataResult;
-
-        }catch(\Exception $e)
-        {
-            throw new \Exception('Could not update Debitor');
-        };
+        $updatedDebitorHandle = $this->client->Debtor_UpdateFromData($data)->Debtor_UpdateFromDataResult;
 
         if(isset($contact_handle->Id))
         {
