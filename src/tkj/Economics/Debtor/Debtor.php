@@ -543,7 +543,7 @@ class Debtor {
             $this->client->Debtor_SetEan($debtorEan);
         }
 
-        return true;
+        return $number;
     }
 
 }
