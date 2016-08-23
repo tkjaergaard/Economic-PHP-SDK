@@ -510,7 +510,7 @@ class Debtor {
 
         }catch(\Exception $e)
         {
-            throw new Exception('Could not update Debitor');
+            throw new \Exception('Could not update Debitor');
         };
 
         if(isset($contact_handle->Id))
