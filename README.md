@@ -28,6 +28,7 @@ You can also install it manually by downloading this repository and manually inc
 [Sve1nn](https://github.com/Sve1nn)   
 [lizard2010](https://github.com/lizard2010)   
 [danielboendergaard](https://github.com/danielboendergaard)   
+[mortenscheel](https://github.com/mortenscheel)
 
 ## Contributing
 
