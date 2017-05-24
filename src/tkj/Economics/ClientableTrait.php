@@ -12,7 +12,7 @@ trait ClientableTrait
      * E-conomics API url
      * @var string
      */
-    protected $apiUrl = 'https://www.e-conomic.com/secure/api1/EconomicWebservice.asmx?WSDL';
+    protected $apiUrl = 'https://api.e-conomic.com/secure/api1/EconomicWebService.asmx?wsdl';
 
     /**
      * Array with debug options
