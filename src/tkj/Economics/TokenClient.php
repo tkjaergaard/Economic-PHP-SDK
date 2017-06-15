@@ -12,11 +12,13 @@ class TokenClient implements ClientInterface {
 
     protected $appIdentifier;
 
-    public function __construct($token, $appToken, $appIdentifier)
+    public function __construct($token, $appToken, $appIdentifier, array $options = [])
     {
         $this->token = $token;
         $this->appToken = $appToken;
         $this->appIdentifier = $appIdentifier;
+
+        $this->debug = array_merge($this->debug, $options);
 
         $this->setupAppIndentifierContex();
 

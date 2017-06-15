@@ -26,15 +26,18 @@ class Client implements ClientInterface
 
     /**
      * Client constructor
-     * @param integer   $agreement
-     * @param integer   $userId
-     * @param string    $password
+     * @param integer $agreement
+     * @param integer $userId
+     * @param string $password
+     * @param array $options
      */
-    public function __construct($agreement, $userId, $password)
+    public function __construct($agreement, $userId, $password, array $options = [])
     {
         $this->agreement = $agreement;
         $this->userId    = $userId;
         $this->password  = $password;
+
+        $this->debug = array_merge($this->debug, $options);
 
         $this->client = new SoapClient($this->apiUrl, $this->debug);
 
