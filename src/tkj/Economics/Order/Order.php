@@ -301,6 +301,20 @@ class Order {
                             'value'       => $value
                         ));
                     break;
+                case 'text2':
+                    $this->client
+                        ->Order_SetTextLine2(array(
+                            'orderHandle' => $handle,
+                            'value'       => $value
+                        ));
+                    break;
+                case 'heading':
+                    $this->client
+                        ->Order_SetHeading(array(
+                            'orderHandle' => $handle,
+                            'value'       => $value
+                        ));
+                    break;
                 case 'termsofdelivery':
                     $this->client
                         ->Order_SetTermsOfDelivery(array(
