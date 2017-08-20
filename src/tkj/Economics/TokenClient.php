@@ -2,7 +2,8 @@
 
 use SoapClient;
 
-class TokenClient implements ClientInterface {
+class TokenClient implements ClientInterface
+{
 
     use ClientableTrait;
 
@@ -28,7 +29,7 @@ class TokenClient implements ClientInterface {
     protected function setupAppIndentifierContex()
     {
         $this->debug['stream_context'] = stream_context_create([
-           'http' => ['header' => 'X-EconomicAppIdentifier: ' . $this->appIdentifier]
+            'http' => ['header' => 'X-EconomicAppIdentifier: ' . $this->appIdentifier]
         ]);
     }
 

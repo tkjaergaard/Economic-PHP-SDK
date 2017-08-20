@@ -5,27 +5,28 @@ use tkj\Economics\Debtor\Debtor;
 use Closure;
 use Exception;
 
-class Order {
+class Order
+{
 
     /**
      * Client Connection
-     * @var devdk\Economics\Client
+     * @var $client
      */
     protected $client;
 
     /**
      * Instance of Client
-     * @var devdk\Economics\Client
+     * @var $client_raw
      */
     protected $client_raw;
 
     /**
      * Construct class and set dependencies
-     * @param devdk\Economics\Client $client
+     * @param Client $client
      */
     public function __construct(Client $client)
     {
-        $this->client     = $client->getClient();
+        $this->client = $client->getClient();
         $this->client_raw = $client;
     }
 
@@ -36,23 +37,23 @@ class Order {
      */
     public function getHandle($no)
     {
-        if( is_object($no) AND isset($no->Number) ) return $no;
+        if (is_object($no) AND isset($no->Number)) return $no;
 
-        if( @$result = $this->client
-                ->Order_FindByNumber(array('number'=>$no))
-                ->Order_FindByNumberResult
+        if (@$result = $this->client
+            ->Order_FindByNumber(array('number' => $no))
+            ->Order_FindByNumberResult
         ) return $result;
     }
 
     /**
      * Get Orders from handles
-     * @param  object $handels
+     * @param  mixed $handles
      * @return object
      */
     public function getArrayFromHandles($handles)
     {
         return $this->client
-            ->Order_GetDataArray(array('entityHandles'=>array('OrderHandle'=>$handles)))
+            ->Order_GetDataArray(array('entityHandles' => array('OrderHandle' => $handles)))
             ->Order_GetDataArrayResult
             ->OrderData;
     }
@@ -95,7 +96,7 @@ class Order {
             ->Order_GetAllCurrentResult
             ->OrderHandle;
 
-        return $this->getArrayFromHandles( $handles );
+        return $this->getArrayFromHandles($handles);
     }
 
     /**
@@ -108,12 +109,12 @@ class Order {
         $handle = $this->getHandle($no);
 
         $debtorHandle = $this->client
-            ->Order_GetDebtor(array('orderHandle'=>$handle))
+            ->Order_GetDebtor(array('orderHandle' => $handle))
             ->Order_GetDebtorResult;
 
         $debtor = new Debtor($this->client_raw);
 
-        return $debtor->getArrayFromHandles(array('DebtorHandle'=>$debtorHandle));
+        return $debtor->getArrayFromHandles(array('DebtorHandle' => $debtorHandle));
     }
 
     /**
@@ -122,24 +123,20 @@ class Order {
      * @param  boolean $sent
      * @return boolean
      */
-    public function sent($no, $sent=NULL)
+    public function sent($no, $sent = NULL)
     {
-        $handle = array('orderHandle'=>$this->getHandle($no));
+        $handle = array('orderHandle' => $this->getHandle($no));
 
-        if( is_null($sent) )
-        {
+        if (is_null($sent)) {
             return $this->client
                 ->Order_GetIsSent($handle)
                 ->Order_GetIsSentResult;
         }
 
-        if( !!$sent )
-        {
+        if (!!$sent) {
             $this->client
                 ->Order_RegisterAsSent($handle);
-        }
-        else
-        {
+        } else {
             $this->client
                 ->Order_CancelSentStatus($handle);
         }
@@ -156,24 +153,23 @@ class Order {
         $handle = $this->getHandle($no);
 
         return $this->client
-            ->Order_GetDueDate(array('orderHandle'=>$handle))
+            ->Order_GetDueDate(array('orderHandle' => $handle))
             ->Order_GetDueDateResult;
     }
 
     /**
      * Get a Order total with or without VAT
-     * @param  integer  $no
-     * @param  boolean  $vat
+     * @param  integer $no
+     * @param  boolean $vat
      * @return float
      */
-    public function total($no, $vat=false)
+    public function total($no, $vat = false)
     {
         $handle = $this->getHandle($no);
 
-        $request = array('orderHandle'=>$handle);
+        $request = array('orderHandle' => $handle);
 
-        if( $vat )
-        {
+        if ($vat) {
             return $this->client
                 ->Order_GetGrossAmount($request)
                 ->Order_GetGrossAmountResult;
@@ -187,7 +183,7 @@ class Order {
 
     /**
      * Get if a Orders is archived
-     * @param  integer  $no
+     * @param  integer $no
      * @return boolean
      */
     public function isArchived($no)
@@ -195,7 +191,7 @@ class Order {
         $handle = $this->getHandle($no);
 
         $this->client
-            ->Order_GetIsArchived(array('orderHandle'=>$handle))
+            ->Order_GetIsArchived(array('orderHandle' => $handle))
             ->Order_GetIsArchivedResult;
     }
 
@@ -209,7 +205,7 @@ class Order {
         $handle = $this->getHandle($no);
 
         $lineHandles = $this->client
-            ->Order_GetLines(array('orderHandle'=>$handle))
+            ->Order_GetLines(array('orderHandle' => $handle))
             ->Order_GetLinesResult
             ->OrderLineHandle;
 
@@ -224,18 +220,17 @@ class Order {
      * @param  boolean $download [description]
      * @return mixed
      */
-    public function pdf($no, $download=false)
+    public function pdf($no, $download = false)
     {
         $handle = $this->getHandle($no);
 
         $pdf = $this->client
-            ->Order_GetPdf(array('orderHandle'=>$handle))
+            ->Order_GetPdf(array('orderHandle' => $handle))
             ->Order_GetPdfResult;
 
-        if( $download )
-        {
+        if ($download) {
             header('Content-type: application/pdf');
-            header('Content-Disposition: attachment; filename="'.$no.'.pdf"');
+            header('Content-Disposition: attachment; filename="' . $no . '.pdf"');
             echo $pdf;
             return true;
         }
@@ -245,27 +240,28 @@ class Order {
 
     /**
      * Create new Order
-     * @param  integer  $debtorNumber
-     * @param  Closure  $callback
+     * @param  integer $debtorNumber
+     * @param  Closure $callback
      * @return object
+     * @throws Exception if $orderHandle->Id is empty
      */
-    public function create($debtorNumber, Closure $callback, array $options=NULL)
+    public function create($debtorNumber, Closure $callback, array $options = NULL)
     {
         $debtor = new Debtor($this->client_raw);
         $debtorHandle = $debtor->getHandle($debtorNumber);
 
         $orderHandle = $this->client
-            ->Order_Create(array('debtorHandle'=>$debtorHandle))
+            ->Order_Create(array('debtorHandle' => $debtorHandle))
             ->Order_CreateResult;
 
 
-        if( !$orderHandle->Id )
-        {
+        if (!$orderHandle->Id) {
             throw new Exception("Error: creating Invoice.");
         }
 
-        if( $options )
+        if ($options){
             $this->setOptions($orderHandle, $options);
+        }
 
         $this->lines = new Line($this->client_raw, $orderHandle);
 
@@ -283,92 +279,90 @@ class Order {
      */
     public function setOptions($handle, array $options)
     {
-        foreach( $options as $option => $value )
-        {
-            switch( strtolower($option) )
-            {
+        foreach ($options as $option => $value) {
+            switch (strtolower($option)) {
                 case 'vat':
                     $this->client
                         ->Order_SetIsVatIncluded(array(
-                                'orderHandle' => $handle,
-                                'value'       => $value
+                            'orderHandle' => $handle,
+                            'value' => $value
                         ));
                     break;
                 case 'text1':
                     $this->client
                         ->Order_SetTextLine1(array(
                             'orderHandle' => $handle,
-                            'value'       => $value
+                            'value' => $value
                         ));
                     break;
                 case 'text2':
                     $this->client
                         ->Order_SetTextLine2(array(
                             'orderHandle' => $handle,
-                            'value'       => $value
+                            'value' => $value
                         ));
                     break;
                 case 'heading':
                     $this->client
                         ->Order_SetHeading(array(
                             'orderHandle' => $handle,
-                            'value'       => $value
+                            'value' => $value
                         ));
                     break;
                 case 'termsofdelivery':
                     $this->client
                         ->Order_SetTermsOfDelivery(array(
                             'orderHandle' => $handle,
-                            'value'       => $value
+                            'value' => $value
                         ));
                     break;
                 case 'deliveryaddress':
                     $this->client
                         ->Order_SetDeliveryAddress(array(
                             'orderHandle' => $handle,
-                            'value'       => $value
+                            'value' => $value
                         ));
                     break;
                 case 'deliverycity':
                     $this->client
                         ->Order_SetDeliveryCity(array(
                             'orderHandle' => $handle,
-                            'value'       => $value
+                            'value' => $value
                         ));
                     break;
                 case 'deliverycountry':
                     $this->client
                         ->Order_SetDeliveryCountry(array(
                             'orderHandle' => $handle,
-                            'value'       => $value
+                            'value' => $value
                         ));
                     break;
                 case 'deliverypostalcode':
                     $this->client
                         ->Order_SetDeliveryPostalCode(array(
                             'orderHandle' => $handle,
-                            'value'       => $value
+                            'value' => $value
                         ));
-                     break;
+                    break;
                 case 'otherreference':
                     $this->client
                         ->Order_SetOtherReference(array(
                             'orderHandle' => $handle,
-                            'value'       => $value
+                            'value' => $value
                         ));
                     break;
                 case 'date':
                     $this->client
                         ->Order_SetDate(array(
                             'orderHandle' => $handle,
-                            'value'       => $value
+                            'value' => $value
                         ));
                     break;
                 case 'layout':
                     $this->client
                         ->Order_SetLayout(array(
                             'orderHandle' => $handle,
-                            'value'       => $value
+                            'value' => $value
                         ));
                     break;
             }
@@ -385,7 +379,7 @@ class Order {
         $handle = $this->getHandle($orderNumber);
 
         $id = $this->client
-            ->Order_UpgradeToInvoice(array('orderHandle'=>$handle))
+            ->Order_UpgradeToInvoice(array('orderHandle' => $handle))
             ->Order_UpgradeToInvoiceResult;
 
         return $id;
@@ -405,7 +399,7 @@ class Order {
                 ->Order_Delete(array(
                     'OrderHandle' => $handle
                 ));
-        } catch( Exception $e ) {
+        } catch (Exception $e) {
             return false;
         }
 

@@ -2,7 +2,8 @@
 
 use tkj\Economics\ClientInterface as Client;
 
-class Group {
+class Group
+{
 
     /**
      * Client Connection
@@ -22,7 +23,7 @@ class Group {
      */
     public function __construct(Client $client)
     {
-        $this->client     = $client->getClient();
+        $this->client = $client->getClient();
         $this->client_raw = $client;
     }
 
@@ -34,12 +35,13 @@ class Group {
      */
     public function getHandle($no)
     {
-        if( is_object($no) AND isset($no->Number) ) return $no;
+        if (is_object($no) AND isset($no->Number)) return $no;
 
         return $this->client
-                    ->ProductGroup_FindByNumber(array('number'=>$no))
-                    ->ProductGroup_FindByNumberResult;
+            ->ProductGroup_FindByNumber(array('number' => $no))
+            ->ProductGroup_FindByNumberResult;
     }
+
     /**
      * Get Products Groups from handles
      * @param  object $handels
@@ -48,7 +50,7 @@ class Group {
     public function getArrayFromHandles($handles)
     {
         return $this->client
-            ->Product_GetDataArray(array('entityHandles'=>array('ProductGroupHandle'=>$handles)))
+            ->Product_GetDataArray(array('entityHandles' => array('ProductGroupHandle' => $handles)))
             ->Product_GetDataArrayResult
             ->ProductData;
     }
@@ -90,7 +92,7 @@ class Group {
         $handle = $this->getHandle($no);
 
         $productHandles = $this->client
-            ->ProductGroup_GetProducts(array('productGroupHandle'=>$handle))
+            ->ProductGroup_GetProducts(array('productGroupHandle' => $handle))
             ->ProductGroup_GetProductsResult
             ->ProductHandle;
 

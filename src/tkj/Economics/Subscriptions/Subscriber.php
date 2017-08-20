@@ -4,7 +4,8 @@ use tkj\Economics\ClientInterface as Client;
 use tkj\Economics\Debtor\Debtor;
 use InvalidArgumentException;
 
-class Subscriber {
+class Subscriber
+{
 
     protected $client;
 
@@ -14,8 +15,8 @@ class Subscriber {
 
     public function __construct(Client $client, $subscriptionHandle)
     {
-        $this->client       = $client->getClient();
-        $this->client_raw   = $client;
+        $this->client = $client->getClient();
+        $this->client_raw = $client;
 
         $this->subscriptionHandle = $subscriptionHandle;
     }
@@ -24,7 +25,7 @@ class Subscriber {
     {
         $data['subscriptionHandle'] = $this->subscriptionHandle;
 
-        if( !isset($data['debtor']))
+        if (!isset($data['debtor']))
             throw new InvalidArgumentException("It's required to provide a debtor number.");
 
         $debtor = new Debtor($this->client_raw);
@@ -34,9 +35,9 @@ class Subscriber {
         unset($data['debtor']);
 
         $data = array_merge(array(
-            'startDate'          => date('Y-m-d H:i:s'),
-            'registeredDate'     => date('Y-m-d H:i:s'),
-            'endDate'            => date('Y-m-d H:i:s', strtotime('+99 YEAR'))
+            'startDate' => date('Y-m-d H:i:s'),
+            'registeredDate' => date('Y-m-d H:i:s'),
+            'endDate' => date('Y-m-d H:i:s', strtotime('+99 YEAR'))
         ), $data);
 
         return $this->client

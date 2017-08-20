@@ -3,7 +3,8 @@
 use tkj\Economics\ClientInterface as Client;
 use tkj\Economics\Account\Account;
 
-class Group {
+class Group
+{
 
     /**
      * Client Connection
@@ -23,7 +24,7 @@ class Group {
      */
     public function __construct(Client $client)
     {
-        $this->client     = $client->getClient();
+        $this->client = $client->getClient();
         $this->client_raw = $client;
     }
 
@@ -34,10 +35,10 @@ class Group {
      */
     public function getHandle($no)
     {
-        if( is_object($no) AND isset($no->Number) ) return $no;
+        if (is_object($no) AND isset($no->Number)) return $no;
 
         return $this->client
-            ->DebtorGroup_FindByNumber(array('number'=>$no))
+            ->DebtorGroup_FindByNumber(array('number' => $no))
             ->DebtorGroup_FindByNumberResult;
     }
 
@@ -49,7 +50,7 @@ class Group {
     public function getArrayFromHandles($handles)
     {
         return $this->client
-            ->DebtorGroup_GetDataArray(array('entityHandles'=>$handles))
+            ->DebtorGroup_GetDataArray(array('entityHandles' => $handles))
             ->DebtorGroup_GetDataArrayResult
             ->DebtorGroupData;
     }
@@ -59,7 +60,7 @@ class Group {
         $handle = $this->getHandle($no);
 
         return $this->client
-            ->DebtorGroup_GetData(array('entityHandle'=> $handle))
+            ->DebtorGroup_GetData(array('entityHandle' => $handle))
             ->DebtorGroup_GetDataResult;
     }
 
@@ -88,7 +89,7 @@ class Group {
         $handle = $this->getHandle($no);
 
         $debtorHandles = $this->client
-            ->DebtorGroup_GetDebtors(array('debtorGroupHandle'=>$handle))
+            ->DebtorGroup_GetDebtors(array('debtorGroupHandle' => $handle))
             ->DebtorGroup_GetDebtorsResult
             ->DebtorHandle;
 
@@ -98,13 +99,13 @@ class Group {
 
     /**
      * Create a new Debtor Group
-     * @param  string  $name
+     * @param  string $name
      * @param  integer $account
      * @return object
      */
     public function create($name, $account)
     {
-        $all    = $this->all();
+        $all = $this->all();
         $number = end($all)->Number + 1;
 
         $accounts = new Account($this->client_raw);
@@ -112,8 +113,8 @@ class Group {
 
         $groupHandle = $this->client
             ->DebtorGroup_Create(array(
-                "number"        => $number,
-                "name"          => $name,
+                "number" => $number,
+                "name" => $name,
                 "accountHandle" => $accountHandle
             ))->DebtorGroup_CreateResult;
 

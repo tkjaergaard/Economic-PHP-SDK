@@ -3,7 +3,8 @@
 use tkj\Economics\ClientInterface as Client;
 use Exception;
 
-class Contact {
+class Contact
+{
 
     /**
      * Client Connection
@@ -23,7 +24,7 @@ class Contact {
      */
     public function __construct(Client $client)
     {
-        $this->client     = $client->getClient();
+        $this->client = $client->getClient();
         $this->client_raw = $client;
     }
 
@@ -35,7 +36,7 @@ class Contact {
     public function getArrayFromHandles($handles)
     {
         return $this->client
-            ->DebtorContact_GetDataArray(array('entityHandles'=>array('DebtorContactHandle'=>$handles)))
+            ->DebtorContact_GetDataArray(array('entityHandles' => array('DebtorContactHandle' => $handles)))
             ->DebtorContact_GetDataArrayResult
             ->DebtorContactData;
     }
@@ -77,7 +78,7 @@ class Contact {
     public function search($name)
     {
         $handles = $this->client
-            ->DebtorContact_FindByName(array('name'=>$name))
+            ->DebtorContact_FindByName(array('name' => $name))
             ->DebtorContact_FindByNameResult
             ->DebtorContactHandle;
 
@@ -86,26 +87,24 @@ class Contact {
 
     /**
      * Update an existion Contact by Contact ID
-     * @param  array   $data
+     * @param  array $data
      * @param  integer $id
      * @return array
      */
     public function update(array $data, $id)
     {
-        if( !is_integer($id) )
+        if (!is_integer($id))
             throw new Exception("ID must be a integer");
 
-        $handle = array('Id'=>$id);
+        $handle = array('Id' => $id);
 
-        foreach( $data as $field => $value )
-        {
-            switch( strtolower($field) )
-            {
+        foreach ($data as $field => $value) {
+            switch (strtolower($field)) {
                 case 'name':
                     $this->client
                         ->debtorContact_SetName(array(
                             'debtorContactHandle' => $handle,
-                            'value'               => $value
+                            'value' => $value
                         ));
                     break;
 
@@ -113,7 +112,7 @@ class Contact {
                     $this->client
                         ->debtorContact_SetEmail(array(
                             'debtorContactHandle' => $handle,
-                            'value'               => $value
+                            'value' => $value
                         ));
                     break;
 
@@ -121,7 +120,7 @@ class Contact {
                     $this->client
                         ->DebtorContact_SetTelephoneNumber(array(
                             'debtorContactHandle' => $handle,
-                            'value'               => $value
+                            'value' => $value
                         ));
                     break;
 
@@ -129,7 +128,7 @@ class Contact {
                     $this->client
                         ->debtorContact_SetIsToReceiveEmailCopyOfInvoice(array(
                             'debtorContactHandle' => $handle,
-                            'value'               => !!$value
+                            'value' => !!$value
                         ));
                     break;
 
@@ -137,7 +136,7 @@ class Contact {
                     $this->client
                         ->debtorContact_SetIsToReceiveEmailCopyOfOrder(array(
                             'debtorContactHandle' => $handle,
-                            'value'               => !!$value
+                            'value' => !!$value
                         ));
                     break;
 
@@ -145,7 +144,7 @@ class Contact {
                     $this->client
                         ->debtorContact_SetComments(array(
                             'debtorContactHandle' => $handle,
-                            'value'               => $value
+                            'value' => $value
                         ));
                     break;
 
@@ -157,7 +156,7 @@ class Contact {
 
     /**
      * Create a new Contact from data array
-     * @param  array   $data
+     * @param  array $data
      * @param  integer $debtor
      * @return array
      */
@@ -169,7 +168,7 @@ class Contact {
         $id = $this->client
             ->DebtorContact_Create(array(
                 'debtorHandle' => $debtorHandle,
-                'name'         => $data['name']
+                'name' => $data['name']
             ))->DebtorContact_CreateResult;
 
         return $this->update($id->Id, $data);

@@ -4,7 +4,8 @@ use tkj\Economics\ClientInterface as Client;
 use tkj\Economics\Unit\Unit;
 use tkj\Economics\Product\Product;
 
-class Line {
+class Line
+{
 
     /**
      * Client Connection
@@ -29,13 +30,12 @@ class Line {
      * Construct class and set dependencies
      * @param devdk\Economics\Client $client
      */
-    public function __construct(Client $client, $invoiceHandle=NULL)
+    public function __construct(Client $client, $invoiceHandle = NULL)
     {
-        $this->client     = $client->getClient();
+        $this->client = $client->getClient();
         $this->client_raw = $client;
 
-        if( $invoiceHandle )
-        {
+        if ($invoiceHandle) {
             $this->invoiceHandle = $invoiceHandle;
         }
     }
@@ -48,7 +48,7 @@ class Line {
     public function getArrayFromHandles($handles)
     {
         return $this->client
-            ->CurrentInvoiceLine_GetDataArray(array('entityHandles'=>$handles))
+            ->CurrentInvoiceLine_GetDataArray(array('entityHandles' => $handles))
             ->CurrentInvoiceLine_GetDataArrayResult
             ->CurrentInvoiceLineData;
     }
@@ -71,20 +71,19 @@ class Line {
     {
         $defaults = array(
             "description" => null,
-            "price"       => null,
-            "discount"    => null,
-            "qty"         => 1,
-            "unit"        => null
+            "price" => null,
+            "discount" => null,
+            "qty" => 1,
+            "unit" => null
         );
 
         $merged = array_merge($defaults, $data);
 
         $line = $this->create($this->invoiceHandle);
 
-        if( isset($merged['product']) )
-        {
+        if (isset($merged['product'])) {
             $this->product($line, $merged['product']);
-            unset( $merged['product'] );
+            unset($merged['product']);
         }
 
         return $this->update($data, $line);
@@ -92,24 +91,21 @@ class Line {
 
     /**
      * Update Invoice Line with data
-     * @param  array  $data
+     * @param  array $data
      * @param  object $line
      * @return object
      */
     public function update(array $data, $line)
     {
-        if( is_integer($line) )
-        {
+        if (is_integer($line)) {
             $line = array('Id' => $line);
         }
 
-        foreach( $data as $name => $value )
-        {
-            if( is_null($value) )
+        foreach ($data as $name => $value) {
+            if (is_null($value))
                 continue;
 
-            switch( strtolower($name) )
-            {
+            switch (strtolower($name)) {
                 case 'description':
                     $this->description($line, $value);
                     break;
@@ -128,7 +124,7 @@ class Line {
             }
         }
 
-        return $this->getArrayFromHandles( array('CurrentInvoiceLineHandle'=>$line) );
+        return $this->getArrayFromHandles(array('CurrentInvoiceLineHandle' => $line));
     }
 
     /**
@@ -179,7 +175,7 @@ class Line {
             ->CurrentInvoiceLine_SetDiscountAsPercent(
                 array(
                     'currentInvoiceLineHandle' => $invoiceLineHandle,
-                    'value'                    => $discount
+                    'value' => $discount
                 )
             );
 
@@ -198,7 +194,7 @@ class Line {
             ->CurrentInvoiceLine_SetDescription(
                 array(
                     'currentInvoiceLineHandle' => $invoiceLineHandle,
-                    'value'                    => $description
+                    'value' => $description
                 )
             );
 
@@ -217,7 +213,7 @@ class Line {
             ->CurrentInvoiceLine_SetUnitNetPrice(
                 array(
                     'currentInvoiceLineHandle' => $invoiceLineHandle,
-                    'value'                    => $price
+                    'value' => $price
                 )
             );
 
@@ -236,7 +232,7 @@ class Line {
             ->CurrentInvoiceLine_SetQuantity(
                 array(
                     'currentInvoiceLineHandle' => $invoiceLineHandle,
-                    'value'                    => $qty
+                    'value' => $qty
                 )
             );
 
@@ -252,14 +248,14 @@ class Line {
      */
     public function unit($invoiceLineHandle, $unit)
     {
-        $units      = new Unit($this->client_raw);
+        $units = new Unit($this->client_raw);
         $unitHandle = $units->getHandle($unit);
 
         $this->client
             ->CurrentInvoiceLine_SetUnit(
                 array(
                     'currentInvoiceLineHandle' => $invoiceLineHandle,
-                    'valueHandle'              => $unitHandle
+                    'valueHandle' => $unitHandle
                 )
             );
 

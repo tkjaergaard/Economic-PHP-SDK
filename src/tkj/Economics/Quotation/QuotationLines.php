@@ -4,7 +4,8 @@ use tkj\Economics\ClientInterface as Client;
 use tkj\Economics\Unit\Unit;
 use tkj\Economics\Product\Product;
 
-class QuotationLines {
+class QuotationLines
+{
 
     /**
      * Client Connection
@@ -29,10 +30,10 @@ class QuotationLines {
      * @param Client $client
      * @param mixed $quotationHandle
      */
-    public function __construct(Client $client, $quotationHandle=NULL)
+    public function __construct(Client $client, $quotationHandle = NULL)
     {
-        $this->client          = $client->getClient();
-        $this->client_raw      = $client;
+        $this->client = $client->getClient();
+        $this->client_raw = $client;
         $this->quotationHandle = $quotationHandle;
     }
 
@@ -44,29 +45,26 @@ class QuotationLines {
     {
         $defaults = array(
             "description" => null,
-            "price"       => null,
-            "discount"    => null,
-            "qty"         => 1,
-            "unit"        => null
+            "price" => null,
+            "discount" => null,
+            "qty" => 1,
+            "unit" => null
         );
 
         $merged = array_merge($defaults, $data);
 
         $line = $this->create($this->quotationHandle);
 
-        if( isset($merged['product']) )
-        {
+        if (isset($merged['product'])) {
             $this->product($line, $merged['product']);
-            unset( $merged['product'] );
+            unset($merged['product']);
         }
 
-        foreach( $merged as $name => $value )
-        {
-            if( is_null($value) )
+        foreach ($merged as $name => $value) {
+            if (is_null($value))
                 continue;
 
-            switch($name)
-            {
+            switch ($name) {
                 case 'description':
                     $this->description($line, $value);
                     break;
@@ -111,7 +109,7 @@ class QuotationLines {
             ->QuotationLine_SetDiscountAsPercent(
                 array(
                     'quotationLineHandle' => $QuotationLineHandle,
-                    'value'               => $discount
+                    'value' => $discount
                 )
             );
 
@@ -130,7 +128,7 @@ class QuotationLines {
             ->QuotationLine_SetDescription(
                 array(
                     'quotationLineHandle' => $QuotationLineHandle,
-                    'value'               => $description
+                    'value' => $description
                 )
             );
 
@@ -149,7 +147,7 @@ class QuotationLines {
             ->QuotationLine_SetUnitNetPrice(
                 array(
                     'quotationLineHandle' => $QuotationLineHandle,
-                    'value'               => $price
+                    'value' => $price
                 )
             );
 
@@ -168,7 +166,7 @@ class QuotationLines {
             ->QuotationLine_SetQuantity(
                 array(
                     'quotationLineHandle' => $QuotationLineHandle,
-                    'value'               => $qty
+                    'value' => $qty
                 )
             );
 
@@ -184,7 +182,7 @@ class QuotationLines {
      */
     public function unit($QuotationLineHandle, $unit)
     {
-        $units      = new Unit($this->client_raw);
+        $units = new Unit($this->client_raw);
         $unitHandle = $units->getHandle($unit);
 
         $this->client

@@ -4,7 +4,8 @@ use tkj\Economics\ClientInterface as Client;
 use tkj\Economics\Subscriptions\Subscriber;
 use Exception;
 
-class Subscription {
+class Subscription
+{
 
     protected $client;
 
@@ -12,17 +13,17 @@ class Subscription {
 
     public function __construct(Client $client)
     {
-        $this->client     = $client->getClient();
+        $this->client = $client->getClient();
         $this->client_raw = $client;
     }
 
     public function getHandle($no)
     {
-        if( is_object($no) AND isset($no->Id) ) return $no;
+        if (is_object($no) AND isset($no->Id)) return $no;
 
-        if( @$result = $this->client
-                ->Subscription_FindByNumber(array('number'=>$no))
-                ->Subscription_FindByNumberResult
+        if (@$result = $this->client
+            ->Subscription_FindByNumber(array('number' => $no))
+            ->Subscription_FindByNumberResult
         ) return $result;
     }
 
@@ -54,8 +55,7 @@ class Subscription {
         try {
             $this->client
                 ->Subscription_Delete(array('subscriptionHandle' => $handle));
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             return false;
         }
 
@@ -74,7 +74,7 @@ class Subscription {
     public function getArrayFromHandles($handles)
     {
         return $this->client
-            ->Subscription_GetDataArray(array('entityHandles'=>$handles))
+            ->Subscription_GetDataArray(array('entityHandles' => $handles))
             ->Subscription_GetDataArrayResult
             ->SubscriptionData;
     }

@@ -2,7 +2,8 @@
 
 use tkj\Economics\ClientInterface as Client;
 
-class Unit {
+class Unit
+{
 
     /**
      * Client Connection
@@ -18,17 +19,17 @@ class Unit {
 
     public function __construct(Client $client)
     {
-        $this->client     = $client->getClient();
+        $this->client = $client->getClient();
         $this->client_raw = $client;
     }
 
     public function getHandle($no)
     {
-        if( is_object($no) AND isset($no->Id) ) return $no;
+        if (is_object($no) AND isset($no->Id)) return $no;
 
         return $this->client
-                    ->Unit_FindByNumber(array('number'=>$no))
-                    ->Unit_FindByNumberResult;
+            ->Unit_FindByNumber(array('number' => $no))
+            ->Unit_FindByNumberResult;
     }
 
 }

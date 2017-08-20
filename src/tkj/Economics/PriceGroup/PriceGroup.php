@@ -2,7 +2,8 @@
 
 use tkj\Economics\ClientInterface as Client;
 
-class PriceGroup {
+class PriceGroup
+{
 
     /**
      * Client Connection
@@ -16,7 +17,7 @@ class PriceGroup {
      */
     public function __construct(Client $client)
     {
-        $this->client     = $client->getClient();
+        $this->client = $client->getClient();
     }
 
     /**
@@ -26,22 +27,22 @@ class PriceGroup {
     public function all()
     {
         return $this->client
-                    ->PriceGroup_GetAll()
-					->PriceGroup_GetAllResult
-					->PriceGroupHandle;
+            ->PriceGroup_GetAll()
+            ->PriceGroup_GetAllResult
+            ->PriceGroupHandle;
     }
 
     /**
      * Returns the price for the product in the PriceGroup
      * If no special price is found then the sales price is returned instead
      * @param  integer $groupNo
-     * @param  string   $productNo
+     * @param  string $productNo
      * @return float
      */
     public function getPrice($groupNo, $productNo)
     {
         return $this->client
-                    ->PriceGroup_GetPrice(array('priceGroupHandle'=>array('Number'=>$groupNo), 'productHandle'=>array('Number'=>$productNo)))
-					->PriceGroup_GetPriceResult;
+            ->PriceGroup_GetPrice(array('priceGroupHandle' => array('Number' => $groupNo), 'productHandle' => array('Number' => $productNo)))
+            ->PriceGroup_GetPriceResult;
     }
 }

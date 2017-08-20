@@ -4,7 +4,8 @@ use tkj\Economics\ClientInterface as Client;
 use tkj\Economics\Unit\Unit;
 use tkj\Economics\Product\Product;
 
-class Line {
+class Line
+{
 
     /**
      * Client Connection
@@ -29,13 +30,12 @@ class Line {
      * Construct class and set dependencies
      * @param devdk\Economics\Client $client
      */
-    public function __construct(Client $client, $orderHandle=NULL)
+    public function __construct(Client $client, $orderHandle = NULL)
     {
-        $this->client     = $client->getClient();
+        $this->client = $client->getClient();
         $this->client_raw = $client;
 
-        if( $orderHandle )
-        {
+        if ($orderHandle) {
             $this->orderHandle = $orderHandle;
         }
     }
@@ -58,8 +58,8 @@ class Line {
      */
     public function getArrayFromHandles($handles)
     {
-         return $this->client
-            ->OrderLine_GetDataArray(array('entityHandles'=>$handles))
+        return $this->client
+            ->OrderLine_GetDataArray(array('entityHandles' => $handles))
             ->OrderLine_GetDataArrayResult->OrderLineData;
     }
 
@@ -71,20 +71,19 @@ class Line {
     {
         $defaults = array(
             "description" => null,
-            "price"       => null,
-            "discount"    => null,
-            "qty"         => 1,
-            "unit"        => null
+            "price" => null,
+            "discount" => null,
+            "qty" => 1,
+            "unit" => null
         );
 
         $merged = array_merge($defaults, $data);
 
         $line = $this->create($this->orderHandle);
 
-        if( isset($merged['product']) )
-        {
+        if (isset($merged['product'])) {
             $this->product($line, $merged['product']);
-            unset( $merged['product'] );
+            unset($merged['product']);
         }
 
         return $this->update($data, $line);
@@ -92,24 +91,21 @@ class Line {
 
     /**
      * Update Order Line by data
-     * @param  array  $data
+     * @param  array $data
      * @param  object $line
      * @return object
      */
     public function update(array $data, $line)
     {
-        if( is_integer($line) )
-        {
+        if (is_integer($line)) {
             $line = array('Id' => $line);
         }
 
-        foreach( $data as $name => $value )
-        {
-            if( is_null($value) )
+        foreach ($data as $name => $value) {
+            if (is_null($value))
                 continue;
 
-            switch( strtolower($name) )
-            {
+            switch (strtolower($name)) {
                 case 'description':
                     $this->description($line, $value);
                     break;
@@ -128,7 +124,7 @@ class Line {
             }
         }
 
-        return $this->getArrayFromHandles( array('OrderLineHandle'=>$line) );
+        return $this->getArrayFromHandles(array('OrderLineHandle' => $line));
     }
 
     /**
@@ -179,7 +175,7 @@ class Line {
             ->OrderLine_SetDiscountAsPercent(
                 array(
                     'orderLineHandle' => $orderLineHandle,
-                    'value'           => $discount
+                    'value' => $discount
                 )
             );
 
@@ -198,7 +194,7 @@ class Line {
             ->OrderLine_SetDescription(
                 array(
                     'orderLineHandle' => $orderLineHandle,
-                    'value'           => $description
+                    'value' => $description
                 )
             );
 
@@ -217,7 +213,7 @@ class Line {
             ->OrderLine_SetUnitNetPrice(
                 array(
                     'orderLineHandle' => $orderLineHandle,
-                    'value'           => $price
+                    'value' => $price
                 )
             );
 
@@ -236,7 +232,7 @@ class Line {
             ->OrderLine_SetQuantity(
                 array(
                     'orderLineHandle' => $orderLineHandle,
-                    'value'           => $qty
+                    'value' => $qty
                 )
             );
 
@@ -252,14 +248,14 @@ class Line {
      */
     public function unit($orderLineHandle, $unit)
     {
-        $units      = new Unit($this->client_raw);
+        $units = new Unit($this->client_raw);
         $unitHandle = $units->getHandle($unit);
 
         $this->client
             ->OrderLine_SetUnit(
                 array(
                     'orderLineHandle' => $orderLineHandle,
-                    'valueHandle'     => $unitHandle
+                    'valueHandle' => $unitHandle
                 )
             );
 

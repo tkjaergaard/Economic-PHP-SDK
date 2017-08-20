@@ -2,7 +2,8 @@
 
 use tkj\Economics\ClientInterface as Client;
 
-class Account {
+class Account
+{
 
     /**
      * Client Connection
@@ -22,7 +23,7 @@ class Account {
      */
     public function __construct(Client $client)
     {
-        $this->client     = $client->getClient();
+        $this->client = $client->getClient();
         $this->client_raw = $client;
     }
 
@@ -33,10 +34,10 @@ class Account {
      */
     public function getHandle($no)
     {
-        if( is_object($no) AND isset($no->Number) ) return $no;
+        if (is_object($no) AND isset($no->Number)) return $no;
 
         return $this->client
-            ->Account_FindByNumber(array('number'=>$no))
+            ->Account_FindByNumber(array('number' => $no))
             ->Account_FindByNumberResult;
     }
 
@@ -48,7 +49,7 @@ class Account {
     public function getArrayFromHandles($handles)
     {
         return $this->client
-            ->Account_GetDataArray(array('entityHandles'=>$handles))
+            ->Account_GetDataArray(array('entityHandles' => $handles))
             ->Account_GetDataArrayResult
             ->AccountData;
     }

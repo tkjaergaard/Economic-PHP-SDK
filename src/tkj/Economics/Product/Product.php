@@ -3,7 +3,8 @@
 use tkj\Economics\ClientInterface as Client;
 use tkj\Economics\Unit\Unit;
 
-class Product {
+class Product
+{
 
     /**
      * Client Connection
@@ -23,7 +24,7 @@ class Product {
      */
     public function __construct(Client $client)
     {
-        $this->client     = $client->getClient();
+        $this->client = $client->getClient();
         $this->client_raw = $client;
     }
 
@@ -34,11 +35,11 @@ class Product {
      */
     public function getHandle($no)
     {
-        if( is_object($no) AND isset($no->Number) ) return $no;
+        if (is_object($no) AND isset($no->Number)) return $no;
 
         return $this->client
-                    ->Product_FindByNumber(array('number'=>$no))
-                    ->Product_FindByNumberResult;
+            ->Product_FindByNumber(array('number' => $no))
+            ->Product_FindByNumberResult;
     }
 
     /**
@@ -49,7 +50,7 @@ class Product {
     public function getArrayFromHandles($handles)
     {
         return $this->client
-            ->Product_GetDataArray(array('entityHandles'=>array('ProductHandle'=>$handles)))
+            ->Product_GetDataArray(array('entityHandles' => array('ProductHandle' => $handles)))
             ->Product_GetDataArrayResult
             ->ProductData;
     }
@@ -91,37 +92,37 @@ class Product {
         $handle = $this->getHandle($no);
 
         return $this->client
-            ->Product_GetAvailable(array('productHandle'=>$handle))
+            ->Product_GetAvailable(array('productHandle' => $handle))
             ->Product_GetAvailableResult;
     }
 
     /**
      * Create a new Product
-     * @param  array  $data
+     * @param  array $data
      * @return object
      */
     public function create(array $data)
     {
-        if(isset($data["number"])) {
+        if (isset($data["number"])) {
             $number = $data["number"];
-        }else{
-            $all    = $this->all();
+        } else {
+            $all = $this->all();
             $number = end($all)->Number + 1;
         }
 
-        $group       = new Group($this->client_raw);
+        $group = new Group($this->client_raw);
         $groupHandle = $group->getHandle($data['group']);
 
         $productHandle = $this->client
             ->Product_Create(array(
-                "number"             => $number,
+                "number" => $number,
                 "productGroupHandle" => $groupHandle,
-                "name"               => $data["name"]
+                "name" => $data["name"]
             ))
             ->Product_CreateResult;
 
-        unset( $data['name'] );
-        unset( $data['group'] );
+        unset($data['name']);
+        unset($data['group']);
 
         $this->client
             ->Product_SetIsAccessible(array('productHandle' => $productHandle, "value" => true));
@@ -132,19 +133,17 @@ class Product {
     /**
      * Update an existion Product
      * @param  integer $no
-     * @param  array   $data
+     * @param  array $data
      * @return object
      */
     public function update($no, array $data)
     {
-        $handle  = $this->getHandle($no);
+        $handle = $this->getHandle($no);
 
-        foreach( $data as $field => $value )
-        {
+        foreach ($data as $field => $value) {
             $request = array('productHandle' => $handle, "value" => $value);
 
-            switch( strtolower($field) )
-            {
+            switch (strtolower($field)) {
                 case 'cost';
                     $this->client
                         ->Product_SetCostPrice($request);
@@ -160,8 +159,8 @@ class Product {
                 case 'group':
                     unset($request["value"]);
 
-                    $group                  = new Group($this->client_raw);
-                    $groupHandle            = $group->getHandle($value);
+                    $group = new Group($this->client_raw);
+                    $groupHandle = $group->getHandle($value);
                     $request["valueHandle"] = $groupHandle;
 
                     $this->client
@@ -178,8 +177,8 @@ class Product {
                 case 'unit':
                     unset($request["value"]);
 
-                    $unit                   = new Unit($this->client_raw);
-                    $unitHandle             = $unit->getHandle($value);
+                    $unit = new Unit($this->client_raw);
+                    $unitHandle = $unit->getHandle($value);
                     $request["valueHandle"] = $unitHandle;
 
                     $this->client
@@ -188,7 +187,7 @@ class Product {
             }
         }
 
-        return $this->getArrayFromHandles( $handle );
+        return $this->getArrayFromHandles($handle);
     }
 
     /**
@@ -204,10 +203,10 @@ class Product {
     public function find($query)
     {
         $handles = $this->client
-            ->Product_FindByName(array('name'=>$query))
+            ->Product_FindByName(array('name' => $query))
             ->Product_FindByNameResult;
 
-        if( ! isset($handles->ProductHandle) )
+        if (!isset($handles->ProductHandle))
             return null;
 
         return $this->getArrayFromHandles($handles->ProductHandle);
@@ -221,7 +220,7 @@ class Product {
      */
     public function getPriceByCurrency($number, $code)
     {
-		return $this->client->ProductPrice_GetPrice(array('productPriceHandle' => array('Id1' => $number, 'Id2' => $code)))->ProductPrice_GetPriceResult;
+        return $this->client->ProductPrice_GetPrice(array('productPriceHandle' => array('Id1' => $number, 'Id2' => $code)))->ProductPrice_GetPriceResult;
     }
 
 

@@ -5,7 +5,8 @@ use tkj\Economics\Invoice\Invoice;
 use tkj\Economics\Order\Order;
 use tkj\Economics\Quotation\Quotation;
 
-class Debtor {
+class Debtor
+{
 
     /**
      * Client Connection
@@ -25,7 +26,7 @@ class Debtor {
      */
     public function __construct(Client $client)
     {
-        $this->client     = $client->getClient();
+        $this->client = $client->getClient();
         $this->client_raw = $client;
     }
 
@@ -36,11 +37,11 @@ class Debtor {
      */
     public function getHandle($no)
     {
-        if( is_object($no) AND isset($no->Number) ) return $no;
+        if (is_object($no) AND isset($no->Number)) return $no;
 
         return $this->client
-                    ->Debtor_FindByNumber(array('number'=>$no))
-                    ->Debtor_FindByNumberResult;
+            ->Debtor_FindByNumber(array('number' => $no))
+            ->Debtor_FindByNumberResult;
     }
 
     /**
@@ -51,7 +52,7 @@ class Debtor {
     public function getDataFromHandle($handle)
     {
         return $this->client
-            ->Debtor_GetData(array('entityHandle'=> $handle))
+            ->Debtor_GetData(array('entityHandle' => $handle))
             ->Debtor_GetDataResult;
     }
 
@@ -63,7 +64,7 @@ class Debtor {
     public function getArrayFromHandles($handles)
     {
         return $this->client
-            ->Debtor_GetDataArray(array('entityHandles'=>$handles))
+            ->Debtor_GetDataArray(array('entityHandles' => $handles))
             ->Debtor_GetDataArrayResult
             ->DebtorData;
     }
@@ -103,7 +104,7 @@ class Debtor {
         $handle = $this->getHandle($no);
 
         return $this->client
-            ->Debtor_GetAddress(array('debtorHandle'=>$handle))
+            ->Debtor_GetAddress(array('debtorHandle' => $handle))
             ->Debtor_GetAddressResult;
     }
 
@@ -117,7 +118,7 @@ class Debtor {
         $handle = $this->getHandle($no);
 
         return $this->client
-            ->Debtor_GetBalance(array('debtorHandle'=>$handle))
+            ->Debtor_GetBalance(array('debtorHandle' => $handle))
             ->Debtor_GetBalanceResult;
     }
 
@@ -132,12 +133,11 @@ class Debtor {
         $handle = $this->getHandle($no);
 
         $contactHandles = $this->client
-            ->Debtor_GetDebtorContacts(array('debtorHandle'=>$handle))
+            ->Debtor_GetDebtorContacts(array('debtorHandle' => $handle))
             ->Debtor_GetDebtorContactsResult
             ->DebtorContactHandle;
 
-        if( count($contactHandles) <= 0 )
-        {
+        if (count($contactHandles) <= 0) {
             return array();
         }
 
@@ -156,7 +156,7 @@ class Debtor {
         $handle = $this->getHandle($no);
 
         $invoiceHandles = $this->client
-            ->Debtor_GetInvoices(array('debtorHandle'=>$handle))
+            ->Debtor_GetInvoices(array('debtorHandle' => $handle))
             ->Debtor_GetInvoicesResult
             ->InvoiceHandle;
 
@@ -175,7 +175,7 @@ class Debtor {
         $handle = $this->getHandle($no);
 
         $orderHandles = $this->client
-            ->Debtor_GetOrders(array('debtorHandle'=>$handle))
+            ->Debtor_GetOrders(array('debtorHandle' => $handle))
             ->Debtor_GetOrdersResult
             ->OrderHandle;
 
@@ -192,10 +192,10 @@ class Debtor {
     {
         $handle = $this->getHandle($no);
         $quotationHandles = $this->client
-            ->Debtor_GetQuotations(array('debtorHandle'=>$handle))
+            ->Debtor_GetQuotations(array('debtorHandle' => $handle))
             ->Debtor_GetQuotationsResult;
 
-        if( count($quotationHandles) <= 0 )
+        if (count($quotationHandles) <= 0)
             return array();
 
         $quotationHandles = $quotationHandles->QuotationHandle;
@@ -210,11 +210,10 @@ class Debtor {
      * @param  string $by
      * @return object
      */
-    public function search($value, $by='EMAIL')
+    public function search($value, $by = 'EMAIL')
     {
         $by = strtoupper($by);
-        switch( $by )
-        {
+        switch ($by) {
             case 'CI':
                 return $this->findByCi($value);
             case 'EAN':
@@ -238,17 +237,17 @@ class Debtor {
     protected function findByCi($value)
     {
         $handles = $this->client
-            ->Debtor_FindByCINumber(array('ciNumber'=>$value))
+            ->Debtor_FindByCINumber(array('ciNumber' => $value))
             ->Debtor_FindByCINumberResult
             ->DebtorHandle;
 
-        if ( count($handles) > 1 )
+        if (count($handles) > 1)
             return $this->getArrayFromHandles($handles);
 
-    $result = $this->getDataFromHandle($handles);
-    if ( empty($result) )
-        return array();
-    return array($result);
+        $result = $this->getDataFromHandle($handles);
+        if (empty($result))
+            return array();
+        return array($result);
     }
 
     /**
@@ -259,17 +258,17 @@ class Debtor {
     protected function findByEan($value)
     {
         $handles = $this->client
-            ->Debtor_FindByEan(array('ean'=>$value))
+            ->Debtor_FindByEan(array('ean' => $value))
             ->Debtor_FindByEanResult
             ->DebtorHandle;
 
-        if ( count($handles) > 1 )
+        if (count($handles) > 1)
             return $this->getArrayFromHandles($handles);
 
-    $result = $this->getDataFromHandle($handles);
-    if ( empty($result) )
-        return array();
-    return array($result);
+        $result = $this->getDataFromHandle($handles);
+        if (empty($result))
+            return array();
+        return array($result);
     }
 
     /**
@@ -280,17 +279,17 @@ class Debtor {
     protected function findByEmail($value)
     {
         $handles = $this->client
-            ->Debtor_FindByEmail(array('email'=>$value))
+            ->Debtor_FindByEmail(array('email' => $value))
             ->Debtor_FindByEmailResult
             ->DebtorHandle;
 
-        if ( count($handles) > 1 )
+        if (count($handles) > 1)
             return $this->getArrayFromHandles($handles);
 
-    $result = $this->getDataFromHandle($handles);
-    if ( empty($result) )
-        return array();
-    return array($result);
+        $result = $this->getDataFromHandle($handles);
+        if (empty($result))
+            return array();
+        return array($result);
     }
 
     /**
@@ -301,17 +300,17 @@ class Debtor {
     protected function findByName($value)
     {
         $handles = $this->client
-            ->Debtor_FindByName(array('name'=>$value))
+            ->Debtor_FindByName(array('name' => $value))
             ->Debtor_FindByNameResult
             ->DebtorHandle;
 
-        if ( count($handles) > 1 )
+        if (count($handles) > 1)
             return $this->getArrayFromHandles($handles);
 
-    $result = $this->getDataFromHandle($handles);
-    if ( empty($result) )
-        return array();
-    return array($result);
+        $result = $this->getDataFromHandle($handles);
+        if (empty($result))
+            return array();
+        return array($result);
     }
 
     /**
@@ -322,15 +321,15 @@ class Debtor {
     public function findByPartialName($value)
     {
         $handles = $this->client
-            ->Debtor_FindByPartialName(array('partialName'=>$value))
+            ->Debtor_FindByPartialName(array('partialName' => $value))
             ->Debtor_FindByPartialNameResult
             ->DebtorHandle;
 
-        if ( count($handles) > 1 )
+        if (count($handles) > 1)
             return $this->getArrayFromHandles($handles);
 
         $result = $this->getDataFromHandle($handles);
-        if ( empty($result) )
+        if (empty($result))
             return array();
         return array($result);
     }
@@ -338,19 +337,17 @@ class Debtor {
     /**
      * Update an existing Debtor
      * @param  integer $no
-     * @param  array   $data
+     * @param  array $data
      * @return object
      */
     public function updateField($no, $data)
     {
         $handle = $this->getHandle($no);
 
-        foreach( $data as $field => $value )
-        {
-            $request = array('debtorHandle'=>$handle, 'value'=>$value);
+        foreach ($data as $field => $value) {
+            $request = array('debtorHandle' => $handle, 'value' => $value);
 
-            switch( strtolower($field) )
-            {
+            switch (strtolower($field)) {
                 case 'name':
                     $this->client
                         ->Debtor_SetName($request);
@@ -423,14 +420,14 @@ class Debtor {
 
     /**
      * Create a new debtor
-     * @param  array  $data
+     * @param  array $data
      * @return object
      */
     public function create(array $data)
     {
-        if(isset($data["number"])) {
+        if (isset($data["number"])) {
             $number = $data["number"];
-        }else{
+        } else {
             $number = $this->client
                 ->Debtor_GetNextAvailableNumber()
                 ->Debtor_GetNextAvailableNumberResult;
@@ -438,8 +435,7 @@ class Debtor {
 
         $groupHandle = array('Number' => 1);
 
-        if( isset($data['group']) )
-        {
+        if (isset($data['group'])) {
             $group = new Group($this->client_raw);
             $groupHandle = $group->getHandle($data['group']);
         }
@@ -447,15 +443,15 @@ class Debtor {
         $debtor = $this->client
             ->Debtor_Create(
                 array(
-                    'number'            => $number,
+                    'number' => $number,
                     'debtorGroupHandle' => $groupHandle,
-                    'name'              => $data['Name'],
-                    'vatZone'           => $data['vatZone']
+                    'name' => $data['Name'],
+                    'vatZone' => $data['vatZone']
                 )
             )
             ->Debtor_CreateResult;
 
-        $handle = $this->getHandle( $number );
+        $handle = $this->getHandle($number);
 
         $this->client
             ->Debtor_SetIsAccessible(
@@ -469,20 +465,20 @@ class Debtor {
     /**
      * Update debtor
      * @param integer $number
-     * @param  array  $params
+     * @param  array $params
      * @return integer the id of the Debtor
      */
     public function update($number, $params)
     {
-        $debitorHandle = [ 'Number' => $number ];
-        $groupHandle = [ 'Number' => $params['group'] ];
-        $currencyHandle = [ 'Code' => $params['CurrencyCode'] ];
-        $termHandle = [ 'Name' => $params['payment_term_name'], 'Id' => $params['TermId'] ];
-        $templateHandle = [ 'Name' => $params['template_name'] ];
-        $contactHandle = [ 'externalId' => $params['externalId'] ];
+        $debitorHandle = ['Number' => $number];
+        $groupHandle = ['Number' => $params['group']];
+        $currencyHandle = ['Code' => $params['CurrencyCode']];
+        $termHandle = ['Name' => $params['payment_term_name'], 'Id' => $params['TermId']];
+        $templateHandle = ['Name' => $params['template_name']];
+        $contactHandle = ['externalId' => $params['externalId']];
 
         $data = [
-          'data' => (object) [
+            'data' => (object)[
                 'Handle' => $debitorHandle,
                 'Number' => $number,
                 'VatZone' => $params['vatZone'],
@@ -496,7 +492,7 @@ class Debtor {
                 'VatNumber' => $params['VatNumber'],
                 'Country' => $params['Country'],
                 'DebtorGroupHandle' => $groupHandle,
-                'CurrencyHandle' =>  $currencyHandle,
+                'CurrencyHandle' => $currencyHandle,
                 'TermOfPaymentHandle' => $termHandle,
                 'LayoutHandle' => $templatecollectionHandle,
                 'AttentionHandle' => $contact_handle
@@ -505,8 +501,7 @@ class Debtor {
 
         $updatedDebitorHandle = $this->client->Debtor_UpdateFromData($data)->Debtor_UpdateFromDataResult;
 
-        if(isset($contact_handle->Id))
-        {
+        if (isset($contact_handle->Id)) {
 
             $contactData = [
                 'data' => [
@@ -522,19 +517,16 @@ class Debtor {
                 ]
             ];
 
-            try
-            {
+            try {
 
-            $contact = $this->client->DebtorContact_UpdateFromData($contactData)->DebtorContact_UpdateFromDataResult;
+                $contact = $this->client->DebtorContact_UpdateFromData($contactData)->DebtorContact_UpdateFromDataResult;
 
-            }catch(\Exception $e)
-            {
+            } catch (\Exception $e) {
                 throw new Exception('Could not update Debitor Contact information');
             };
         }
 
-        if ( ! empty($params['debitor_ean']))
-        {
+        if (!empty($params['debitor_ean'])) {
             $debtorEan = [
                 'debtorHandle' => $debitor,
                 'valueHandle' => $params['debitor_ean']
