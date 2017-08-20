@@ -2,7 +2,7 @@
 The **Debtor Contact Class** depends on getting a instance of the *Client Class* injected in order to function.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Contact;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -13,7 +13,7 @@ The **Debtor Contact Class** depends on getting a instance of the *Client Class*
 This method returns all contacts as an array.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Contact;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -25,7 +25,7 @@ This method returns all contacts as an array.
 This method lets you grap the data of a Contact by the ID.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Contact;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -37,7 +37,7 @@ This method lets you grap the data of a Contact by the ID.
 This method lets you serach a contact by their name.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Contact;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -54,7 +54,7 @@ The method returns an array with the details of the new contact.
 * $debtor `integer` `The debtor number to assign the contact to`
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Contact;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -89,7 +89,7 @@ This method lets you update an existing Contact.
 ** All of the above elements are optional. **
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Contact;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -110,7 +110,7 @@ This method lets you update an existing Contact.
 This method lets you delete a Contact by ID.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Contact;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);

@@ -2,7 +2,7 @@
 The **Debtor Group Class** depends on getting a instance of the *Client Class* injected in order to function.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Group;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -12,7 +12,7 @@ The **Debtor Group Class** depends on getting a instance of the *Client Class* i
 This method returns an array of Debtor Groups.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Group;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -24,7 +24,7 @@ This method returns an array of Debtor Groups.
 This method returns a specific Debtor Group by the group numnber.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Group;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -36,7 +36,7 @@ This method returns a specific Debtor Group by the group numnber.
 This method returns an array of Debtors in a specific debtor group
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Group;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -53,7 +53,7 @@ The method returns the newly create Debtor Group as an array.
 * account `The account number`
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Group;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);

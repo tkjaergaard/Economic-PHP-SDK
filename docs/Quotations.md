@@ -2,7 +2,7 @@
 The **Quotation Class** depends on getting a instance of the *Client Class* injected in order to function.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Quotation\Quotation;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -12,7 +12,7 @@ The **Quotation Class** depends on getting a instance of the *Client Class* inje
 This method returns all Quotations.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Quotation\Quotation;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -24,7 +24,7 @@ This method returns all Quotations.
 Returns a object for a specific Quotation.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Quotation\Quotation;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -37,7 +37,7 @@ Returns a object for a specific Quotation.
 This method returns a the due date for a given Quotation.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Quotation\Quotation;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -50,7 +50,7 @@ This method returns a the due date for a given Quotation.
 Get a object of all Quotation lines.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Quotation\Quotation;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -63,7 +63,7 @@ Get a object of all Quotation lines.
 Get the net amount of a Quotation as float
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Quotation\Quotation;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -77,7 +77,7 @@ This method return by default a base64 string of the pdf.
 You can invoke download of the pdf by setting the secound paramater as `true`.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Quotation\Quotation;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -94,7 +94,7 @@ This method returns by default a boolean of the current sent status.
 To change the sent status you can set the second paramater to a `boolean`.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Quotation\Quotation;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -113,7 +113,7 @@ To change the sent status you can set the second paramater to a `boolean`.
 This method upgrades a given Quotation to a order and returns the `order id`.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Quotation\Quotation;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -135,7 +135,7 @@ The `add` method on the `line` object accepts a array containing information on 
 
 ```
 <?php
-use Tkj\Economics\TokenClient;
+use tkj\Economics\TokenClient;
 use tkj\Economics\Quotation\Quotation;
 
 $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -158,7 +158,7 @@ $new_quotation = $quotation->create($debtorNumber, function($line)
 This method deletes a Quotation by it's number.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Quotation\Quotation;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);

@@ -2,7 +2,7 @@
 The **Product Class** depends on getting a instance of the *Client Class* injected in order to function.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Product\Product;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -12,7 +12,7 @@ The **Product Class** depends on getting a instance of the *Client Class* inject
 This method returns all products.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Product\Product;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -24,7 +24,7 @@ This method returns all products.
 This method returns a specific Product by the product number.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Product\Product;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -36,7 +36,7 @@ This method returns a specific Product by the product number.
 This method lets you retrive a product by it's excact name.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Product\Product;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -48,7 +48,7 @@ This method lets you retrive a product by it's excact name.
 This method returns all accessible Products.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Product\Product;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -60,7 +60,7 @@ This method returns all accessible Products.
 This method returns the current stock of a specific Product by product number.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Product\Product;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -82,7 +82,7 @@ The `$data` array accepts the following elements:
 
 ```
 <?php
-use Tkj\Economics\TokenClient;
+use tkj\Economics\TokenClient;
 use tkj\Economics\Product\Product;
 
 $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);

@@ -3,7 +3,7 @@ The **Debtor Class** depends on getting a instance of the *Client Class* injecte
 
 ```
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Debtor;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -15,7 +15,7 @@ This method returns all Debtors.
 
 ```
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Debtor;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -29,7 +29,7 @@ Returns a object for a specific Debtor.
 
 ```
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Debtor;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -52,7 +52,7 @@ Available fields to search:
 
 ```
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Debtor;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -88,7 +88,7 @@ Required `data array` elements:
 
 ```
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Debtor;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -114,7 +114,7 @@ This method lets you retrive a object containing all Quotaions for a specific De
 
 ```
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Debtor;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -128,7 +128,7 @@ This method lets you retrive all Orders for a specific Debor.
 
 ```
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Debtor;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -142,7 +142,7 @@ This method lets you retrive all Invoices for a specific Debtor.
 
 ```
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Debtor;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -156,7 +156,7 @@ This method lets you retrive all Contacts for a specific Debtor.
 
 ```
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Debtor;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -169,7 +169,7 @@ This method lets you retrive all Contacts for a specific Debtor.
 This method lets you retrive the Balance for a specific Debtor.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Debtor;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -182,7 +182,7 @@ This method lets you retrive the Address for a specific Debtor
 
 ```
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Debtor;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -216,7 +216,7 @@ Optional `data array` elements:
 
 ```
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Debtor;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);

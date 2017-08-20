@@ -2,7 +2,7 @@
 The **Order Class** depends on getting a instance of the *Client Class* injected in order to function.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Order\Order;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -12,7 +12,7 @@ The **Order Class** depends on getting a instance of the *Client Class* injected
 This method returns all Orders, including those which are archived.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Order\Order;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -24,7 +24,7 @@ This method returns all Orders, including those which are archived.
 This method only returns the Orders that are not archived and set as current.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Order\Order;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -36,7 +36,7 @@ This method only returns the Orders that are not archived and set as current.
 This method returns a specific Order by the order number.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Order\Order;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -48,7 +48,7 @@ This method returns a specific Order by the order number.
 This method returns the Debtor of a specific Order by order number.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Order\Order;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -60,7 +60,7 @@ This method returns the Debtor of a specific Order by order number.
 This method either returns the sent status of a Order or lets you set the current sent status by setting the second paramater to `true` or `false`
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Order\Order;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -79,7 +79,7 @@ This method either returns the sent status of a Order or lets you set the curren
 This method return a specific Order due date.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Order\Order;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -91,7 +91,7 @@ This method return a specific Order due date.
 This method lets you grap the total amount of a Order, either with or without VAT.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Order\Order;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -107,7 +107,7 @@ This method lets you grap the total amount of a Order, either with or without VA
 This method returns `boolean` whether or not it is archived.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Order\Order;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -119,7 +119,7 @@ This method returns `boolean` whether or not it is archived.
 This method returns all Order lines of a specific Order.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Order\Order;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -132,7 +132,7 @@ This method return the PDF of a order as a string.
 If the second paramater is set to `true` force download will be invoked.
 
     <?php
-    use Tkj\Economics\TokenClient;
+    use tkj\Economics\TokenClient;
     use tkj\Economics\Order\Order;
 
     $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -156,7 +156,7 @@ The `add` method on the `line` object accepts a array containing information on 
 
 ```
 <?php
-use Tkj\Economics\TokenClient;
+use tkj\Economics\TokenClient;
 use tkj\Economics\Order\Order;
 
 $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
@@ -184,7 +184,7 @@ the Invoice id for futher processing.
 
 ```
 <?php
-use Tkj\Economics\TokenClient;
+use tkj\Economics\TokenClient;
 use tkj\Economics\Order\Order;
 
 $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
