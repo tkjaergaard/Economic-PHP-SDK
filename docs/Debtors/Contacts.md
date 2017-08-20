@@ -2,10 +2,10 @@
 The **Debtor Contact Class** depends on getting a instance of the *Client Class* injected in order to function.
 
     <?php
-    use tkj\Economics\Client;
+    use Tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Contact;
 
-    $client = new Client($agreementNumber, $userID, $password);
+    $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
     $contact = new Contact($client);
 
 
@@ -13,10 +13,10 @@ The **Debtor Contact Class** depends on getting a instance of the *Client Class*
 This method returns all contacts as an array.
 
     <?php
-    use tkj\Economics\Client;
+    use Tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Contact;
 
-    $client = new Client($agreementNumber, $userID, $password);
+    $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
     $contact = new Contact($client);
 
     $all = $contact->all();
@@ -25,10 +25,10 @@ This method returns all contacts as an array.
 This method lets you grap the data of a Contact by the ID.
 
     <?php
-    use tkj\Economics\Client;
+    use Tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Contact;
 
-    $client = new Client($agreementNumber, $userID, $password);
+    $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
     $contact = new Contact($client);
 
     $data = $contact->findById($id);
@@ -37,10 +37,10 @@ This method lets you grap the data of a Contact by the ID.
 This method lets you serach a contact by their name.
 
     <?php
-    use tkj\Economics\Client;
+    use Tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Contact;
 
-    $client = new Client($agreementNumber, $userID, $password);
+    $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
     $contact = new Contact($client);
 
     $results = $contact->search('John Doe');
@@ -54,10 +54,10 @@ The method returns an array with the details of the new contact.
 * $debtor `integer` `The debtor number to assign the contact to`
 
     <?php
-    use tkj\Economics\Client;
+    use Tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Contact;
 
-    $client = new Client($agreementNumber, $userID, $password);
+    $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
     $contact = new Contact($client);
 
     $data = array(
@@ -89,10 +89,10 @@ This method lets you update an existing Contact.
 ** All of the above elements are optional. **
 
     <?php
-    use tkj\Economics\Client;
+    use Tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Contact;
 
-    $client = new Client($agreementNumber, $userID, $password);
+    $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
     $contact = new Contact($client);
 
     $data = array(
@@ -110,10 +110,10 @@ This method lets you update an existing Contact.
 This method lets you delete a Contact by ID.
 
     <?php
-    use tkj\Economics\Client;
+    use Tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Contact;
 
-    $client = new Client($agreementNumber, $userID, $password);
+    $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
     $contact = new Contact($client);
 
     $contact->delete($id);

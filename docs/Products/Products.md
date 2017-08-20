@@ -2,20 +2,20 @@
 The **Product Class** depends on getting a instance of the *Client Class* injected in order to function.
 
     <?php
-    use tkj\Economics\Client;
+    use Tkj\Economics\TokenClient;
     use tkj\Economics\Product\Product;
 
-    $client = new Client($agreementNumber, $userID, $password);
+    $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
     $product = new Product($client);
 
 #### Get all Products
 This method returns all products.
 
     <?php
-    use tkj\Economics\Client;
+    use Tkj\Economics\TokenClient;
     use tkj\Economics\Product\Product;
 
-    $client = new Client($agreementNumber, $userID, $password);
+    $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
     $product = new Product($client);
 
     $all = $product->all();
@@ -24,10 +24,10 @@ This method returns all products.
 This method returns a specific Product by the product number.
 
     <?php
-    use tkj\Economics\Client;
+    use Tkj\Economics\TokenClient;
     use tkj\Economics\Product\Product;
 
-    $client = new Client($agreementNumber, $userID, $password);
+    $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
     $product = new Product($client);
 
     $get = $product->get(301);
@@ -36,10 +36,10 @@ This method returns a specific Product by the product number.
 This method lets you retrive a product by it's excact name.
 
     <?php
-    use tkj\Economics\Client;
+    use Tkj\Economics\TokenClient;
     use tkj\Economics\Product\Product;
 
-    $client = new Client($agreementNumber, $userID, $password);
+    $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
     $product = new Product($client);
 
     $get = $product->find("my product");
@@ -48,10 +48,10 @@ This method lets you retrive a product by it's excact name.
 This method returns all accessible Products.
 
     <?php
-    use tkj\Economics\Client;
+    use Tkj\Economics\TokenClient;
     use tkj\Economics\Product\Product;
 
-    $client = new Client($agreementNumber, $userID, $password);
+    $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
     $product = new Product($client);
 
     $accessible = $product->accessible();
@@ -60,10 +60,10 @@ This method returns all accessible Products.
 This method returns the current stock of a specific Product by product number.
 
     <?php
-    use tkj\Economics\Client;
+    use Tkj\Economics\TokenClient;
     use tkj\Economics\Product\Product;
 
-    $client = new Client($agreementNumber, $userID, $password);
+    $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
     $product = new Product($client);
 
     $stock = $product->stock(301);
@@ -82,10 +82,10 @@ The `$data` array accepts the following elements:
 
 ```
 <?php
-use tkj\Economics\Client;
+use Tkj\Economics\TokenClient;
 use tkj\Economics\Product\Product;
 
-$client = new Client($agreementNumber, $userID, $password);
+$client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
 $product = new Product($client);
 
 $data = array(

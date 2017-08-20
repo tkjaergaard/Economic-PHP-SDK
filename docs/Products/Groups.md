@@ -2,20 +2,20 @@
 The **Product Group Class** depends on getting a instance of the *Client Class* injected in order to function.
 
     <?php
-    use tkj\Economics\Client;
+    use Tkj\Economics\TokenClient;
     use tkj\Economics\Product\Group;
 
-    $client = new Client($agreementNumber, $userID, $password);
+    $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
     $group  = new Group($client);
 
 #### Get all Product Groups
 This method returns all Product Groups.
 
     <?php
-    use tkj\Economics\Client;
+    use Tkj\Economics\TokenClient;
     use tkj\Economics\Product\Group;
 
-    $client = new Client($agreementNumber, $userID, $password);
+    $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
     $group  = new Group($client);
 
     $all = $group->all();
@@ -24,10 +24,10 @@ This method returns all Product Groups.
 This method lets you grap a specific Product Group by the group number.
 
     <?php
-    use tkj\Economics\Client;
+    use Tkj\Economics\TokenClient;
     use tkj\Economics\Product\Group;
 
-    $client = new Client($agreementNumber, $userID, $password);
+    $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
     $group  = new Group($client);
 
     $get = $group->get(1);
@@ -36,10 +36,10 @@ This method lets you grap a specific Product Group by the group number.
 This method lets you grap all Products within a specific group.
 
     <?php
-    use tkj\Economics\Client;
+    use Tkj\Economics\TokenClient;
     use tkj\Economics\Product\Group;
 
-    $client = new Client($agreementNumber, $userID, $password);
+    $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
     $group  = new Group($client);
 
     $products = $group->products(1);

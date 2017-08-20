@@ -2,20 +2,20 @@
 The **Debtor Group Class** depends on getting a instance of the *Client Class* injected in order to function.
 
     <?php
-    use tkj\Economics\Client;
+    use Tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Group;
 
-    $client = new Client($agreementNumber, $userID, $password);
+    $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
     $group = new Group($client);
 
 #### Get all Debtor Groups
 This method returns an array of Debtor Groups.
 
     <?php
-    use tkj\Economics\Client;
+    use Tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Group;
 
-    $client = new Client($agreementNumber, $userID, $password);
+    $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
     $group = new Group($client);
 
     $all = $group->all();
@@ -24,10 +24,10 @@ This method returns an array of Debtor Groups.
 This method returns a specific Debtor Group by the group numnber.
 
     <?php
-    use tkj\Economics\Client;
+    use Tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Group;
 
-    $client = new Client($agreementNumber, $userID, $password);
+    $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
     $group = new Group($client);
 
     $get = $group->get(1);
@@ -36,10 +36,10 @@ This method returns a specific Debtor Group by the group numnber.
 This method returns an array of Debtors in a specific debtor group
 
     <?php
-    use tkj\Economics\Client;
+    use Tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Group;
 
-    $client = new Client($agreementNumber, $userID, $password);
+    $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
     $group = new Group($client);
 
     $debtors = $group->debtors(1);
@@ -53,10 +53,10 @@ The method returns the newly create Debtor Group as an array.
 * account `The account number`
 
     <?php
-    use tkj\Economics\Client;
+    use Tkj\Economics\TokenClient;
     use tkj\Economics\Debtor\Group;
 
-    $client = new Client($agreementNumber, $userID, $password);
+    $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
     $group = new Group($client);
 
     $newGroup = $group->create("Foreign", 5600);

@@ -16,23 +16,12 @@ Clone this repository and load the files manually or setup a `spl_autoload`.
 
 ##### Connection to Economic
 
-All classes requires a instance of the `ClientInterface` which either can be a the "regular" client which accepts the agreement number, user id and password **(This authentication method will be deprecated by March 15th 2016)**.
-
-###### Agreement number authentication (deprecated by March 15th 2016).
-
 Get your access/tokens from here: https://www.e-conomic.com/developer
 
-```php
+###### Token authentication
 
-use Tkj\Economics\Client;
-
-
-$client = new Client($agreementNo, $userId, $password, $options=[]);
 ```
-
-###### Token authentication (Recommended).
-
-```php
+<?php
 use Tkj\Economics\TokenClient;
 
 $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
