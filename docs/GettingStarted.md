@@ -22,7 +22,7 @@ Get your access/tokens from here: https://www.e-conomic.com/developer
 
 ```
 <?php
-use Tkj\Economics\TokenClient;
+use tkj\Economics\TokenClient;
 
 $client = new TokenClient($token, $appToken, $appIdentifier, $options=[]);
 ```
