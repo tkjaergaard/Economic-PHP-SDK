@@ -5,27 +5,28 @@ use tkj\Economics\Debtor\Debtor;
 use Exception;
 use Closure;
 
-class Invoice {
+class Invoice
+{
 
     /**
      * Client Connection
-     * @var devdk\Economics\Client
+     * @var $client
      */
     protected $client;
 
     /**
      * Instance of Client
-     * @var devdk\Economics\Client
+     * @var $client_raw
      */
     protected $client_raw;
 
     /**
      * Construct class and set dependencies
-     * @param devdk\Economics\Client $client
+     * @param $client
      */
     public function __construct(Client $client)
     {
-        $this->client     = $client->getClient();
+        $this->client = $client->getClient();
         $this->client_raw = $client;
     }
 
@@ -36,11 +37,11 @@ class Invoice {
      */
     public function getHandle($no)
     {
-        if( is_object($no) AND isset($no->Id) ) return $no;
+        if (is_object($no) AND isset($no->Id)) return $no;
 
-        if( @$result = $this->client
-                ->Invoice_FindByNumber(array('number'=>$no))
-                ->Invoice_FindByNumberResult
+        if (@$result = $this->client
+            ->Invoice_FindByNumber(array('number' => $no))
+            ->Invoice_FindByNumberResult
         ) return $result;
     }
 
@@ -52,7 +53,7 @@ class Invoice {
     public function getArrayFromHandles($handles)
     {
         return $this->client
-            ->CurrentInvoice_GetDataArray(array('entityHandles'=>array('CurrentInvoiceHandle'=>$handles)))
+            ->CurrentInvoice_GetDataArray(array('entityHandles' => array('CurrentInvoiceHandle' => $handles)))
             ->CurrentInvoice_GetDataArrayResult
             ->CurrentInvoiceData;
     }
@@ -93,23 +94,22 @@ class Invoice {
         $handle = $this->getHandle($no);
 
         return $this->client
-            ->Invoice_GetDueDate(array('invoiceHandle'=>$handle))
+            ->Invoice_GetDueDate(array('invoiceHandle' => $handle))
             ->Invoice_GetDueDateResult;
     }
 
     /**
      * Get Invoice total ny number
-     * @param  integer  $no
-     * @param  boolean  $vat
+     * @param  integer $no
+     * @param  boolean $vat
      * @return float
      */
-    public function total($no, $vat=false)
+    public function total($no, $vat = false)
     {
-        $handle  = $this->getHandle($no);
-        $request = array('invoiceHandle'=>$handle);
+        $handle = $this->getHandle($no);
+        $request = array('invoiceHandle' => $handle);
 
-        if( $vat )
-        {
+        if ($vat) {
             return $this->client
                 ->Invoice_GetGrossAmount($request)
                 ->Invoice_GetGrossAmountResult;
@@ -130,7 +130,7 @@ class Invoice {
         $handle = $this->getHandle($no);
 
         return $this->client
-            ->Invoice_GetVatAmount(array('invoiceHandle'=>$handle))
+            ->Invoice_GetVatAmount(array('invoiceHandle' => $handle))
             ->Invoice_GetVatAmountResult;
     }
 
@@ -139,7 +139,7 @@ class Invoice {
         $handle = $this->getHandle($no);
 
         $lineHandles = $this->client
-            ->Invoice_GetLines(array('invoiceHandle'=>$handle))
+            ->Invoice_GetLines(array('invoiceHandle' => $handle))
             ->Invoice_GetLinesResult
             ->InvoiceLineHandle;
 
@@ -153,18 +153,17 @@ class Invoice {
      * @param  integer $no
      * @return mixed
      */
-    public function pdf($no, $download=false)
+    public function pdf($no, $download = false)
     {
         $handle = $this->getHandle($no);
 
         $pdf = $this->client
-            ->Invoice_GetPdf(array('invoiceHandle'=>$handle))
+            ->Invoice_GetPdf(array('invoiceHandle' => $handle))
             ->Invoice_GetPdfResult;
 
-        if( $download )
-        {
+        if ($download) {
             header('Content-type: application/pdf');
-            header('Content-Disposition: attachment; filename="'.$no.'.pdf"');
+            header('Content-Disposition: attachment; filename="' . $no . '.pdf"');
             echo $pdf;
             return true;
         }
@@ -173,25 +172,28 @@ class Invoice {
     }
 
     /**
-     * Create a new Quotaion to a specific Debtor
-     * @param  integer  $debtorNumber
+     * Create a new Invoice to a specific Debtor
+     * @param  integer $debtorNumber
      * @param  Closure $callback
      * @return object
+     * @throws  Exception if invoiceHandle->id is  empty
      */
-    public function create($debtorNumber, Closure $callback)
+    public function create($debtorNumber, Closure $callback, array $options = NULL)
     {
         $debtor = new Debtor($this->client_raw);
         $debtorHandle = $debtor->getHandle($debtorNumber);
 
         $invoiceHandle = $this->client
-            ->CurrentInvoice_Create(array('debtorHandle'=>$debtorHandle))
+            ->CurrentInvoice_Create(array('debtorHandle' => $debtorHandle))
             ->CurrentInvoice_CreateResult;
 
 
-        if( !$invoiceHandle->Id )
-        {
+        if (!$invoiceHandle->Id) {
             throw new Exception("Error: creating Invoice.");
         }
+
+        if ($options)
+            $this->setOptions($invoiceHandle, $options);
 
         $this->lines = new Line($this->client_raw, $invoiceHandle);
 
@@ -200,6 +202,103 @@ class Invoice {
         return $this->client->CurrentInvoice_GetDataArray(
             array('entityHandles' => array('CurrentInvoiceHandle' => $invoiceHandle))
         )->CurrentInvoice_GetDataArrayResult;
+    }
+
+    /**
+     * Set Invoice Options
+     * @param mixed $handle
+     * @param array $options
+     */
+    public function setOptions($handle, array $options)
+    {
+        foreach ($options as $option => $value) {
+            switch (strtolower($option)) {
+                case 'vat':
+                    $this->client
+                        ->CurrentInvoice_SetIsVatIncluded(array(
+                            'currentInvoiceHandle' => $handle,
+                            'value' => $value
+                        ));
+                    break;
+                case 'text1':
+                    $this->client
+                        ->CurrentInvoice_SetTextLine1(array(
+                            'currentInvoiceHandle' => $handle,
+                            'value' => $value
+                        ));
+                    break;
+                case 'text2':
+                    $this->client
+                        ->CurrentInvoice_SetTextLine2(array(
+                            'currentInvoiceHandle' => $handle,
+                            'value' => $value
+                        ));
+                    break;
+                case 'heading':
+                    $this->client
+                        ->CurrentInvoice_SetHeading(array(
+                            'currentInvoiceHandle' => $handle,
+                            'value' => $value
+                        ));
+                    break;
+                case 'termsofdelivery':
+                    $this->client
+                        ->CurrentInvoice_SetTermsOfDelivery(array(
+                            'currentInvoiceHandle' => $handle,
+                            'value' => $value
+                        ));
+                    break;
+                case 'deliveryaddress':
+                    $this->client
+                        ->CurrentInvoice_SetDeliveryAddress(array(
+                            'currentInvoiceHandle' => $handle,
+                            'value' => $value
+                        ));
+                    break;
+                case 'deliverycity':
+                    $this->client
+                        ->CurrentInvoice_SetDeliveryCity(array(
+                            'currentInvoiceHandle' => $handle,
+                            'value' => $value
+                        ));
+                    break;
+                case 'deliverycountry':
+                    $this->client
+                        ->CurrentInvoice_SetDeliveryCountry(array(
+                            'currentInvoiceHandle' => $handle,
+                            'value' => $value
+                        ));
+                    break;
+                case 'deliverypostalcode':
+                    $this->client
+                        ->CurrentInvoice_SetDeliveryPostalCode(array(
+                            'currentInvoiceHandle' => $handle,
+                            'value' => $value
+                        ));
+                    break;
+                case 'otherreference':
+                    $this->client
+                        ->CurrentInvoice_SetOtherReference(array(
+                            'currentInvoiceHandle' => $handle,
+                            'value' => $value
+                        ));
+                    break;
+                case 'date':
+                    $this->client
+                        ->CurrentInvoice_SetDate(array(
+                            'currentInvoiceHandle' => $handle,
+                            'value' => $value
+                        ));
+                    break;
+                case 'layout':
+                    $this->client
+                        ->CurrentInvoice_SetLayout(array(
+                            'currentInvoiceHandle' => $handle,
+                            'value' => $value
+                        ));
+                    break;
+            }
+        }
     }
 
     /**
@@ -212,7 +311,7 @@ class Invoice {
         $handle = $this->getHandle($invoiceNumber);
 
         $number = $this->client
-            ->CurrentInvoice_Book(array('currentInvoiceHandle'=>$handle))
+            ->CurrentInvoice_Book(array('currentInvoiceHandle' => $handle))
             ->CurrentInvoice_BookResult;
 
         return $number;
