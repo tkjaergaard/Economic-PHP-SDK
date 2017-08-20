@@ -9,26 +9,27 @@ class Line
 
     /**
      * Client Connection
-     * @var devdk\Economics\Client
+     * @var $client
      */
     protected $client;
 
     /**
      * Instance of Client
-     * @var devdk\Economics\Client
+     * @var $client_raw
      */
     protected $client_raw;
 
     /**
      * Invoice Handle used
-     * when manipluation invoice lines
+     * when manipulation invoice lines
      * @var object
      */
     protected $invoiceHandle;
 
     /**
      * Construct class and set dependencies
-     * @param devdk\Economics\Client $client
+     * @param $client
+     * @param  $invoiceHandle
      */
     public function __construct(Client $client, $invoiceHandle = NULL)
     {
@@ -42,7 +43,7 @@ class Line
 
     /**
      * Get Invoice Lines from handles
-     * @param  object $handels
+     * @param  object $handles
      * @return object
      */
     public function getArrayFromHandles($handles)
@@ -57,15 +58,18 @@ class Line
      * Set Invoice handle for
      * editing or creating lines
      * @param object $handle
+     * @return object
      */
     public function setHandle($handle)
     {
         $this->invoiceHandle = $handle;
+        return $this;
     }
 
     /**
      * Add Invoice line
      * @param array $data
+     * @return object
      */
     public function add(array $data)
     {
@@ -164,8 +168,8 @@ class Line
     }
 
     /**
-     * Set Quotation Line discount
-     * @param  mixed $QuotationLineHandle
+     * Set Invoice Line discount
+     * @param  mixed $invoiceLineHandle
      * @param  float $discount
      * @return boolean
      */
@@ -183,8 +187,8 @@ class Line
     }
 
     /**
-     * Set Quotation Line description
-     * @param  mixed $QuotationLineHandle
+     * Set Invoice Line description
+     * @param  mixed $invoiceLineHandle
      * @param  string $description
      * @return boolean
      */
@@ -202,8 +206,8 @@ class Line
     }
 
     /**
-     * Set Quotation Line price without VAT
-     * @param  mixed $QuotationLineHandle
+     * Set Invoice Line price without VAT
+     * @param  mixed $invoiceLineHandle
      * @param  float $price
      * @return boolean
      */
@@ -221,8 +225,8 @@ class Line
     }
 
     /**
-     * Set Quotation Line quantity
-     * @param  mixed $QuotationLineHandle
+     * Set Invoice Line quantity
+     * @param  mixed $invoiceLineHandle
      * @param  integer $qty
      * @return boolean
      */
@@ -240,9 +244,9 @@ class Line
     }
 
     /**
-     * Set Quotation Line unit
+     * Set Invoice Line unit
      * by unit number
-     * @param  mixed $QuotationLineHandle [description]
+     * @param  mixed $invoiceLineHandle [description]
      * @param  integer $unit
      * @return boolean
      */
